@@ -78,8 +78,8 @@ class Business {
 	 * Instantiates Request/Response objects
 	 * and save them persistent in the registry.
 	 *
-	 * @param \Cwa\Core\Request The request object
-	 * @param \Cwa\Core\Response The response object
+	 * @param \Spaf\Core\Request The request object
+	 * @param \Spaf\Core\Response The response object
 	 */
 	public function __construct(\Spaf\Core\Request\AbstractRequest $request, \Spaf\Core\Response\AbstractResponse $response) {
 		$this->_registry = Registry::getInstance();
