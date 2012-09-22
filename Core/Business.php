@@ -17,15 +17,15 @@ namespace Spaf\Core;
  * There are also methods to inject all those objects as mock objects for testing purpose.
  *
  * @author		Claudio Walser
- * @package		\Cwa\Library\Benchmark
- * @namespace	\Cwa\Library\Benchmark
+ * @package		\Spaf\Core
+ * @namespace	\Spaf\Core
  * */
 class Business {
 
 	/**
 	 * Registry Object
 	 *
-	 * @var Cwa\Core\Registry
+	 * @var \Spaf\Core\Registry
 	 */
 	private $_registry = null;
 
@@ -33,21 +33,21 @@ class Business {
 	/**
 	 * Dispatcher Object
 	 *
-	 * @var Cwa\Core\Dispatcher
+	 * @var \Spaf\Core\Dispatcher
 	 */
 	private $_dispatcher = null;
 
 	/**
 	 * Request Object
 	 *
-	 * @var Cwa\Core\Request
+	 * @var \Spaf\Core\Request
 	 */
 	private $_request = null;
 
 	/**
 	 * Response Object
 	 *
-	 * @var Cwa\Core\Response
+	 * @var \Spaf\Core\Response
 	 */
 	private $_response = null;
 	
@@ -78,10 +78,10 @@ class Business {
 	 * Instantiates Request/Response objects
 	 * and save them persistent in the registry.
 	 *
-	 * @param Cwa\Core\Request The request object
-	 * @param Cwa\Core\Response The response object
+	 * @param \Cwa\Core\Request The request object
+	 * @param \Cwa\Core\Response The response object
 	 */
-	public function __construct(\Cwa\Core\Request\AbstractRequest $request, \Cwa\Core\Response\AbstractResponse $response) {
+	public function __construct(\Spaf\Core\Request\AbstractRequest $request, \Spaf\Core\Response\AbstractResponse $response) {
 		$this->_registry = Registry::getInstance();
 		$this->_dispatcher = new Dispatcher();
 		$this->_request = $request;
@@ -92,10 +92,10 @@ class Business {
 	 * Public method to inject another Registry class
 	 * This is only usefull for testing purposes
 	 * 
-	 * @param Cwa\Core\Registry
+	 * @param \Spaf\Core\Registry
 	 * @return boolean true
 	 */
-	public function setRegistry(Cwa\Core\Registry $registry) {
+	public function setRegistry(\Spaf\Core\Registry $registry) {
 		$this->_registry = $registry;
 		
 		return true;
@@ -105,10 +105,10 @@ class Business {
 	 * Public method to inject another Dispatcher class
 	 * This is only usefull for testing purposes
 	 * 
-	 * @param Cwa\Core\Dispatcher The Dispatcher object
+	 * @param \Spaf\Core\Dispatcher The Dispatcher object
 	 * @return boolean true
 	 */
-	public function setDispatcher(Cwa\Core\Dispatcher $dispatcher) {
+	public function setDispatcher(\Spaf\Core\Dispatcher $dispatcher) {
 		$this->_dispatcher = $dispatcher;
 		
 		return true;
