@@ -10,6 +10,8 @@
  */
 namespace Spaf\Core\Controller;
 
+use \Spaf\Core\Controller;
+
 /**
  * \Spaf\Core\Controller\NotFound
  *
@@ -19,7 +21,7 @@ namespace Spaf\Core\Controller;
  * @package \Spaf\Core\Controller
  * @namespace \Spaf\Core\Controller
  */
-class NotFound extends Abstraction {
+class NotFound extends Controller {
 	
 	/**
 	 * NotFound controllers view method

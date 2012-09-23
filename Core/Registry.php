@@ -64,8 +64,9 @@ class Registry {
 			self::$_instance = $registry;
 		}
 		
-		// 
+		// if instance still is NULL
 		if (self::$_instance === null) {
+			// create new one of myself
 			self::$_instance = new self();
 		}
 		

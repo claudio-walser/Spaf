@@ -10,6 +10,8 @@
  */
 namespace Spaf\Core\Response;
 
+use \Spaf\Core\Response;
+
 /**
  * \Spaf\Core\Response\Php
  *
@@ -21,7 +23,7 @@ namespace Spaf\Core\Response;
  * @package \Spaf\Core\Response
  * @namespace \Spaf\Core\Response
  */
-class Php extends Abstraction {
+class Php extends Response {
 
 	/**
 	 * What values should result in ['success'] = false?

@@ -20,3 +20,5 @@ namespace Spaf\Core\Controller;
  * @namespace \Spaf\Core\Controller
  */
 class Exception extends \Exception {}
+
+?>

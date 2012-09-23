@@ -128,11 +128,13 @@ class Dispatcher {
 	 * Execute the dispatcher based on the given request 
 	 * parameters. This method is handling not found fallbacks as well.
 	 *
+	 * @throws \Spaf\Core\Exception Throws an Exception if no request object is set in the registry yet
+	 * 
 	 * @return mixed The controllers return values
 	 */
 	public function dispatch() {
-		// get registry/request objects
-		$request = $this->_registry->get('request');
+		// get registry/request object, throws an exception if none is set yet.
+		$request = $this->_registry->get('request', true);
 
 		// get controller
 		$this->_controller = $request->getParam('controller', $this->_defaultController);

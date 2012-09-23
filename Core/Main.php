@@ -116,10 +116,10 @@ class Main {
 	/**
 	 * Public method to inject a request class
 	 * 
-	 * @param \Spaf\Core\Request\Abstraction The request object
+	 * @param \Spaf\Core\Request The request object
 	 * @return boolean true
 	 */
-	public function setDispatcher(\Spaf\Core\Request\Abstraction $request) {
+	public function setRequest(\Spaf\Core\Request $request) {
 		$this->_request = $request;
 		
 		return true;
@@ -128,10 +128,10 @@ class Main {
 	/**
 	 * Public method to inject a response class
 	 * 
-	 * @param \Spaf\Core\Response\Abstraction The response object
+	 * @param \Spaf\Core\Response The response object
 	 * @return boolean true
 	 */
-	public function setDispatcher(\Spaf\Core\Response\Abstraction $response) {
+	public function setResponse(\Spaf\Core\Response $response) {
 		$this->_response = $response;
 		
 		return true;

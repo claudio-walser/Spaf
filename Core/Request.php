@@ -3,25 +3,25 @@
 /**
  * $Id$
  *
- * Spaf/Core/Request/Abstraction.php
+ * Spaf/Core/Request.php
  * @created Tue Jun 10 16:20:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Core\Request;
+namespace Spaf\Core;
 
 /**
- * \Spaf\Core\Request\Abstraction
+ * \Spaf\Core\Request
  *
- * Thats a base request classe.
+ * Thats a base request class.
  * Any concrete request should extend this class.
  *
  * @author Claudio Walser
  * @package \Spaf\Core\Request
- * @namespace \Spaf\Core\Request
+ * @namespace \Spaf\Core
  * @abstract
  */
-abstract class Abstraction {
+abstract class Request {
 	
 	/**
 	 * Either this class should utf8 decode incoming values or not
