@@ -97,8 +97,6 @@ class Main {
 	public function setRegistry(\Spaf\Core\Registry $registry) {
 		$this->_registry = $registry;
 		
-		//test für leo
-		
 		return true;
 	}
 
