@@ -1,117 +1,135 @@
 <?php
+
 /**
  * $Id$
- * Main Dispatcher class
  *
- * @created 	Tue Jun 08 19:26:27 CET 2010
- * @author 		Claudio Walser
- * @reviewer 	TODO
- * @package		\Cwa\Core
- * @namespace	\Cwa\Core
+ * Dispatcher.php
+ * @created Tue Jun 08 19:26:27 CET 2010
+ * @author Claudio Walser
+ * @reviewer TODO
  */
-
-namespace Cwa\Core;
+namespace Spaf\Core;
 
 /**
- * \Cwa\Core\Dispatcher
+ * \Spaf\Core\Dispatcher
  *
  * The basic Dispatcher class
- * The Dispatcher process the request parameters
- * and call the correct Controller class based on that.
+ * The Dispatcher is processing the request parameters
+ * and calls the correct Controller class based on that.
  *
- * @author 		Claudio Walser
+ * @author Claudio Walser
+ * @package \Spaf\Core
+ * @namespace \Spaf\Core
  */
 class Dispatcher {
 
 	/**
+	 * The Registry Object.
+	 *
+	 * @var \Spaf\Core\Registry
+	 */
+	protected $_registry = null;
+
+	/**
 	 * The requested controller Object.
 	 *
-	 * @var		\Cwa\Core\Controller
+	 * @var \Spaf\Core\Controller
 	 */
 	protected $_controller = null;
 
 	/**
 	 * Name of the method which is to call.
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	protected $_action = null;
 
 	/**
 	 * Default controller if the requested one was not found.
 	 *
-	 * @var		string
+	 * @var string
 	 */
-	protected $_notFoundController = '\\Cwa\\Core\\Controller\\NotFound';
+	protected $_notFoundController = '\\Spaf\\Core\\Controller\\NotFound';
 
 	/**
 	 * Default controller if no one is given.
 	 *
-	 * @var		string
+	 * @var string
 	 */
-	protected $_defaultController = '\\Cwa\\Core\\Controller\\Index';
+	protected $_defaultController = '\\Spaf\\Core\\Controller\\Index';
 
 	/**
 	 * Default action if no one is given,
 	 * or the given one can not be found.
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	protected $_defaultAction = 'view';
-
+	
 	/**
-	 * set the not found controller
+	 * Set the registry object
+	 */
+	 public function setRegistry(\Spaf\Core\Registry $registry) {
+	 	$this->_registry = $registry;
+		
+		return true;
+	 }
+	
+	/**
+	 * Set the property of the not found controller.
 	 *
-	 * Change the property of the not found container.
-	 *
-	 * @param	string		the not found controller
-	 * @return	boolean
+	 * @throws \Spaf\Core\Exception Throws an exception if you try to set an undefined controller
+	 * 
+	 * @param string Name of the-not found controller
+	 * @return boolean true
 	 */
 	public function setNotFoundController($controller) {
+		if (!class_exists($controller)) {
+			throw new Exception(get_class($this) . ': You try to set the inexistent not-controller "' . $controller . '"');
+		}
 		$this->_notFoundController = (string) $controller;
+		
 		return true;
 	}
 
 	/**
-	 * set the default controller
+	 * Set the property of the default container.
 	 *
-	 * Change the property of the default container.
-	 *
-	 * @param	string		the default controller
-	 * @return	boolean
+	 * @throws \Spaf\Core\Exception Throws an exception if you try to set an undefined controller
+	 * 
+	 * @param string Name of the default controller
+	 * @return boolean
 	 */
 	public function setDefaultController($controller) {
+		if (!class_exists($controller)) {
+			throw new Exception(get_class($this) . ': You try to set the inexistent default-controller "' . $controller . '"');
+		}
 		$this->_defaultController = $controller;
+		
 		return true;
 	}
 
-
 	/**
-	 * set the default action
+	 * Set the property of the default controller action.
 	 *
-	 * Change the property of the default container-action.
-	 *
-	 * @param	string		the default action
-	 * @return	boolean
+	 * @param string Name of the default action
+	 * @return boolean
 	 */
 	public function setDefaultAction($action) {
 		$this->_defaultAction = $action;
+		
 		return true;
 	}
 
-
 	/**
-	 * Check all parameters in order to run the controller
-	 *
 	 * Execute the dispatcher based on the given request 
-	 * parameters.
+	 * parameters. This method is handling not found fallbacks as well.
 	 *
-	 * @return	mixed		the controllers return values
+	 * @return mixed The controllers return values
 	 */
 	public function dispatch() {
 		// get registry/request objects
-		$registry = Registry::getInstance();
-		$request = $registry->get('request');
+		$request = $this->_registry->get('request');
 
 		// get controller
 		$this->_controller = $request->getParam('controller', $this->_defaultController);
@@ -123,18 +141,20 @@ class Dispatcher {
 		}
 
 		// instantiate controller
-		$controller = new $this->_controller();
+		$controller = new $this->_controller($registry);
 
 		// get action
-		$this->_action = $request->getParam('action', $this->_defaultAction);
+		$action = $request->getParam('action', $this->_defaultAction);
 
 		// check if method does not exists
 		if (!method_exists($controller, $this->_action)) {
 			$controller = new $this->_notFoundController();
-			return $controller->methodNotFound($this->_controller, $this->_action);
+			return $controller->methodNotFound($this->_controller, $this->_defaultAction);
 		}
-
-		return $this->_doDispatch($controller);
+		
+		// forward the controllers return value
+		//return call_user_func(array($controller, $this->_action)); // have to see if this works
+		return $this->_doDispatch($controller, $this->_action);
 	}
 
 	/**
@@ -143,13 +163,13 @@ class Dispatcher {
 	 * Execute the given action on the given controller
 	 * and return its return values.
 	 *
-	 * @return	mixed		the controllers return values
+	 * @param \Spaf\Core\Controller Controller object
+	 * @return mixed the controllers return values
 	 */
-	protected function _doDispatch(Controller\AbstractController $controller) {
-		return $controller->{$this->_action}();
+	protected function _doDispatch(\Spaf\Core\Controller $controller, $action) {
+		// forward the controllers return value
+		return $controller->{$action}();
 	}
-
-
 
 }
 

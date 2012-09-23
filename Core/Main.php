@@ -1,26 +1,28 @@
 <?php
+
 /**
  * $ID$
  *
- * Business.php
- * @created 	Wed Aug 18 18:42:27 CET 2010
- * @author 		Claudio Walser
- * @reviewer 	TODO
+ * Main.php
+ * @created Wed Aug 18 18:42:27 CET 2010
+ * @author Claudio Walser
+ * @reviewer TODO
  */
 namespace Spaf\Core;
 
 /**
- * Business class
- * Main business tier class.
+ * \Spaf\Core\Main
+ * 
+ * Main tier class.
  * Instantiates Dispatcher/Controller objects and delegates the request
  * to get/set data
  * There are also methods to inject all those objects as mock objects for testing purpose.
  *
- * @author		Claudio Walser
- * @package		\Spaf\Core
- * @namespace	\Spaf\Core
- * */
-class Business {
+ * @author Claudio Walser
+ * @package \Spaf\Core
+ * @namespace \Spaf\Core
+ */
+class Main {
 
 	/**
 	 * Registry Object
@@ -173,7 +175,7 @@ class Business {
 		}
 		
 		// forwards the dispatchers return, which is in fact the return value of a specific controller method
-		return $this->_dispatcher->dispatch();
+		return $this->_dispatcher->dispatch($this->_registry);
 	}
 	
 }

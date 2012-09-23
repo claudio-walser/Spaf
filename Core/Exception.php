@@ -1,12 +1,12 @@
 <?php
 /**
  * @author		Claudio Walser
- * @package		Cwa\Core
+ * @package		Spaf\Core
  */
-namespace Cwa\Core;
+namespace Spaf\Core;
 
 /**
- * Cwa\Core\Exception
+ * \Spaf\Core\Exception
  */
 class Exception extends \Exception {}
 
