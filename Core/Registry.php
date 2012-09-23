@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Registry.php
+ * Spaf/Core/Registry.php
  * @created Tue Jun 08 19:26:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -66,7 +66,7 @@ class Registry {
 		
 		// 
 		if (self::$_instance === null) {
-			self::$_instance = new Registry();
+			self::$_instance = new self();
 		}
 		
 		return self::$_instance;

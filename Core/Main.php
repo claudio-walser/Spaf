@@ -3,7 +3,7 @@
 /**
  * $ID$
  *
- * Main.php
+ * Spaf/Core/Main.php
  * @created Wed Aug 18 18:42:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -13,7 +13,7 @@ namespace Spaf\Core;
 /**
  * \Spaf\Core\Main
  * 
- * Main tier class.
+ * Main class.
  * Instantiates Dispatcher/Controller objects and delegates the request
  * to get/set data
  * There are also methods to inject all those objects as mock objects for testing purpose.
@@ -79,11 +79,8 @@ class Main {
 	 *
 	 * Instantiates Request/Response objects
 	 * and save them persistent in the registry.
-	 *
-	 * @param \Spaf\Core\Request The request object
-	 * @param \Spaf\Core\Response The response object
 	 */
-	public function __construct(\Spaf\Core\Request\AbstractRequest $request, \Spaf\Core\Response\AbstractResponse $response) {
+	public function __construct() {
 		$this->_registry = Registry::getInstance();
 		$this->_dispatcher = new Dispatcher();
 		$this->_request = $request;
@@ -112,6 +109,30 @@ class Main {
 	 */
 	public function setDispatcher(\Spaf\Core\Dispatcher $dispatcher) {
 		$this->_dispatcher = $dispatcher;
+		
+		return true;
+	}
+
+	/**
+	 * Public method to inject a request class
+	 * 
+	 * @param \Spaf\Core\Request\Abstraction The request object
+	 * @return boolean true
+	 */
+	public function setDispatcher(\Spaf\Core\Request\Abstraction $request) {
+		$this->_request = $request;
+		
+		return true;
+	}
+
+	/**
+	 * Public method to inject a response class
+	 * 
+	 * @param \Spaf\Core\Response\Abstraction The response object
+	 * @return boolean true
+	 */
+	public function setDispatcher(\Spaf\Core\Response\Abstraction $response) {
+		$this->_response = $response;
 		
 		return true;
 	}

@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Dispatcher.php
+ * Spaf/Core/Dispatcher.php
  * @created Tue Jun 08 19:26:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -68,6 +68,9 @@ class Dispatcher {
 	
 	/**
 	 * Set the registry object
+	 * 
+	 * @param \Spaf\Core\Registry Registry object for injection
+	 * @return boolean true
 	 */
 	 public function setRegistry(\Spaf\Core\Registry $registry) {
 	 	$this->_registry = $registry;
@@ -80,12 +83,12 @@ class Dispatcher {
 	 *
 	 * @throws \Spaf\Core\Exception Throws an exception if you try to set an undefined controller
 	 * 
-	 * @param string Name of the-not found controller
+	 * @param string Name of the not-found controller
 	 * @return boolean true
 	 */
 	public function setNotFoundController($controller) {
 		if (!class_exists($controller)) {
-			throw new Exception(get_class($this) . ': You try to set the inexistent not-controller "' . $controller . '"');
+			throw new Exception(get_class($this) . ': You try to set the inexistent not-found controller "' . $controller . '"');
 		}
 		$this->_notFoundController = (string) $controller;
 		
@@ -102,7 +105,7 @@ class Dispatcher {
 	 */
 	public function setDefaultController($controller) {
 		if (!class_exists($controller)) {
-			throw new Exception(get_class($this) . ': You try to set the inexistent default-controller "' . $controller . '"');
+			throw new Exception(get_class($this) . ': You try to set the inexistent default controller "' . $controller . '"');
 		}
 		$this->_defaultController = $controller;
 		
@@ -164,7 +167,7 @@ class Dispatcher {
 	 * and return its return values.
 	 *
 	 * @param \Spaf\Core\Controller Controller object
-	 * @return mixed the controllers return values
+	 * @return mixed the controllers return value
 	 */
 	protected function _doDispatch(\Spaf\Core\Controller $controller, $action) {
 		// forward the controllers return value
