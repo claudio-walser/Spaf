@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Cwa\Core\Controller;
+namespace Spaf\Core\Controller;
 
 /**
  * \Spaf\Core\Controller\Index

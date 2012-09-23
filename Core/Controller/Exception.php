@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Cwa\Core\Controller;
+namespace Spaf\Core\Controller;
 
 /**
  * \Spaf\Core\Controller\Exception
@@ -18,6 +18,5 @@ namespace Cwa\Core\Controller;
  * @author Claudio Walser
  * @package \Spaf\Core\Controller
  * @namespace \Spaf\Core\Controller
- * @abstract
  */
 class Exception extends \Exception {}
