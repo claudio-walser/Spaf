@@ -10,8 +10,6 @@
  */
 namespace Spaf\Core\Request;
 
-use \Spaf\Core\Request;
-
 /**
  * \Spaf\Core\Request\Http
  *
@@ -23,7 +21,7 @@ use \Spaf\Core\Request;
  * @package \Spaf\Core\Request
  * @namespace \Spaf\Core\Request
  */
-class Http extends Request {
+class Http extends Abstraction {
 	
 	/**
 	 * Just return the whole request array.

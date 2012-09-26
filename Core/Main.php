@@ -42,14 +42,14 @@ class Main {
 	/**
 	 * Request Object
 	 *
-	 * @var \Spaf\Core\Request
+	 * @var \Spaf\Core\Request\Abstraction
 	 */
 	private $_request = null;
 
 	/**
 	 * Response Object
 	 *
-	 * @var \Spaf\Core\Response
+	 * @var \Spaf\Core\Response\Abstraction
 	 */
 	private $_response = null;
 	
@@ -116,10 +116,10 @@ class Main {
 	/**
 	 * Public method to inject a request class
 	 * 
-	 * @param \Spaf\Core\Request The request object
+	 * @param \Spaf\Core\Request\Request The request object
 	 * @return boolean true
 	 */
-	public function setRequest(\Spaf\Core\Request $request) {
+	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
 		$this->_request = $request;
 		
 		return true;
@@ -128,10 +128,10 @@ class Main {
 	/**
 	 * Public method to inject a response class
 	 * 
-	 * @param \Spaf\Core\Response The response object
+	 * @param \Spaf\Core\Response\Response The response object
 	 * @return boolean true
 	 */
-	public function setResponse(\Spaf\Core\Response $response) {
+	public function setResponse(\Spaf\Core\Response\Abstraction $response) {
 		$this->_response = $response;
 		
 		return true;

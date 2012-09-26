@@ -21,7 +21,7 @@ use \Spaf\Core\Controller;
  * @package \Spaf\Core\Controller
  * @namespace \Spaf\Core\Controller
  */
-class NotFound extends Controller {
+class NotFound extends Abstraction {
 	
 	/**
 	 * NotFound controllers view method

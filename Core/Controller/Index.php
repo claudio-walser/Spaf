@@ -21,7 +21,7 @@ use \Spaf\Core\Controller;
  * @package \Spaf\Core\Controller
  * @namespace \Spaf\Core\Controller
  */
-class Index extends Controller {
+class Index extends Abstraction {
 	
 	/**
 	 * Default controllers view method

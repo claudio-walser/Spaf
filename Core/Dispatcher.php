@@ -33,7 +33,7 @@ class Dispatcher {
 	/**
 	 * The requested controller Object.
 	 *
-	 * @var \Spaf\Core\Controller
+	 * @var \Spaf\Core\Controller\Abstraction
 	 */
 	protected $_controller = null;
 
@@ -168,10 +168,10 @@ class Dispatcher {
 	 * Execute the given action on the given controller
 	 * and return its return values.
 	 *
-	 * @param \Spaf\Core\Controller Controller object
+	 * @param \Spaf\Core\Controller\Abstraction Controller object
 	 * @return mixed the controllers return value
 	 */
-	protected function _doDispatch(\Spaf\Core\Controller $controller, $action) {
+	protected function _doDispatch(\Spaf\Core\Controller\Abstraction $controller, $action) {
 		// forward the controllers return value
 		return $controller->{$action}();
 	}
