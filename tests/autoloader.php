@@ -11,7 +11,7 @@
 namespace Spaf\tests;
 
 // Spaf abstract autoloader class for extending here
-require_once('../Library/Autoloader.php');
+require_once('../Core/Autoloader.php');
 
 /**
  * \Spaf\tests\Autoloader
@@ -22,7 +22,7 @@ require_once('../Library/Autoloader.php');
  * @package \Spaf\tests\Mock\Core
  * @namespace \Spaf\tests\Mock\Core
  */
-final class Autoloader Extends \Spaf\Library\Autoloader {
+final class Autoloader Extends \Spaf\Core\Autoloader {
 	
 	/**
 	 * Load the only needed phpunit file by hand.

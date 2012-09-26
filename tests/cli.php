@@ -11,7 +11,7 @@ require_once('autoloader.php');
 $loader = new \Spaf\tests\Autoloader(false);
 
 // instantiate manager
-$manager = new \Spaf\Library\Test\Manager();
+$manager = new \Spaf\Library\Test\CliManager();
 // set class prefix for testing
 $manager->setClassPrefix('Spaf\\tests');
 // run test manager
