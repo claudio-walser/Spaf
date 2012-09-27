@@ -8,7 +8,7 @@ chdir(__DIR__);
 
 // requiere test-autoloader environment
 require_once('autoloader.php');
-$loader = new \Spaf\tests\Autoloader(false);
+$loader = new \Spaf\tests\Unit\Autoloader(false);
 
 // instantiate manager
 $manager = new \Spaf\Library\TestManager\Cli();
