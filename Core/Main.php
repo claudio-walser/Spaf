@@ -81,10 +81,11 @@ class Main {
 	 * and save them persistent in the registry.
 	 */
 	public function __construct() {
-		$this->_registry = Registry::getInstance();
 		$this->_dispatcher = new Dispatcher();
-		$this->_request = $request;
-		$this->_response = $response;
+		$this->setRegistry(Registry::getInstance());
+		
+		$this->_request = $this->_registry->get('request'. null);
+		$this->_response = $this->_registry->get('response'. null);;
 	}
 	
 	/**
@@ -92,14 +93,28 @@ class Main {
 	 * This is only usefull for testing purposes
 	 * 
 	 * @param \Spaf\Core\Registry
+	 * @param boolean Call Dispatchers setRegistry as well with the new object, default to true
 	 * @return boolean true
 	 */
-	public function setRegistry(\Spaf\Core\Registry $registry) {
+	public function setRegistry(\Spaf\Core\Registry $registry, $updateDispatcher = true) {
 		$this->_registry = $registry;
+		
+		if ($updateDispatcher === true) {
+			$this->_dispatcher->setRegistry($this->_registry);
+		}
 		
 		return true;
 	}
-
+	
+	/**
+	 * Public method get the Registry object
+	 * 
+	 * @return \Spaf\Core\Registry
+	 */
+	public function getRegistry() {
+		return $this->_registry;
+	}
+	
 	/**
 	 * Public method to inject another Dispatcher class
 	 * This is only usefull for testing purposes
@@ -112,11 +127,20 @@ class Main {
 		
 		return true;
 	}
-
+	
+	/**
+	 * Public method get the Dispatcher object
+	 * 
+	 * @return \Spaf\Core\Dispatcher
+	 */
+	public function getDispatcher() {
+		return $this->_dispatcher;
+	}
+	
 	/**
 	 * Public method to inject a request class
 	 * 
-	 * @param \Spaf\Core\Request\Request The request object
+	 * @param \Spaf\Core\Request\Abstraction The request object
 	 * @return boolean true
 	 */
 	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
@@ -124,7 +148,16 @@ class Main {
 		
 		return true;
 	}
-
+	
+	/**
+	 * Public method to get the Request object
+	 * 
+	 * @return \Spaf\Core\Request\Abstraction
+	 */
+	public function getRequest() {
+		return $this->_request;
+	}
+	
 	/**
 	 * Public method to inject a response class
 	 * 
@@ -138,6 +171,14 @@ class Main {
 	}
 	
 	/**
+	 * Public method to get the Response object
+	 * 
+	 * @return \Spaf\Core\Response\Abstraction
+	 */
+	public function getResponse() {
+		return $this->_response;
+	}	
+	/**
 	 * Change the property of the default controller.
 	 *
 	 * @param string The default controller
@@ -147,6 +188,15 @@ class Main {
 		$this->_defaultController = (string) $controller;
 		
 		return true;
+	}
+	
+	/**
+	 * Public method to get the DefaultController string
+	 * 
+	 * @return string Default Controller String
+	 */
+	public function getDefaultController() {
+		return $this->_defaultController;
 	}
 	
 	/**
@@ -162,6 +212,15 @@ class Main {
 	}	
 
 	/**
+	 * Public method to get the NotFoundController string
+	 * 
+	 * @return string NotFound Controller String
+	 */
+	public function getNotFoundController() {
+		return $this->_notFoundController;
+	}
+	
+	/**
 	 * Change the property of the default controller-action.
 	 *
 	 * @param string The default action
@@ -171,6 +230,15 @@ class Main {
 		$this->_defaultAction = (string) $action;
 		
 		return true;
+	}
+
+	/**
+	 * Public method to get the Default Action string
+	 * 
+	 * @return string Default Action String
+	 */
+	public function getDefaultAction() {
+		return $this->_defaultAction;
 	}
 	
 	/**

@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Core;
+namespace Spaf\Core\Controller;
 
 /**
  * \Spaf\Core\Controller\Abstraction
@@ -18,7 +18,7 @@ namespace Spaf\Core;
  *
  * @author Claudio Walser
  * @package \Spaf\Core\Controller
- * @namespace \Spaf\Core
+ * @namespace \Spaf\Core\Controller
  * @abstract
  */
 abstract class Abstraction {

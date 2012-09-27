@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Core\Abstraction;
+namespace Spaf\Core\Request;
 
 /**
  * \Spaf\Core\Request\Abstraction
@@ -91,7 +91,7 @@ abstract class Abstraction {
 	 * 
 	 * @return boolean The value of utf8Decode
 	 */
-	public function setUtf8Decode() {
+	public function getUtf8Decode() {
 		return $this->_utf8Decode;
 	}
 

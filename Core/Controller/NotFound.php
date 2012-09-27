@@ -29,7 +29,7 @@ class NotFound extends Abstraction {
 	 * @return string Just a default string
 	 */
 	public function view() {
-		throw new Exception(get_class($this) . ': You try to call the inexistent controller "' . $this->_registry->getParam('controller', 'index') . '"');
+		$this->_response->write('notFound controllers listing method');
 	}
 	
 }

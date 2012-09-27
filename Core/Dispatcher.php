@@ -139,27 +139,34 @@ class Dispatcher {
 		// get controller
 		$this->_controller = $request->getParam('controller', $this->_defaultController);
 		
+		
 		// if unknown controller
 		if (!class_exists($this->_controller)) {
-			$controller = new $this->_notFoundController();
-			return $controller->controllerNotFound($this->_controller);
+			$controller = new $this->_notFoundController($this->_registry);
+			return $controller->view();
 		}
 
 		// instantiate controller
-		$controller = new $this->_controller($registry);
-
+		$controller = new $this->_controller($this->_registry);
+		
+		
+		
 		// get action
-		$action = $request->getParam('action', $this->_defaultAction);
-
-		// check if method does not exists
+		$this->_action = $request->getParam('action', $this->_defaultAction);
+		// check first and set defaultAction as action
 		if (!method_exists($controller, $this->_action)) {
-			$controller = new $this->_notFoundController();
-			return $controller->methodNotFound($this->_controller, $this->_defaultAction);
+			$this->_action = $this->_defaultAction;
+		}
+
+		// check if method still does not exist
+		if (!method_exists($controller, $this->_action)) {
+			// instantiate the default controller
+			$controller = new $this->_notFoundController($this->_registry);
+			return $controller->{$this->_defaultAction}($this->_controller, $this->_defaultAction);
 		}
 		
 		// forward the controllers return value
-		//return call_user_func(array($controller, $this->_action)); // have to see if this works
-		return $this->_doDispatch($controller, $this->_action);
+ 		return $this->_doDispatch($controller, $this->_action);
 	}
 
 	/**
