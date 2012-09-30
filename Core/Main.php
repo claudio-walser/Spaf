@@ -178,6 +178,7 @@ class Main {
 	public function getResponse() {
 		return $this->_response;
 	}	
+
 	/**
 	 * Change the property of the default controller.
 	 *

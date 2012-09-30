@@ -39,7 +39,7 @@ class Registry extends \Spaf\Core\Registry {
 	 * 
 	 * @return \Spaf\tests\Mock\Core\Registry
 	 */
-	public static function getInstance() {
+	public static function getInstance(\Spaf\Core\Registry $registry = null) {
 		// if instance still is NULL
 		if (self::$_instance === null) {
 			// create new one of myself

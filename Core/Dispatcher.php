@@ -72,12 +72,21 @@ class Dispatcher {
 	 * @param \Spaf\Core\Registry Registry object for injection
 	 * @return boolean true
 	 */
-	 public function setRegistry(\Spaf\Core\Registry $registry) {
-	 	$this->_registry = $registry;
+	public function setRegistry(\Spaf\Core\Registry $registry) {
+		$this->_registry = $registry;
 		
-		return true;
-	 }
+	   return true;
+	}
 	
+	/**
+	 * Get the registry object
+	 * 
+	 * @return \Spaf\Core\Registry Registry object for injection
+	 */
+	public function getRegistry() {
+		return $this->_registry;
+	}
+    
 	/**
 	 * Set the property of the not found controller.
 	 *

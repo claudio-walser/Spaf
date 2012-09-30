@@ -1,5 +1,14 @@
 #!/bin/env php
 <?php
+// harck server argv for windows console
+if (!isset($_SERVER['argv']) && !empty($_GET)) {
+    $_SERVER['argv'] = array('scriptname');
+    
+    foreach ($_GET as $key => $value) {
+        $_SERVER['argv'][] = $key;
+    }
+}
+
 // error reporting on
 error_reporting(E_ALL);
 

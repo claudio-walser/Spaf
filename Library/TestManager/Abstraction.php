@@ -300,6 +300,7 @@ class Abstraction {
 	private function _fetchArguments() {
 		// fet cli arguments
 		$arguments = $_SERVER['argv'];
+        
 		// remove first element cause its the script-name itself
 		array_shift($arguments);
 		// check method name allowed
