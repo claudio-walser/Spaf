@@ -22,20 +22,20 @@ namespace Spaf\Core\Request;
  * @namespace \Spaf\Core\Request
  */
 class Http extends Abstraction {
-	
+
 	/**
 	 * Just return the whole request array.
 	 * File uploads are included as well.
-	 * 
+	 *
 	 * @return array Array with all request and file-upload values
 	 */
 	public function getParams() {
 		return array('request' => $this->_getAllRequestVariables(), 'files' => $this->_getAllUploads());
 	}
-	
+
 	/**
 	 * Get one param by name.
-	 * 
+	 *
 	 * @param string Name of the key
 	 * @param mixed Default value to return if there is no value with the given key
 	 * @return string Value of the given key or the default value if nothing found
@@ -46,18 +46,21 @@ class Http extends Abstraction {
 
 	/**
 	 * Shortcut for self::getParam
-	 * 
+	 *
 	 * @see \Spaf\Core\Request\Http::getParam()
+	 * @param string Name of the key
+	 * @param mixed Default value to return if there is no value with the given key
+	 * @return string Value of the given key or the default value if nothing found
 	 */
 	public function get($name, $default = null) {
-		return $this->getParam($name, $default);	
+		return $this->getParam($name, $default);
 	}
 
 	/**
 	 * Try to fetch the client language.
 	 * If nothing usefull found, you will get NULL
 	 * as return value.
-	 * 
+	 *
 	 * @return mixed Client Language as string or NULL if nothing found
 	 */
 	public function getClientLanguage() {
@@ -67,13 +70,13 @@ class Http extends Abstraction {
 		if (is_array($p)) {
 			return $p[0] . '_' . strtoupper($p[1]);
 		}
-		
+
 		return null;
-	}	
-	
+	}
+
 	/**
 	 * Get one element from $_FILES by key
-	 * 
+	 *
 	 * @param string Name of the key
 	 * @return array Array with upload information from $_FILES
 	 */
@@ -81,15 +84,15 @@ class Http extends Abstraction {
 		if (isset($_FILES[$name]) && $this->_utf8Decode === true) {
 			$_FILES[$name]['name'] = utf8_decode($_FILES[$name]['name']);
 		}
-		
+
 		return isset($_FILES[$name]) ? $_FILES[$name] : null;
 	}
-	
+
 	/**
 	 * Get the client ip if possible.
 	 * If nothing is found, you will get NULL
 	 * as return value.
-	 * 
+	 *
 	 * @return mixed Client IP or NULL if nothing found
 	 */
 	public function getIp() {
@@ -103,10 +106,10 @@ class Http extends Abstraction {
 		}
 		return $ip;
 	}
-	
+
 	/**
 	 * Resets the whole reqeust stuff
-	 * 
+	 *
 	 * @return boolean true
 	 */
 	public function reset() {
@@ -114,22 +117,22 @@ class Http extends Abstraction {
 		$_POST = array();
 		$_REQUEST = array();
 		$_FILES = array();
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Returns all Values from $_REQUEST as an array.
-	 * 
+	 *
 	 * @return array The $_REQUEST Array
 	 */
 	private function _getAllRequestVariables() {
 		return isset($_REQUEST) ? $this->_dispatchParam($_REQUEST) : array();
 	}
-	
+
 	/**
 	 * Returns all Values from $_FILES as an array.
-	 * 
+	 *
 	 * @return array The $_FILES Array
 	 */
 	private function _getAllUploads() {
@@ -139,14 +142,14 @@ class Http extends Abstraction {
 				$files[$key] = $this->getUpload($key);
 			}
 		}
-		
+
 		return $files;
 	}
-	
+
 	/**
 	 * Dispath one value.
 	 * This method is using utf8_decode if you asked for it.
-	 * 
+	 *
 	 * @param string Dirty value
 	 * @return mixed Dispatched and clean value
 	 */
@@ -170,10 +173,10 @@ class Http extends Abstraction {
 				$var = utf8_decode($var);
 			}
 		}
-		
+
 		return $var;
 	}
-	
+
 }
 
 ?>

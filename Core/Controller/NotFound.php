@@ -10,8 +10,6 @@
  */
 namespace Spaf\Core\Controller;
 
-use \Spaf\Core\Controller;
-
 /**
  * \Spaf\Core\Controller\NotFound
  *
@@ -29,7 +27,7 @@ class NotFound extends Abstraction {
 	 * @return string Just a default string
 	 */
 	public function view() {
-		$this->_response->write('notFound controllers listing method');
+		return $this->_response->write('notFound controllers listing method');
 	}
 	
 }

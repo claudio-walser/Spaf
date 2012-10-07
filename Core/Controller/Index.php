@@ -10,8 +10,6 @@
  */
 namespace Spaf\Core\Controller;
 
-use \Spaf\Core\Controller;
-
 /**
  * \Spaf\Core\Controller\Index
  *

@@ -73,19 +73,19 @@ class Dispatcher {
 	 * @return boolean true
 	 */
 	public function setRegistry(\Spaf\Core\Registry $registry) {
-		$this->_registry = $registry;
+	   $this->_registry = $registry;
 		
 	   return true;
 	}
 	
-	/**
-	 * Get the registry object
-	 * 
-	 * @return \Spaf\Core\Registry Registry object for injection
-	 */
-	public function getRegistry() {
-		return $this->_registry;
-	}
+    /**
+     * Get the registry object
+     * 
+     * @return \Spaf\Core\Registry Registry object for injection
+     */
+    public function getRegistry() {
+        return $this->_registry;
+    }
     
 	/**
 	 * Set the property of the not found controller.
@@ -103,7 +103,16 @@ class Dispatcher {
 		
 		return true;
 	}
-
+    
+    /**
+     * Returns the name of the current not found controller
+     * 
+     * @return string Name of the current not found controller class
+     */
+    public function getNotFoundController() {
+        return $this->_notFoundController;
+    }
+    
 	/**
 	 * Set the property of the default container.
 	 *
@@ -120,7 +129,16 @@ class Dispatcher {
 		
 		return true;
 	}
-
+    
+    /**
+     * Returns the name of the current default controller
+     * 
+     * @return string Name of the current default controller class
+     */
+    public function getDefaultController() {
+        return $this->_defaultController;
+    }
+    
 	/**
 	 * Set the property of the default controller action.
 	 *
@@ -132,7 +150,16 @@ class Dispatcher {
 		
 		return true;
 	}
-
+    
+    /**
+     * Returns the name of the current default action
+     * 
+     * @return string Name of the current default action method
+     */
+    public function getDefaultAction() {
+        return $this->_defaultAction;
+    }
+    
 	/**
 	 * Execute the dispatcher based on the given request 
 	 * parameters. This method is handling not found fallbacks as well.
@@ -155,10 +182,9 @@ class Dispatcher {
 			return $controller->view();
 		}
 
+		
 		// instantiate controller
 		$controller = new $this->_controller($this->_registry);
-		
-		
 		
 		// get action
 		$this->_action = $request->getParam('action', $this->_defaultAction);
@@ -185,6 +211,7 @@ class Dispatcher {
 	 * and return its return values.
 	 *
 	 * @param \Spaf\Core\Controller\Abstraction Controller object
+	 * @param string Action to call on this controller
 	 * @return mixed the controllers return value
 	 */
 	protected function _doDispatch(\Spaf\Core\Controller\Abstraction $controller, $action) {

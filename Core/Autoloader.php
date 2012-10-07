@@ -38,8 +38,10 @@ class Autoloader {
 	private $_noLoaderMethods = array('__construct', 'setDebug', '_getFilename', '_register');
 
 	/**
-	 * Pass the given debug param and register 
+	 * Pass the given debug param and register
 	 * needed functions.
+	 *
+	 * @param boolean True to see some usefull debug outputs
 	 */
 	public function __construct($debug = false) {
 		$this->setDebug($debug);
@@ -57,10 +59,10 @@ class Autoloader {
 		$this->_debug = (bool) $bool;
 		return true;
 	}
-	
+
 	/**
 	 * Outputting a string, respecting the internal $_debug value.
-	 * 
+	 *
 	 * @param string String to debug
 	 * @return boolean Current debug setting. True for debug is currently active
 	 */
@@ -68,14 +70,14 @@ class Autoloader {
 		if ($this->_debug === true) {
 			echo $string;
 		}
-		
+
 		return $this->_debug;
 	}
-	
+
 	/**
 	 * Get filename of a class, splitted by
 	 * given separator.
-	 * 
+	 *
 	 * @param string Classname
 	 * @param sring Used Separator, most usually its "\\" for php >= 5.3 and "_" for php < 5.3
 	 * @return string Evaluated filename
