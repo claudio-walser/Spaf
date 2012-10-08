@@ -261,6 +261,10 @@ class Abstraction {
 	 * @return boolean true
 	 */
 	private function _fetchTests($directory = './') {
+		// @TODO Take lines below to recursivly find tests 
+		//$directory = new \Spaf\Library\Directory\Directory('../');
+		//$files = $directory->getChildren(true, '*Test.php', 'file');			
+			
 		// go for spl directory iterator
 		$iterator = new \DirectoryIterator($directory);
 		// iterate
