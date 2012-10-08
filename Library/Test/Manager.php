@@ -3,23 +3,23 @@
 /**
  * $Id$
  *
- * Spaf/Library/TestManager/Abstraction.php
+ * Spaf/Library/Test/Abstraction.php
  * @created Wed Sep 26 19:26:27 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Library\TestManager;
+namespace Spaf\Library\Test;
 
 /**
- * \Spaf\Library\TestManager\Abstraction
+ * \Spaf\Library\Test\Abstraction
  *
  * The Cli Test Manager class provides an interface for running the unit tests easely.
  *
  * @author Claudio Walser
- * @package Spaf\Library\TestManager
- * @namespace Spaf\Library\TestManager
+ * @package Spaf\Library\Test
+ * @namespace Spaf\Library\Test
  */
-class Abstraction {
+class Manager {
 
 	/**
 	 * PHPUnit TestSuite
@@ -101,30 +101,11 @@ class Abstraction {
 	private $_tests = array();
 
 	/**
-	 * Class prefix for test classes
-	 *
-	 * @var string
-	 */
-	private $_classPrefix = 'Spaf\\tests';
-
-	/**
 	 * Constructor ist setting up a PHPUnit Runner and Suite
 	 */
 	public function __construct() {
 		$this->_runner	= new \PHPUnit_TextUI_TestRunner();
 		$this->_suite = new \PHPUnit_Framework_TestSuite('Spaf - Test Suite');
-	}
-
-	/**
-	 * Set a class prefix to execute the test classes
-	 *
-	 * @param string Class prefix, usually the namespace your are running in
-	 * @return boolean true
-	 */
-	public function setClassPrefix($prefix) {
-		$this->_classPrefix = (string) $prefix;
-
-		return true;
 	}
 
 	/**
@@ -217,7 +198,6 @@ class Abstraction {
 	 * @return boolean true
 	 */
 	public function cliExecute() {
-		$this->_fetchTests();
 		foreach ($this->_tests as $test) {
 			$this->_runner->getLoader()->load($test['class'], $test['file']);
 			$this->_suite->addTestSuite($test['class']);
@@ -253,45 +233,13 @@ class Abstraction {
 
 
 	/**
-	 * Fetches available tests by seeking a folder.
-	 * Every File with postfix *Test.php is considered as a test file.
-	 * This method stores the file and class name in a internal array property
+	 * Stores an array of given Test File objects
 	 *
-	 * @param string Current directory to search in
+	 * @param array Array with \Spaf\Library\Test\File objects
 	 * @return boolean true
 	 */
-	private function _fetchTests($directory = './') {
-		// @TODO Take lines below to recursivly find tests
-		//$directory = new \Spaf\Library\Directory\Directory('../');
-		//$files = $directory->getChildren(true, '*Test.php', 'file');
-
-		// go for spl directory iterator
-		$iterator = new \DirectoryIterator($directory);
-		// iterate
-		foreach($iterator as $item) {
-			// if directory
-			if($item->isDir()) {
-				// if non testable folder
-				if(in_array($item->getFilename(), $this->_nonTestFolders)) {
-					continue;
-				}
-				// recursion
-				$this->_fetchTests($item->getPath() . DIRECTORY_SEPARATOR . $item->getFilename());
-			}
-
-			// if a testfile
-			if (substr($item->getFilename(), -8) === 'Test.php') {
-				$file = $item->getPath() . DIRECTORY_SEPARATOR . $item->getFilename();
-				$file = '' . substr($file, 2);
-				$class = '\\' . $this->_classPrefix . '\\' . str_replace(array('.php', DIRECTORY_SEPARATOR), array('', '\\'), $file);
-				// push internal _tests property
-				array_push($this->_tests, array(
-					'file' => $file,
-					'class' =>  $class
-				));
-			}
-		}
-
+	public function setTests(array $testcases) {
+		$this->_tests = $testcases;
 		return true;
 	}
 

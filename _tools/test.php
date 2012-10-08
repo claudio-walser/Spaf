@@ -29,10 +29,26 @@ chdir(__DIR__);
 require_once('autoloader.php');
 $loader = new \Spaf\_tests\Unit\Autoloader(false);
 
+// find all test files
+$directory = new \Spaf\Library\Directory\Directory('../_tests/');
+$files = $directory->getChildren('*Test.php', 'file', true);
+
+$tests = array();
+foreach ($files as $file) {
+	// @TODO Write a class Spaf\Library\Test\File for it maybe
+	$fileName = $file->getPath() . $file->getName();
+	$className = '\\Spaf\\' . str_replace(array('..' . DIRECTORY_SEPARATOR, '.php', DIRECTORY_SEPARATOR), array('', '', '\\'), $fileName);
+	$tests[] = array(
+		'file' => $fileName,
+		'class' => $className
+	);
+}
+
+
 // instantiate manager
-$manager = new \Spaf\Library\TestManager\Cli();
-// set class prefix for testing
-$manager->setClassPrefix('Spaf\\_tests');
+$manager = new \Spaf\Library\Test\Cli();
+// set array with tests
+$manager->setTests($tests);
 // run test manager
 $manager->run();
 

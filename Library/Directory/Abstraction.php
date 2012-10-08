@@ -100,6 +100,10 @@ abstract class Abstraction {
 
 	/**
 	 * Create directories recursivly
+	 *
+	 * @param Directory path to create
+	 * @param Mode for access. Read http://ch.php.net/chmod for more info
+	 * @return boolean True or false if it wasnt possible to create the directory
 	 */
 	 public static function createDirectory($directory, $mode = 0777) {
 	 	if (is_dir($directory)) {
@@ -107,21 +111,6 @@ abstract class Abstraction {
 	 	}
 
 		return mkdir($directory, $mode, true);
-
-		/*$currentDir = '';
-		$parts = explode('/', $directory);
-
-		foreach ($parts as $part) {
-
-			$currentDir .= !empty($currentDir) ? '/' : '';
-			$currentDir .= $part;
-			if (is_dir($currentDir)) {
-				continue;
-			}
-			mkdir($currentDir);
-		}
-
-		return true;*/
 	 }
 
 	/**
