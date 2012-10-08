@@ -83,7 +83,10 @@ class Directory extends Abstraction {
 	 * Reads the children and returns \Spaf\Library\Directory\Directory
 	 * and \Spaf\Library\Directory\File objects.
 	 *
-	 * @param boolean $recursive Read the child elements recursive
+	 * @param string Pattern to search for, for more details see www.php.net/glob
+	 * @param string Type to read, possible values are * || file || directory, default is * for reading both
+	 * @param boolean Read the child elements recursive
+	 * @param array Array with folder-names to ignore, only usefull if recursive === true
 	 * @return boolean
 	 */
 	public function getChildren($pattern = '*', $type = null, $recursive = false, array $ignoreDirectories = array()) {

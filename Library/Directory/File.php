@@ -52,7 +52,18 @@ class File extends Abstraction {
 	 */
 	private $_utf8Decode = false;
 
+	/**
+	 * Content as an array with each line
+	 *
+	 * @var array Content as an array with each line
+	 */
 	private $_lines = null;
+
+	/**
+	 * Content as string
+	 *
+	 * @var string Content as string
+	 */
 	private $_content = null;
 
 
@@ -101,7 +112,6 @@ class File extends Abstraction {
 	 * utf-8 content.
 	 * Use fopen(*, 'wb') for binary strings.
 	 *
-	 * @todo Check documentation if this class provides functionality for writing files
 	 * @return string
 	 */
 	public function getContent() {
@@ -125,17 +135,44 @@ class File extends Abstraction {
 		return $this->_lines;
 	}
 
-
+	/**
+	 * Set the content for this file.
+	 * This is only usefull if you going to write
+	 * it as well i guess.
+	 * This is also updating $this->_lines
+	 *
+	 * @param string Content to write into the file
+	 * @return boolean True
+	 */
 	public function setContent($content) {
 		$this->_content = (string) $content;
 		$this->_lines = explode("\n", $this->_content);
 
+		return true;
 	}
+
+	/**
+	 * Set the an array as current lines.
+	 * This is only usefull if you going to write
+	 * it as well i guess.
+	 * This is also updating $this->_content
+	 *
+	 * @param array Array with lines to write into the file
+	 * @return boolean True
+	 */
 	public function setLines(array $lines) {
 		$this->_lines = $lines;
 		$this->_content = implode("\n", $this->_lines);
 	}
 
+	/**
+	 * Write the file to the harddisk.
+	 *
+	 * @throws \Spaf\Library\Directory\Exception Throws an Exception if it was not possible to write the file
+	 * @param string Filename if you want copy the file
+	 * @param boolean True for saving binary content, default to false
+	 * @return boolean True if the file was successfully written
+	 */
 	public function write($file = null, $binary = false) {
 		if ($file === null) {
 			$file = $this->_path . $this->_name;
@@ -149,9 +186,16 @@ class File extends Abstraction {
 		if (!file_put_contents($file, $this->_content)) {
 			throw new Exception('Could not write file: ' . $file);
 		}
+
 		return true;
 	}
 
+	/**
+	 * Splits the name and path of a given folder-path.
+	 *
+	 * @param string Folderpath
+	 * @return array Array with name and path seperated
+	 */
 	private function _getNameAndPath($namePath) {
 		$namePath = self::formPath($namePath, false);
 		$parts = explode('/', $namePath);
@@ -162,11 +206,20 @@ class File extends Abstraction {
 		return array('path' => $path, 'name' => $name);
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * Legacy Stuff from here, might have some usefull stuff maybe...
 	 */
-
-
 
 	/**
 	 * Bestimmt ob jegliche Dateinamen mit einem UTF-8 Decode behandelt werden.
@@ -180,7 +233,6 @@ class File extends Abstraction {
 		$this->_utf8Decode = (bool) $bool;
 		return true;
 	}
-
 
 	/**
 	 * Liefert den Dateinamen
@@ -197,7 +249,6 @@ class File extends Abstraction {
 		return $this->_fileName;
 	}
 
-
 	/**
 	 * Liefert den Dateipfad
 	 *
@@ -213,7 +264,6 @@ class File extends Abstraction {
 		return $this->_path;
 	}
 
-
 	/**
 	 * Liefert den Dateipfad
 	 *
@@ -228,7 +278,6 @@ class File extends Abstraction {
 		}
 		return $this->_fullPath;
 	}
-
 
 	/**
 	 * Liefert das Datum der letzen �nderung
@@ -261,7 +310,6 @@ class File extends Abstraction {
 		return isset($info['extension']) ? strtolower($info['extension']) : 'unknown';
 	}
 
-
 	/**
 	 * Ermittelt einige Dateiinformationen
 	 *
@@ -282,7 +330,6 @@ class File extends Abstraction {
 		return stat($this->_fullPath) !== false ? stat($this->_fullPath) : null;
 	}
 
-
 	/**
 	 * Den MimeType einer Datei ermitteln
 	 *
@@ -301,7 +348,6 @@ class File extends Abstraction {
 		}
 		return mime_content_type($this->_fullPath);
 	}
-
 
 	/**
 	 * Dateigr�sse ermitteln
@@ -351,7 +397,6 @@ class File extends Abstraction {
 		return filesize($this->_fullPath);
 	}
 
-
 	/**
 	 * Datei umbenennen
 	 *
@@ -379,8 +424,7 @@ class File extends Abstraction {
 		//touch($this->_fullPath, time());
 
 		return true;
-	 }
-
+	}
 
 	public function copy($target) {
 		if (!copy($this->_fullPath, Dir::formPath($target) . $this->_fileName)) {
@@ -413,7 +457,6 @@ class File extends Abstraction {
 		$this->_deleted = true;
 		return true;
 	 }*/
-
 
 }
 
