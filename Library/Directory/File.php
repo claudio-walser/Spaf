@@ -43,7 +43,7 @@ class File extends Abstraction {
 	 *
 	 * @var boolean
 	 */
-    private $_deleted = false;
+	private $_deleted = false;
 
 	/**
 	 * Defines if the source file is in utf-8 or not.
@@ -51,11 +51,11 @@ class File extends Abstraction {
 	 * @var string
 	 */
 	private $_utf8Decode = false;
-	
+
 	private $_lines = null;
 	private $_content = null;
-	
-	
+
+
 	/**
 	 * Splits the path in filename and filepath.
 	 *
@@ -74,7 +74,7 @@ class File extends Abstraction {
 		$this->_name = $parts['name'];
 		$this->_path = $parts['path'];
 	}
-	
+
 	/**
 	 * Get name of the file.
 	 * Returns the file name without the path.
@@ -108,88 +108,88 @@ class File extends Abstraction {
 		if ($this->_content === null) {
 			$this->_content = file_get_contents($this->_path . $this->_name);
 		}
-		
+
 		return $this->_content;
 	}
-	
+
 	/**
 	 * Get an array of lines from the current file
-	 * 
+	 *
 	 * @return array Array with all lines of this file
 	 */
 	public function getLines() {
 		if ($this->_lines === null) {
 			$this->_lines = file($this->_path . $this->_name);
 		}
-		
+
 		return $this->_lines;
 	}
-	
-	
+
+
 	public function setContent($content) {
 		$this->_content = (string) $content;
 		$this->_lines = explode("\n", $this->_content);
-				
+
 	}
 	public function setLines(array $lines) {
 		$this->_lines = $lines;
 		$this->_content = implode("\n", $this->_lines);
 	}
-	
+
 	public function write($file = null, $binary = false) {
 		if ($file === null) {
 			$file = $this->_path . $this->_name;
 		}
-		
+
 		$parts = $this->_getNameAndPath($file);
 		$name = $parts['name'];
 		$path = $parts['path'];
-		
+
 		\Spaf\Library\Directory\Abstraction::createDirectory($path);
 		if (!file_put_contents($file, $this->_content)) {
 			throw new Exception('Could not write file: ' . $file);
 		}
 		return true;
 	}
-	
+
 	private function _getNameAndPath($namePath) {
 		$namePath = self::formPath($namePath, false);
 		$parts = explode('/', $namePath);
 
 		$name = array_pop($parts);
 		$path = self::formPath(implode('/', $parts));
-		
+
 		return array('path' => $path, 'name' => $name);
 	}
-	
+
 	/**
 	 * Legacy Stuff from here, might have some usefull stuff maybe...
 	 */
-	 
-	 
-	 
-    /**
-     * Bestimmt ob jegliche Dateinamen mit einem UTF-8 Decode behandelt werden.
-     *
+
+
+
+	/**
+	 * Bestimmt ob jegliche Dateinamen mit einem UTF-8 Decode behandelt werden.
+	 *
 	 * FileObject::setUtf8Decode() ben�tigt ben�tigt einen Boolean als Parameter.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Verzeichnisname
-     * /
+	 * /
 	public function setUtf8Decode($bool = false) {
 		$this->_utf8Decode = (bool) $bool;
 		return true;
 	}
 
 
-    /**
-     * Liefert den Dateinamen
-     *
+	/**
+	 * Liefert den Dateinamen
+	 *
 	 * FileObject::getName() ben�tigt keine Parameter und liefert den Dateinamen ohne Pfad.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Verzeichnisname
-     * /
+	 * /
 	public function getName() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -198,14 +198,14 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Liefert den Dateipfad
-     *
+	/**
+	 * Liefert den Dateipfad
+	 *
 	 * FileObject::getPath() ben�tigt keine Parameter und liefert den Dateipfad ohne den Namen.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Verzeichnisname
-     * /
+	 * /
 	public function getPath() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -214,14 +214,14 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Liefert den Dateipfad
-     *
+	/**
+	 * Liefert den Dateipfad
+	 *
 	 * FileObject::getPath() ben�tigt keine Parameter und liefert den Dateipfad ohne den Namen.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Verzeichnisname
-     * /
+	 * /
 	public function getFullPath() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -230,14 +230,14 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Liefert das Datum der letzen �nderung
-     *
+	/**
+	 * Liefert das Datum der letzen �nderung
+	 *
 	 * Dir::getPath() ben�tigt keine Parameter und liefert den Vezeichnispfad ohne den Namen.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Verzeichnisname
-     * /
+	 * /
 	public function getLastModified() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted directory object!');
@@ -246,13 +246,13 @@ class File extends Abstraction {
 	}
 
 	/**
-     * Ermittelt die Dateiendung
-     *
+	 * Ermittelt die Dateiendung
+	 *
 	 * Die Dateiendung der Datei wird zur�ckgegeben.
-     *
+	 *
 	 * @access	public
 	 * @return	string			Bekannte Dateiendung oder 'unknown'
-     * /
+	 * /
 	public function getExtension() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -262,19 +262,19 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Ermittelt einige Dateiinformationen
-     *
+	/**
+	 * Ermittelt einige Dateiinformationen
+	 *
 	 * Genauer gesagt wird hier die PHP Funktion stat aufgerufen.
 	 * Die R�ckgabewerte sind genau unter<br />
 	 * <i>http://www.php.net/manual/de/function.stat.php</i><br />
 	 * beschrieben.
-     *
+	 *
 	 * @throws	DirException	File does not exist Exception
 	 * @access	public
 	 * @param 	string			Dateiname mit Pfad
 	 * @return	array			Assoziatives Array mit allen Infos der Datei
-     * /
+	 * /
 	public function getInfo() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -283,18 +283,18 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Den MimeType einer Datei ermitteln
-     *
+	/**
+	 * Den MimeType einer Datei ermitteln
+	 *
 	 * Gibt den genauen MimeType einer Datei wieder. Dies kann zum Beispiel
 	 * f�r das Zusammenbauen von Mail Headern sehr hilfreich sein.<br />
 	 * <b>Warnung:</b><br /><i>Die Datei muss existieren.</i>
-     *
+	 *
 	 * @throws	FileException	File does not exist Exception
 	 * @access	public
 	 * @param 	string			Dateiname mit Pfad
 	 * @return	bool
-     * /
+	 * /
 	public function getMimeType() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -303,19 +303,19 @@ class File extends Abstraction {
 	}
 
 
-    /**
-     * Dateigr�sse ermitteln
-     *
+	/**
+	 * Dateigr�sse ermitteln
+	 *
 	 * Mithilfe dieser Funktion kann die genaue Dateigr�sse
 	 * ermittelt werden. Diese erh�lt man als R�ckgabe der Funktion
 	 * als String in der Form "Gr�sse Einheit".
 	 * Also zum Beispiel 19.50 MB
-     *
+	 *
 	 * @throws	FileException	If deleted Exception
 	 * @access	public
 	 * @param 	string			Dateiname mit Pfad
 	 * @return	string			Gr�sse der Datei entsprchend formatiert
-     * /
+	 * /
 	public function getFileSize($decimal = 2) {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');
@@ -333,17 +333,17 @@ class File extends Abstraction {
 		}
 	}
 
-    /**
-     * Dateigr�sse in bytes ermitteln
-     *
+	/**
+	 * Dateigr�sse in bytes ermitteln
+	 *
 	 * Mithilfe dieser Funktion kann die genaue Dateigr�sse in Bytes
 	 * ermittelt werden.
 	 * Die R�ckgabe der Funktion ist ein Integer Wert mit Anzahl der Bytes.
-     *
+	 *
 	 * @throws	FileException	If deleted Exception
 	 * @access	public
 	 * @return	int				Gr�sse der Datei in Bytes
-     * /
+	 * /
 	public function getBytes() {
 		if ($this->_deleted !== false) {
 			throw new FileException('Cant process any operations on a deleted file object!');

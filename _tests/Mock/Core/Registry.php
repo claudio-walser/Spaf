@@ -20,23 +20,23 @@ namespace Spaf\_tests\Mock\Core;
  * @namespace \Spaf\_tests\Mock\Core
  */
 class Registry extends \Spaf\Core\Registry {
-	
+
 	/**
 	 * Instance store
-	 * 
+	 *
 	 * @var \Spaf\_tests\Mock\Core\Registry
 	 */
 	private static $_instance = null;
-	
+
 	/**
 	 * Private methods for beeing singleton
 	 */
 	private function __construct() {}
 	private function __clone() {}
-	
+
 	/**
 	 * mock get instance, return the mock for sure
-	 * 
+	 *
 	 * @return \Spaf\_tests\Mock\Core\Registry
 	 */
 	public static function getInstance(\Spaf\Core\Registry $registry = null) {
@@ -45,10 +45,10 @@ class Registry extends \Spaf\Core\Registry {
 			// create new one of myself
 			self::$_instance = new self();
 		}
-		
+
 		return self::$_instance;
 	}
-	
+
 }
 
 ?>

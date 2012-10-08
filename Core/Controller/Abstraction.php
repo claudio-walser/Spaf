@@ -58,16 +58,16 @@ abstract class Abstraction {
 	 */
 	protected $_session = null;
 
-    /**
-     * Creates a controller object and
-     * set the default properties in this class.
-     * Some of them are coming from the registry.
+	/**
+	 * Creates a controller object and
+	 * set the default properties in this class.
+	 * Some of them are coming from the registry.
 	 *
 	 * @throws \Spaf\Core\Exception Throws an Exception if no request object is set in the Registry yet
 	 * @throws \Spaf\Core\Exception Throws an Exception if no response object is set in the Registry yet
 	 *
 	 * @param \Spaf\Core\Registry Pass a registry object by injection
-     */
+	 */
 	public function __construct(\Spaf\Core\Registry $registry) {
 		$this->_registry = $registry;
 

@@ -42,13 +42,13 @@ abstract class Abstraction {
 	/**
 	 * Returns an array with \Spaf\Library\Directory\Directory
 	 * and \Spaf\Library\Directory\File objects.
-	 * 
+	 *
 	 * @param string Path to build objects from
 	 * @param regex Search Pattern
 	 * @param boolean Read only directories - true || false
 	 * @return array Array of \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File objects
 	 */
-     public static function readContent($path, $pattern = '*', $onlyDir = false) {
+	 public static function readContent($path, $pattern = '*', $onlyDir = false) {
 		$path = self::formPath($path);
 		$GLOB = $onlyDir === true ? GLOB_ONLYDIR : GLOB_BRACE;
 		return self::_createObjects(glob($path . $pattern, $GLOB));
@@ -56,11 +56,11 @@ abstract class Abstraction {
 
 	/**
 	 * Returns a well formed path string with an trailing slash(/).
-     *
+	 *
 	 * @param string Directory path to beautify
 	 * @param boolean Add a trailing slash or remove
 	 * @return string Wellformed path
-     */
+	 */
 	public static function formPath($path, $trailingSlash = true) {
 		$path = trim($path);
 		if (!empty($path)) {
@@ -105,14 +105,14 @@ abstract class Abstraction {
 	 	if (is_dir($directory)) {
 	 		return true;
 	 	}
-		
+
 		return mkdir($directory, $mode, true);
-		
+
 		/*$currentDir = '';
 		$parts = explode('/', $directory);
-		
+
 		foreach ($parts as $part) {
-				
+
 			$currentDir .= !empty($currentDir) ? '/' : '';
 			$currentDir .= $part;
 			if (is_dir($currentDir)) {
@@ -120,17 +120,17 @@ abstract class Abstraction {
 			}
 			mkdir($currentDir);
 		}
-		
+
 		return true;*/
 	 }
 
 	/**
 	 * Creates \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File
 	 * objects from a given array containing file/folder paths.
-     *
+	 *
 	 * @param array Array with file/folder paths
 	 * @return array Array with \Spaf\Library\Directory\File or \Spaf\Library\Directory\Directory objects
-     */
+	 */
 	protected static function _createObjects(array $array) {
 		foreach ($array as $key => $value) {
 			if (is_dir($value)) {

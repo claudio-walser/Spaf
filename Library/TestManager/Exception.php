@@ -20,5 +20,5 @@ namespace Spaf\Library\TestManager;
  * @namespace Spaf\Library\TestManager
  */
 class Exception extends \Exception {}
- 
+
 ?>

@@ -46,16 +46,16 @@ class Directory extends Abstraction {
 	 */
 	public function __construct($path) {
 		$path = self::formPath($path, false);
-		
+
 		if (!is_dir($path)) {
 			throw new Exception($path . ' is no valid directory');
 		}
 
 		$parts = explode('/', $path);
-		
+
 		$this->_name = array_pop($parts);
 		$this->_path = implode('/', $parts) . '/';
-		
+
 		if ($this->_path === '/') {
 			$this->_path = '';
 		}
@@ -96,13 +96,13 @@ class Directory extends Abstraction {
 		if ($recursive !== true) {
 			return $childs;
 		}
-		
+
 		$newChilds = $childs;
-		
+
 		if ($type === 'file') {
 			$newChilds = Abstraction::readContent($this->_path . $this->_name, '*', true);
 		}
-		
+
 		foreach ($newChilds as $child) {
 			if ($child instanceof Directory && !in_array($child->getName(), $ignoreDirectories)) {
 				$childs = array_merge($childs, $child->getChildren($pattern, $type, $recursive, $ignoreDirectories));

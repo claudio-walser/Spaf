@@ -23,7 +23,7 @@ require_once('../Core/Autoloader.php');
  * @namespace \Spaf\_tests\Mock\Core
  */
 final class Autoloader Extends \Spaf\Core\Autoloader {
-	
+
 	/**
 	 * Load the only needed phpunit file by hand.
 	 * Then call parent, which is loading any of our functions below
@@ -32,10 +32,10 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	public function __construct() {
 		// phpunit procedural autoload functions
 		require_once('/usr/share/php/PHPUnit/Autoload.php');
-		
+
 		parent::__construct();
 	}
-	
+
 	/**
 	 * Autoloader for the Cwa Framework classes
 	 *
@@ -45,7 +45,7 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	public function Spaf($name) {
 		$file = $this->_getFilename($name);
 		$file = '../../' . $file;
-		
+
 		$this->debug($file . "<br />\n");
 
 		if (is_file($file) && is_readable($file)) {
@@ -68,9 +68,9 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	 */
 	public function PHPUnit($name) {
 		$file = '/usr/share/php/' . $this->_getFilename($name, '_');
-		
+
 		$this->debug($file . "<br />\n");
-		
+
 		if (is_file($file) && is_readable($file)) {
 			// do debug message if needed
 			$this->debug('<strong>' . date('Y-m-d H:i:s') . '</strong> -- File ' . $file . ' successfully loaded' . "<br />\n");
@@ -82,7 +82,7 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 			return false;
 		}
 	}
-	
+
 }
 
 ?>

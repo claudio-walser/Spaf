@@ -20,16 +20,16 @@ namespace Spaf\Core\Controller;
  * @namespace \Spaf\Core\Controller
  */
 class NotFound extends Abstraction {
-	
+
 	/**
 	 * NotFound controllers view method
-	 * 
+	 *
 	 * @return string Just a default string
 	 */
 	public function view() {
 		return $this->_response->write('notFound controllers listing method');
 	}
-	
+
 }
 
 ?>

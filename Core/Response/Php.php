@@ -25,7 +25,7 @@ class Php extends Abstraction {
 
 	/**
 	 * What values should result in ['success'] = false?
-	 * 
+	 *
 	 * @var array Small config array of what values should result in success => false
 	 */
 	private $_false = array(false, null, 0, '');
@@ -39,7 +39,7 @@ class Php extends Abstraction {
 	 * 		count => amount of $param or your given value if not null
 	 * )
 	 * If you dont want all these informations, just pass $pure=true as fourth parameter.
-	 * 
+	 *
 	 * @param mixed Your return value
 	 * @param int Number of all rows if you use paging
 	 * @param boolean Give a fixed success value if you want to return NULL explicit for example
@@ -51,7 +51,7 @@ class Php extends Abstraction {
 		if ($pure === true) {
 			return $this->_encodeUtf8 === true ? $this->_utf8Encode($param) : $param;
 		}
-		
+
 		// init $out as array
 		$out = array();
 		// set success on true per default
@@ -69,13 +69,13 @@ class Php extends Abstraction {
 			$out['data'] = $this->_encodeUtf8 === true ? $this->_utf8Encode($param) : $param;
 			$out['count'] = $count === null ? count($out['data']) : $count;
 		}
-		
+
 		return $out;
 	}
 
 	/**
 	 * Encodes a array or simple string to utf8 charset, other types are ignored.
-	 * 
+	 *
 	 * @param mixed The value you want to UTF8 encode
 	 * @return mixed UTF8 encoded value you passed as param
 	 */
@@ -91,7 +91,7 @@ class Php extends Abstraction {
 				$param[$key] = $this->_utf8Encode($value);
 			}
 		}
-		
+
 		return $param;
 	}
 

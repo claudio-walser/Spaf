@@ -12,11 +12,11 @@
 
 // hack server argv for windows console
 if (!isset($_SERVER['argv']) && !empty($_GET)) {
-    $_SERVER['argv'] = array('scriptname');
+	$_SERVER['argv'] = array('scriptname');
 
-    foreach ($_GET as $key => $value) {
-        $_SERVER['argv'][] = $key;
-    }
+	foreach ($_GET as $key => $value) {
+		$_SERVER['argv'][] = $key;
+	}
 }
 
 // error reporting on
@@ -43,7 +43,7 @@ foreach ($files as $file) {
 	// new path
 	$new = '../../SpafDuplicate/' . substr($orig, 3, strlen($orig));
 	// write the file to the new path
-	$file->write($new);
+	$file->write($orig);
 }
 
 

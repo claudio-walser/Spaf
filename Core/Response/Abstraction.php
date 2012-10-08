@@ -22,15 +22,15 @@ namespace Spaf\Core\Response;
  * @abstract
  */
 abstract class Abstraction {
-	
+
 	/**
 	 * Either this class should utf8 encode outgoing values or not
-	 * 
+	 *
 	 * @var boolean True if outgoing values should be handled with utf8_encode
 	 */
 	protected $_encodeUtf8 = false;
-	
-	
+
+
 	/**
 	 * Abstract function write should be implemented by
 	 * any child class. Output or forward the controllers
@@ -41,7 +41,7 @@ abstract class Abstraction {
 	 * 		'data' => Controller Return Values
 	 * 		'count' => Can be set by controller to give the amount of all rows, only usefull in view/list methods and for paging
 	 * )
-	 * 
+	 *
 	 * @param mixed Value to be returned
 	 * @return mixed Value to be returned
 	 */

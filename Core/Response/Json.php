@@ -39,9 +39,9 @@ class Json extends Php {
 	 * 		count => amount of $param or your given value if not null
 	 * )
 	 * If you dont want all these informations, just pass $pure=true as fourth parameter.
-	 * 
+	 *
 	 * @see \Spaf\Core\Response\Php::write()
-	 * 
+	 *
 	 * @param mixed Your return value
 	 * @param int Number of all rows if you use paging
 	 * @param boolean Give a fixed success value if you want to return NULL explicit for example
