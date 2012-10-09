@@ -3,7 +3,7 @@
  /**
  * $Id$
  *
- * Spaf/Library/Config/Driver/Abstraction.php
+ * Spaf/Library/Config/Driver/Ini.php
  * @created Sat Sep 09 09:33:02 CET 2006
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,46 +11,23 @@
 namespace Spaf\Library\Config\Driver;
 
 /**
- * \Spaf\Library\Config\Driver\Abstraction
+ * \Spaf\Library\Config\Driver\Ini
  *
  * Concrete driver class to handle ini configs.
  *
+ * @todo Implement config comments
  * @author Claudio Walser
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
 class Ini extends Abstraction {
 
-
-    /**
-     * File extension.
-     *
-     * @var string
-     * /
-	private $_fileExtension = 'ini';
-
-    /**
-     * How a comment line has to start
-	 *
-     * @var string
-     * /
-	private $_commentPrefix = ';';
-
-    /**
-     * How a comment line has to end
-     *
-     * @var string
-     * /
-	private $_commentSuffix = '';
-
 	/**
-	 * INI Dateien lesen
+	 * Read the current given ini file.
 	 *
-	 * Funktion um eine INI Datei zu parsen und die Konfigurations-
-	 * Variablen in einem assoziativen Array zur�ckzugeben.
-	 *
-     * @access	public
-     * @return	array			Komplette Daten der Konfiguration
+	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
+     * @access public
+     * @return array Nested array of the whole config
 	 */
 	public function read() {
 		if ($this->_sourceFile === null) {

@@ -1,78 +1,43 @@
 <?php
 
-/**
- * ConfigDriverSerialized.php :: Konfigurations Dateien als serialisiertes Array lesen und schreiben
+ /**
+ * $Id$
  *
- * Die Klasse ConfigDriverSerialized stellt die Schnittstelle bereit um .srz Dateien zu schreiben und zu lesen.
- * Das Format dieser Dateien ist ledichlich ein von PHP serialisiertes Array.
- *
- * @category	Config
- * @package		Config
- * @subpackage	ConfigDrivers
- * @copyright	Copyright (c) 2006 Claudio Walser
- * @author		Claudio Walser
+ * Spaf/Library/Config/Driver/Serialized.php
+ * @created Sat Sep 09 09:33:02 CET 2006
+ * @author Claudio Walser
+ * @reviewer TODO
  */
-class ConfigDriverSerialized extends ConfigDriver {
+namespace Spaf\Library\Config\Driver;
 
-
-    /**
-     * Endung der Datei
-	 *
-	 * Die Dateiendung dieses Treibertyps ist hier gespeichert.
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_fileExtension = 'srz';
-
-    /**
-     * Dateiname
-	 *
-	 * Der Dateiname wird hier abgelegt sobald sie mit Config::registerDriver()
-	 * eine Ini Datei angegeben haben.
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_fileName      = null;
-
+/**
+ * \Spaf\Library\Config\Driver\Serialized
+ *
+ * Concrete driver class to handle php serialized configs.
+ *
+ * @todo Implement config comments
+ * @author Claudio Walser
+ * @package Spaf\Library\Config\Driver
+ * @namespace Spaf\Library\Config\Driver
+ */
+class Serialized extends Abstraction {
 
 	/**
-	 * Konstruktor
+	 * Read the current given serialized php file.
 	 *
-	 * Generiert eine valide Dateiendung falls nötig
-	 * und speichert den Namen in einer Klassenvariable.
-	 *
-     * @access	public
-     * @param	string			Name der Konfigurations Datei
-	 */
-	public function __construct($file_name) {
-		if (substr($file_name, -(strlen($this->_fileExtension) + 1)) !== '.' . $this->_fileExtension) {
-			$file_name .= '.' . $this->_fileExtension;
-		}
-		$this->_fileName = $file_name;
-	}
-
-
-	/**
-	 * SRZ Dateien lesen
-	 *
-	 * Funktion um eine SRZ Datei zu parsen und die Konfigurations-
-	 * Variablen in einem assoziativen Array zurückzugeben.
-	 * Auch diese Funktion sollte relativ schnell arbeiten.
-	 *
-     * @access	public
-     * @return	array			Komplette Daten der Konfiguration
+	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
+     * @access public
+     * @return array Nested array of the whole config
 	 */
 	public function read() {
-		$array['comments'] = null;
-		if (is_file($this->_fileName)) {
-			$content = file_get_contents($this->_fileName);
-			$array['data'] = unserialize($content);
-			if (!is_array($array) || empty($array)) {
-				$array['data'] = null;
-			}
-		} else {
+		if ($this->_sourceFile === null) {
+			throw new Exception('Set a source file before read');
+		}
+
+
+		$content = $this->_sourceFile->getContent();
+		$array['data'] = unserialize($content);
+		if (!is_array($array) || empty($array)) {
 			$array['data'] = null;
 		}
 		return $array;
@@ -80,24 +45,18 @@ class ConfigDriverSerialized extends ConfigDriver {
 
 
 	/**
-	 * SRZ Dateien schreiben
+	 * Write the config back to the serialized php file currently set.
 	 *
-	 * Funktion um eine SRZ Datei zu schreiben. Als Parameter
-	 * wird das komplette zu schreibende Array erwartet.
-	 * Dieser Treiber schreibt ConfigFiles am performantesten.
-	 *
-     * @access	public
-	 * @param	array			Komplette Daten der Konfiguration
-     * @return	bool
+	 * @param array Nested array with complete config to write
+     * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array) {
 		$assoc_array = $assoc_array['data'];
 		$file_content = serialize($assoc_array);
-		file_put_contents($this->_fileName, $file_content);
-		return true;
+		$this->_sourceFile->setContent($file_content);
+		return $this->_sourceFile->write();
 	}
 
+
 }
-
-
 ?>

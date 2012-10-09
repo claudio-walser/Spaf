@@ -1,110 +1,61 @@
 <?php
 
-/**
- * ConfigDriverPhp.php :: Konfigurations Dateien im PHP Format lesen und schreiben
+ /**
+ * $Id$
  *
- * Die Klasse ConfigDriverPhp stellt die Schnittstelle bereit um .php Dateien zu schreiben und zu lesen.
- * Dabei wird ein Array in nativem PHP Code gespeichert und zum auslesen schlicht includiert.
- * Dieser Treiber liest die Konfiguration am performantesten aus.
- *
- * @category	Config
- * @package		Config
- * @subpackage	ConfigDrivers
- * @copyright	Copyright (c) 2006 Claudio Walser
- * @author		Claudio Walser
+ * Spaf/Library/Config/Driver/Php.php
+ * @created Sat Sep 09 09:33:02 CET 2006
+ * @author Claudio Walser
+ * @reviewer TODO
  */
-class ConfigDriverPhp extends ConfigDriver {
+namespace Spaf\Library\Config\Driver;
 
-
-    /**
-     * Endung der Datei
-	 *
-	 * Die Dateiendung dieses Treibertyps ist hier gespeichert.
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_fileExtension = 'php';
-
-    /**
-     * keine Strings
-	 *
-	 * true, false und null werden als Datentypen erkennt und nicht als Strings
-	 * in die Konfigurationsdatei geschrieben.
-     *
-     * @var		array
-     * @access	private
-     */
-	private $_allowedToStrip = array('true', 'false', 'null');
-
-    /**
-     * zu maskierende Zeichen
-	 *
-	 * Alle Zeichen die maskiert werden.
-     *
-     * @var		array
-     * @access	private
-     */
-	private $_toEscape = array('\\');
-
-    /**
-     * Dateiname
-	 *
-	 * Der Dateiname wird hier abgelegt sobald sie mit Config::registerDriver()
-	 * eine Ini Datei angegeben haben.
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_fileName      = null;
-
+/**
+ * \Spaf\Library\Config\Driver\Php
+ *
+ * Concrete driver class to handle php configs.
+ * Any php config file is simply included,
+ * and should contain a $config array definition.
+ *
+ * @todo Implement config comments
+ * @author Claudio Walser
+ * @package Spaf\Library\Config\Driver
+ * @namespace Spaf\Library\Config\Driver
+ */
+class Php extends Abstraction {
 
 	/**
-	 * Konstruktor
+	 * Read the current given php file.
 	 *
-	 * Generiert eine valide Dateiendung falls nötig
-	 * und speichert den Namen in einer Klassenvariable.
-	 *
-     * @access	public
-     * @param	string			Name der Konfigurations Datei
-	 */
-	public function __construct($file_name) {
-		if (substr($file_name, -(strlen($this->_fileExtension) + 1)) !== '.' . $this->_fileExtension) {
-			$file_name .= '.' . $this->_fileExtension;
-		}
-		$this->_fileName = $file_name;
-	}
-
-
-	/**
-	 * PHP Dateien lesen
-	 *
-	 * Funktion um eine PHP Datei einzubinden. Das Array im ConfigFile
-	 * muss $config heissen, da es schlicht nur includiert werden.
-	 *
-     * @access	public
-     * @return	array			Komplette Daten der Konfiguration
+	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
+     * @access public
+     * @return array Nested array of the whole config
 	 */
 	public function read() {
-		if (is_file($this->_fileName)) {
-			include($this->_fileName);
-		} else {
+		if ($this->_sourceFile === null) {
+			throw new Exception('Set a source file before read');
+		}
+
+		include($this->_sourceFile->getPath() . $this->_sourceFile->getName());
+
+		if (!isset($config)) {
 			$config = null;
 		}
-		$config['data'] = $config;
-		return $config;
+
+		$array = array(
+			'data' => $config
+		);
+
+		return $array;
+
 	}
 
 
 	/**
-	 * PHP Dateien schreiben
+	 * Write the config back to the php file currently set.
 	 *
-	 * Funktion um eine PHP Datei zu schreiben. Als Parameter
-	 * wird das komplette zu schreibende Array erwartet.
-	 *
-     * @access	public
-	 * @param	array			Komplette Daten der Konfiguration
-     * @return	bool
+	 * @param array Nested array with complete config to write
+     * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array) {
 		$assoc_array = $assoc_array['data'];
@@ -132,11 +83,11 @@ class ConfigDriverPhp extends ConfigDriver {
 			$file_content .= "\n";
 		}
 		$file_content .= '?>';
-		file_put_contents($this->_fileName, $file_content);
-		return true;
+
+		$this->_sourceFile->setContent($file_content);
+		return $this->_sourceFile->write();
 	}
 
+
 }
-
-
 ?>
