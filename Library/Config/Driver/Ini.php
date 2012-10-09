@@ -1,111 +1,77 @@
 <?php
 
-/**
- * ConfigDriverIni.php :: Konfigurations Dateien im INI Format lesen und schreiben
+ /**
+ * $Id$
  *
- * Die Klasse ConfigDriverIni stellt die Schnittstelle bereit um .ini Dateien zu schreiben und zu lesen.
- *
- * @category	Config
- * @package		Config
- * @subpackage	ConfigDrivers
- * @copyright	Copyright (c) 2006 Claudio Walser
- * @author		Claudio Walser
+ * Spaf/Library/Config/Driver/Abstraction.php
+ * @created Sat Sep 09 09:33:02 CET 2006
+ * @author Claudio Walser
+ * @reviewer TODO
  */
-class ConfigDriverIni extends ConfigDriver {
+namespace Spaf\Library\Config\Driver;
+
+/**
+ * \Spaf\Library\Config\Driver\Abstraction
+ *
+ * Concrete driver class to handle ini configs.
+ *
+ * @author Claudio Walser
+ * @package Spaf\Library\Config\Driver
+ * @namespace Spaf\Library\Config\Driver
+ */
+class Ini extends Abstraction {
 
 
     /**
-     * Endung der Datei
-	 *
-	 * Die Dateiendung dieses Treibertyps ist hier gespeichert.
+     * File extension.
      *
-     * @var		string
-     * @access	private
-     */
+     * @var string
+     * /
 	private $_fileExtension = 'ini';
 
     /**
-     * Dateiname
+     * How a comment line has to start
 	 *
-	 * Der Dateiname wird hier abgelegt sobald sie mit Config::registerDriver()
-	 * eine Ini Datei angegeben haben.
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_fileName      = null;
+     * @var string
+     * /
+	private $_commentPrefix = ';';
 
     /**
-     * Kommentarpräfix
-	 *
-	 * Präfix für Kommentare. Beispielsweise <!--
+     * How a comment line has to end
      *
-     * @var		string
-     * @access	private
-     */
-	private $_commentPräfix	= ';';
-
-    /**
-     * Kommentarsuffix
-	 *
-	 * Suffix für Kommentare. Beispielsweise -->
-     *
-     * @var		string
-     * @access	private
-     */
-	private $_commentSuffix	= '';
-
-
-	/**
-	 * Konstruktor
-	 *
-	 * Generiert eine valide Dateiendung falls nötig
-	 * und speichert den Namen in einer Klassenvariable.
-	 *
-     * @access	public
-     * @param	string			Name der Konfigurations Datei
-	 */
-	public function __construct($file_name) {
-		if (substr($file_name, -(strlen($this->_fileExtension) + 1)) !== '.' . $this->_fileExtension) {
-			$file_name .= '.' . $this->_fileExtension;
-		}
-		$this->_fileName = $file_name;
-	}
-
+     * @var string
+     * /
+	private $_commentSuffix = '';
 
 	/**
 	 * INI Dateien lesen
 	 *
 	 * Funktion um eine INI Datei zu parsen und die Konfigurations-
-	 * Variablen in einem assoziativen Array zurückzugeben.
+	 * Variablen in einem assoziativen Array zurï¿½ckzugeben.
 	 *
      * @access	public
      * @return	array			Komplette Daten der Konfiguration
 	 */
 	public function read() {
-		$array['comments'] = null;
-		if (is_file($this->_fileName)) {
-			$array['data'] = parse_ini_file($this->_fileName, 1);
+		if ($this->_sourceFile === null) {
+			throw new Exception('Set a source file before read');
+		}
 
-			if (!is_array($array) || empty($array)) {
-				$array['data'] = null;
-			}
-		} else {
+		$array['data'] = parse_ini_file($this->_file->getPath() . $this->_file->getName(), 1);
+
+		if (!is_array($array) || empty($array)) {
 			$array['data'] = null;
 		}
+
 		return $array;
 	}
 
 
 	/**
-	 * INI Dateien schreiben
+	 * Write the config back to the ini file currently set.
 	 *
-	 * Funktion um eine INI Datei zu schreiben. Als Parameter
-	 * wird das komplette zu schreibende Array erwartet.
-	 *
-     * @access	public
-	 * @param	array			Komplette Daten der Konfiguration
-     * @return	bool
+	 * @param array Nested array with complete config to write
+     * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array) {
 		$assoc_array = $assoc_array['data'];
@@ -126,9 +92,8 @@ class ConfigDriverIni extends ConfigDriver {
 			}
 			$file_content .= "\n";
 		}
-
-		file_put_contents($this->_fileName, $file_content);
-		return true;
+		$this->_sourceFile->setContent($file_content);
+		return $this->_sourceFile->write();
 	}
 
 

@@ -23,21 +23,40 @@ namespace Spaf\Library\Config\Driver;
  */
 abstract class Abstraction {
 
+	/**
+	 * Source file object
+	 *
+	 * @var \Spaf\Library\Directory\File
+	 */
+	protected $_sourceFile = null;
+
+	/**
+	 * Set the source file.
+	 *
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean True
+	 */
+	public function setSourceFile(\Spaf\Library\Directory\File $file) {
+		$this->_sourceFile = $file;
+
+		return true;
+	}
 
 	/**
      * Read has to be implemented in any driver.
      *
-	 * @return array Comment Array
+	 * @return array Config Array
      */
-	abstract function read();
+	abstract public function read();
 
 	/**
      * Read has to be implemented in any driver.
      *
-	 * @param array Comment Array
+	 * @param array Config Array
 	 * @return boolean True if saving the file was successful
      */
-	abstract function save(array $assoc_array);
+	abstract public function save(array $array);
+
 }
 
 ?>

@@ -87,49 +87,47 @@ class Manager {
 		return true;
 	}
 
+	/**
+	 * Set the source file.
+	 *
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean True
+	 */
+	public function setSourceFile(\Spaf\Library\Directory\File $file) {
+		return $this->_driver->setSourceFile($file);
+	}
+
     /**
      * Read and also parse a config file.
      *
      * @throws \Spaf\Library\Config\Exception Throws an exception if no driver set yet
      * @return boolean True
      */
-	public function read($file) {
-		if ($this->_driver === null) {
-			throw new Exception('You have to set a driver before call Config::read()');
-		}
+	public function read() {
 		$this->_storedData = $this->_driver->read($file);
+
 		return true;
 	}
 
-
     /**
-     * Eine Sektion zur�ckgeben
+     * Get the configs of one section as array
      *
-	 * Die Funktion kann benutzt werden um einzelne Sektionen auszulesen.
-	 * Der Name der gew�nschten Sektion wird als String �bergeben.
-     *
-	 * @access	public
-     * @param	string					Auszulesende Sektion
-     * @return	mixed					NULL oder die Daten der gew�nschten Sektion
+     * @param string Section to read
+     * @return mixed NULL or the given section as array
      */
 	public function getSection($section) {
 		if (is_array($this->_storedData['data']) && array_key_exists($section, $this->_storedData['data'])) {
 			return $this->_storedData['data'][$section];
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
-
     /**
-     * Definiert eine Sektion als Konstanten
+     * Defines a full section as constants.
      *
-	 * Die Konfigurations Variablen einer Sektion werden hier als Konstanten definiert.
-	 * Dabei wird der Array Schl�ssel als Name und das Value als Wert der Konstante verwendet.
-     *
-	 * @access	public
-     * @param	string					Auszulesende Sektion
-     * @return	bool
+     * @param string Section to define as constants
+     * @return boolean True
      */
 	public function getSectionAsConstants($section) {
 		$configs = $this->getSection($section);
@@ -140,116 +138,86 @@ class Manager {
 				}
 			}
 		}
+
 		return true;
 	}
 
-
     /**
-     * Gibt alle Sektionen zur�ck
+     * Returns the config variables of all sections
      *
-	 * Config::getAll kann verwendet werden um das ganze Konfiguartionsfile auszulesen.
-	 * Zur�ck kommt ein 2-Dimensionales Array. In der ersten Dimension sind die Sektionsnamen
-	 * als Schl�ssel und in der zweiten die Variablen mit Werten.
-     *
-	 * @access	public
-     * @return	array					Assoziatives Array mit den Daten
+     * @return array Multinested array with all sections
      */
 	public function getAll() {
 		return $this->_storedData['data'];
 	}
 
-
     /**
-     * eine Sektion anlegen
+ 	 * Create or overwrite a section
      *
-	 * Config::setSection kann eine neue Sektion anlegen oder eine bestehende
-	 * �berschreiben.
-     *
-	 * @access	public
-     * @param	array					Assoziatives Array mit den Daten
-     * @param	string					Name der Sektion
-     * @return	bool
+     * @param array Associative array with the values
+     * @param string Name of the section
+     * @return boolean True
      */
-	public function setSection(Array $assoc_array, $section) {
+	public function setSection(array $assoc_array, $section) {
 		$this->_storedData['data'][$section] = $assoc_array;
+
 		return true;
 	}
 
-
     /**
-     * eine Sektion l�schen
+     * Remove a section
      *
-	 * Config::deleteSection l�scht die gew�nschte Sektion aus dem internen Stapel.
-     *
-	 * @access	public
-     * @param	string					Name der Sektion
-     * @return	bool
+     * @param string Name of the section to remove
+     * @return boolean True
      */
 	public function deleteSection($section_name) {
 		if (isset($this->_storedData['data'][$section_name])) {
 			unset($this->_storedData['data'][$section_name]);
 		}
+
 		return true;
 	}
 
-
     /**
-     * alle Sektionen l�schen
+     * Remove all sections
      *
-	 * Config::deleteAll l�scht alle Sektionen mit allen Konfigurations Variablen.
-     *
-	 * @access	public
-     * @return	bool
+     * @return boolean True
      */
 	public function deleteAll() {
 		if (isset($this->_storedData)) {
 			$this->_storedData = null;
 		}
+
 		return true;
 	}
 
-
 	/**
-	 * alle Sektionen erstetzen
+	 * Set new config sections.
+	 * The old one's will be removed, so its a
+	 * complete rewrite.
 	 *
-	 * Das komplette Konfigurations Array wird gel�scht und mit den neuen Daten
-	 * beschrieben.
-	 *
-	 * @access	public
-     * @param	array					Das assoziative Array. Namen als Schl�ssel
-     * @return	bool
+     * @param array Multinested array to set new data
+     * @return boolean True
 	 */
 	public function setAll(Array $assoc_array) {
 		$this->_storedData = $assoc_array;
+
 		return true;
 	}
 
-
 	/**
-	 * Die Konfigurationsdatei speichern
+	 * Write the config file back to its source
 	 *
-	 * Ruft die Speicherfunktion des ausgew�hlten Treibers aus und schreibt die Konfiguration
-	 * in die angegebene Datei.<br /><br />
-	 * <b>Warnung:</b><br /><i>Alle �nderungen an der Konfiguration werden immer erst in die Datei
-	 * �bernommen, wenn Config::save() aufgerufen wurde.</i>
-	 *
-	 * @access	public
-     * @return	bool
+     * @return boolean True if writing was successful
 	 */
 	public function save() {
 		return $this->_driver->save($this->_storedData);
 	}
 
-
 	/**
-	 * Alle vorhanden Sektionen auslesen
+	 * List all available sections,
 	 *
-	 * Liest alle vorhandenen Sektionen aus. M�glicherweise kennt man diese w�hrend der Entwicklung nicht,
-	 * weil zum Beispiel ein Arbeitskollege die Konfig erstellt. In solchen F�llen ist diese Funktion eventuell
-	 * hilfreich.
-	 *
-	 * @access	public
-     * @return	array				Array mit allen Sektionen
+     * @return array An array with all available sections in this config
 	 */
 	public function getSections() {
 		if ($this->_storedData['data'] !== null) {
@@ -263,12 +231,10 @@ class Manager {
 		} else {
 			$array = null;
 		}
+
 		return $array;
 	}
 
 }
-
-
-
 
 ?>
