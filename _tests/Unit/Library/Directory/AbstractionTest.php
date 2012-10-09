@@ -18,6 +18,7 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * If some stuff fails here, do sudo chmod 0100 _tests/Data/Directory/ToRead/notReadable.php
  * first and check again.
  *
+ * @todo Test, or let me say, implement Mockable Classes for Directory and File
  * @author Claudio Walser
  * @package \Spaf\_tests\Unit\Library\Directory
  * @namespace \Spaf\_tests\Unit\Library\Directory
