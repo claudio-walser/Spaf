@@ -112,10 +112,10 @@ abstract class Abstraction {
 
 		return mkdir($directory, $mode, true);
 	}
-	
+
 	/**
 	 * Creates or creates a file.
-	 * 
+	 *
 	 * @param string Filename
 	 * @return boolean True or false if create failed
 	 */
@@ -124,14 +124,14 @@ abstract class Abstraction {
 
 		$file = $parts['name'];
 		$directory = $parts['path'];
-		
+
 		if (self::directoryExists($directory) === false) {
 			self::createDirectory($directory);
 		}
-		
+
 		return file_put_contents($directory . $file, '');
 	}
-	
+
 	/**
 	 * Checks if a directory exists
 	 *
@@ -141,7 +141,7 @@ abstract class Abstraction {
 	public static function directoryExists($directory) {
 		return is_dir($directory);
 	}
-	
+
 	/**
 	 * Checks if a file exists
 	 *
@@ -151,7 +151,7 @@ abstract class Abstraction {
 	public static function fileExists($file) {
 		return is_file($file);
 	}
-	
+
 	/**
 	 * Checks if a file is readable
 	 *
@@ -162,17 +162,17 @@ abstract class Abstraction {
 		if (self::fileExists($file) === false) {
 			return false;
 		}
-		
+
 		return is_readable($file);
 	}
-	
+
 	/**
 	 * Tries to delete a file by path.
 	 * If the file does not exists, it returns true.
 	 * This means, if you get true back from
 	 * this method, you can be sure the file isnt
 	 * there anymore.
-	 * 
+	 *
 	 * @param string Filename to delete
 	 * @return boolean True if file removed otherwise false
 	 */
@@ -180,15 +180,15 @@ abstract class Abstraction {
 		if (self::fileExists($file) === false) {
 			return true;
 		}
-		
+
 		return unlink($file);
 	}
-	
+
 	/**
 	 * Tries to delete a folder by path.
 	 * This method does not work recursive.
 	 * So if your folder isnt empty, it wont work.
-	 * 
+	 *
 	 * @param string Directoryname to delete
 	 * @return boolean True if directory removed otherwise false
 	 */
@@ -198,7 +198,7 @@ abstract class Abstraction {
 		}
 		return rmdir($directory);
 	}
-	
+
 	/**
 	 * Splits the name and path of a given folder-path.
 	 *
@@ -213,7 +213,7 @@ abstract class Abstraction {
 		$path = self::formPath(implode('/', $parts));
 
 		return array('path' => $path, 'name' => $name);
-	}	
+	}
 	/**
 	 * Creates \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File
 	 * objects from a given array containing file/folder paths.
@@ -227,13 +227,19 @@ abstract class Abstraction {
 				$array[$key] = new Directory($value);
 			} else if (self::fileIsReadable($value)) {
 				$array[$key] = new File($value);
+			} else {
+				unset($array[$key]);
 			}
 		}
 		return $array;
 	}
-	
-	
-	
+
+
+	/**
+	 * Every child class has to have a delete method.
+	 *
+	 * @return boolean True if delete was successful
+	 */
 	abstract public function delete();
 }
 
