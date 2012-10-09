@@ -61,12 +61,12 @@ class AbstractionTest extends \PHPUnit_Framework_TestCase {
 		// read and compare all
 		$directoryContent = \Spaf\Library\Directory\Abstraction::readContent($directory);
 		// has to have 3 elements
-		$this->assertTrue(count($directoryContent) === 3);
+		$this->assertTrue(count($directoryContent) === 4);
 
 		// read and compare only directories
 		$directoryContent = \Spaf\Library\Directory\Abstraction::readContent($directory, '*', true);
 		// has to have 1 element
-		$this->assertTrue(count($directoryContent) === 1);
+		$this->assertTrue(count($directoryContent) === 2);
 
 		// read and compare only php files
 		$directoryContent = \Spaf\Library\Directory\Abstraction::readContent($directory, '*.php');

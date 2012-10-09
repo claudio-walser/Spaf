@@ -77,7 +77,7 @@ class File extends Abstraction {
 		$file = self::formPath($file, false);
 
 		if (!is_readable($file)) {
-			throw new Exception('File �' . $file . '� does not exists!');
+			throw new Exception('File «' . $file . '»does not exists!');
 		}
 
 		$parts = self::_getNameAndPath($file);
@@ -129,7 +129,11 @@ class File extends Abstraction {
 	 */
 	public function getLines() {
 		if ($this->_lines === null) {
-			$this->_lines = file($this->_path . $this->_name);
+			$lines = file($this->_path . $this->_name);
+			foreach ($lines as $key => $line) {
+				$lines[$key] = rtrim($line);
+			}
+			$this->_lines = $lines;
 		}
 
 		return $this->_lines;
@@ -183,6 +187,7 @@ class File extends Abstraction {
 		$path = $parts['path'];
 
 		\Spaf\Library\Directory\Abstraction::createDirectory($path);
+
 		if (!file_put_contents($file, $this->_content)) {
 			throw new Exception('Could not write file: ' . $file);
 		}
@@ -190,7 +195,11 @@ class File extends Abstraction {
 		return true;
 	}
 
-
+	/**
+	 * Delete this file
+	 *
+	 * @return boolean True if deletion was successful
+	 */
 	public function delete() {
 		return Abstraction::deleteFile($this->_path . $this->_name);
 	}

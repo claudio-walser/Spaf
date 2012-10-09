@@ -115,6 +115,12 @@ class Directory extends Abstraction {
 		return $childs;
 	}
 
+	/**
+	 * Delete this folder and its content
+	 * recursive.
+	 *
+	 * @return boolean True if deletion was successful
+	 */
 	public function delete() {
 		$children = $this->getChildren();
 		foreach ($children as $child) {

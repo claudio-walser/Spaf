@@ -43,15 +43,11 @@ foreach ($files as $file) {
 	// new path
 	$new = '../../SpafDuplicate/' . substr($orig, 3, strlen($orig));
 	// write the file to the new path
-	$file->write($orig);
+	try {
+		$file->write($orig);
+	} catch (\Spaf\Library\Directory\Exception $e) {
+		// thrown if try to save an empty file, we have some int our _tests/Data folder
+	}
 }
-
-
-/*$files = \Spaf\Library\Directory\Abstraction::readContent('../Spaf/', '*.php');
-
-// set class prefix for testing
-$manager->setClassPrefix('Spaf\\_tests');
-// run test manager
-$manager->run();*/
 
 ?>
