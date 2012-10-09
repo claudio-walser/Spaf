@@ -233,6 +233,8 @@ class AbstractionTest extends \PHPUnit_Framework_TestCase {
 		
 		// @note If you run the command line test.php Script as root, this test will
 		//		 always fail cause root can read EVERYTHING
+		// if it does fail without beeing logged in as root
+		// chmod the file: sudo chmod 0100 _tests/Data/Directory/ToRead/notReadable.php
 		$this->assertFalse(
 			\Spaf\Library\Directory\Abstraction::fileIsReadable($doesNotExist)
 		);
