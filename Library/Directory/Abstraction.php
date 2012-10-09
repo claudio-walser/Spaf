@@ -105,26 +105,33 @@ abstract class Abstraction {
 	 * @param Mode for access. Read http://ch.php.net/chmod for more info
 	 * @return boolean True or false if it wasnt possible to create the directory
 	 */
-	 public static function createDirectory($directory, $mode = 0777) {
+	 public static function createDirectory($directory, $mode = 01777) {
 	 	if (is_dir($directory)) {
 	 		return true;
 	 	}
 
 		return mkdir($directory, $mode, true);
 	}
-
+	
 	/**
-	 * Creates or touches a file.
-	 *
+	 * Creates or creates a file.
+	 * 
 	 * @param string Filename
-	 * @param integer Optional Timestamp in seconds, default is current timestamp
-	 * @return boolean True or false if touch failed
+	 * @return boolean True or false if create failed
 	 */
-	public static function createFile($file, $time = null) {
-		$time = $time === null ? time() : (int) $time;
-		return touch($file, $fime);
-	}
+	public static function createFile($file) {
+		$parts = self::_getNameAndPath($file);
 
+		$file = $parts['name'];
+		$directory = $parts['path'];
+		
+		if (self::directoryExists($directory) === false) {
+			self::createDirectory($directory);
+		}
+		
+		return file_put_contents($directory . $file, '');
+	}
+	
 	/**
 	 * Checks if a directory exists
 	 *
@@ -134,7 +141,7 @@ abstract class Abstraction {
 	public static function directoryExists($directory) {
 		return is_dir($directory);
 	}
-
+	
 	/**
 	 * Checks if a file exists
 	 *
@@ -144,7 +151,7 @@ abstract class Abstraction {
 	public static function fileExists($file) {
 		return is_file($file);
 	}
-
+	
 	/**
 	 * Checks if a file is readable
 	 *
@@ -155,17 +162,17 @@ abstract class Abstraction {
 		if (self::fileExists($file) === false) {
 			return false;
 		}
-
+		
 		return is_readable($file);
 	}
-
+	
 	/**
 	 * Tries to delete a file by path.
 	 * If the file does not exists, it returns true.
 	 * This means, if you get true back from
 	 * this method, you can be sure the file isnt
 	 * there anymore.
-	 *
+	 * 
 	 * @param string Filename to delete
 	 * @return boolean True if file removed otherwise false
 	 */
@@ -173,15 +180,15 @@ abstract class Abstraction {
 		if (self::fileExists($file) === false) {
 			return true;
 		}
-
+		
 		return unlink($file);
 	}
-
+	
 	/**
 	 * Tries to delete a folder by path.
 	 * This method does not work recursive.
 	 * So if your folder isnt empty, it wont work.
-	 *
+	 * 
 	 * @param string Directoryname to delete
 	 * @return boolean True if directory removed otherwise false
 	 */
@@ -191,7 +198,22 @@ abstract class Abstraction {
 		}
 		return rmdir($directory);
 	}
+	
+	/**
+	 * Splits the name and path of a given folder-path.
+	 *
+	 * @param string Folderpath
+	 * @return array Array with name and path seperated
+	 */
+	protected static function _getNameAndPath($namePath) {
+		$namePath = self::formPath($namePath, false);
+		$parts = explode('/', $namePath);
 
+		$name = array_pop($parts);
+		$path = self::formPath(implode('/', $parts));
+
+		return array('path' => $path, 'name' => $name);
+	}	
 	/**
 	 * Creates \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File
 	 * objects from a given array containing file/folder paths.
@@ -201,17 +223,17 @@ abstract class Abstraction {
 	 */
 	protected static function _createObjects(array $array) {
 		foreach ($array as $key => $value) {
-			if (is_dir($value)) {
+			if (self::directoryExists($value)) {
 				$array[$key] = new Directory($value);
-			} else if (is_file($value)) {
+			} else if (self::fileIsReadable($value)) {
 				$array[$key] = new File($value);
 			}
 		}
 		return $array;
 	}
-
-
-
+	
+	
+	
 	abstract public function delete();
 }
 

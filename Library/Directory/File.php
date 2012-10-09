@@ -80,7 +80,7 @@ class File extends Abstraction {
 			throw new Exception('File �' . $file . '� does not exists!');
 		}
 
-		$parts = $this->_getNameAndPath($file);
+		$parts = self::_getNameAndPath($file);
 
 		$this->_name = $parts['name'];
 		$this->_path = $parts['path'];
@@ -178,7 +178,7 @@ class File extends Abstraction {
 			$file = $this->_path . $this->_name;
 		}
 
-		$parts = $this->_getNameAndPath($file);
+		$parts = self::_getNameAndPath($file);
 		$name = $parts['name'];
 		$path = $parts['path'];
 
@@ -190,21 +190,6 @@ class File extends Abstraction {
 		return true;
 	}
 
-	/**
-	 * Splits the name and path of a given folder-path.
-	 *
-	 * @param string Folderpath
-	 * @return array Array with name and path seperated
-	 */
-	private function _getNameAndPath($namePath) {
-		$namePath = self::formPath($namePath, false);
-		$parts = explode('/', $namePath);
-
-		$name = array_pop($parts);
-		$path = self::formPath(implode('/', $parts));
-
-		return array('path' => $path, 'name' => $name);
-	}
 
 	public function delete() {
 		return Abstraction::deleteFile($this->_path . $this->_name);
