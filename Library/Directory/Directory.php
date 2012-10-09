@@ -115,6 +115,15 @@ class Directory extends Abstraction {
 		return $childs;
 	}
 
+	public function delete() {
+		$children = $this->getChildren();
+		foreach ($children as $child) {
+			$child->delete();
+		}
+
+		return Abstraction::deleteDirectory($this->_path . $this->_name);
+	}
+
 }
 
 ?>

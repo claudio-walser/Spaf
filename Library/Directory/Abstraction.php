@@ -111,7 +111,86 @@ abstract class Abstraction {
 	 	}
 
 		return mkdir($directory, $mode, true);
-	 }
+	}
+
+	/**
+	 * Creates or touches a file.
+	 *
+	 * @param string Filename
+	 * @param integer Optional Timestamp in seconds, default is current timestamp
+	 * @return boolean True or false if touch failed
+	 */
+	public static function createFile($file, $time = null) {
+		$time = $time === null ? time() : (int) $time;
+		return touch($file, $fime);
+	}
+
+	/**
+	 * Checks if a directory exists
+	 *
+	 * @param Directory path to check
+	 * @return boolean True or false if the directory does not exist yet
+	 */
+	public static function directoryExists($directory) {
+		return is_dir($directory);
+	}
+
+	/**
+	 * Checks if a file exists
+	 *
+	 * @param File path to check
+	 * @return boolean True or false if the file does not exist yet
+	 */
+	public static function fileExists($file) {
+		return is_file($file);
+	}
+
+	/**
+	 * Checks if a file is readable
+	 *
+	 * @param File path to check
+	 * @return boolean True or false wether if the file is readable
+	 */
+	public static function fileIsReadable($file) {
+		if (self::fileExists($file) === false) {
+			return false;
+		}
+
+		return is_readable($file);
+	}
+
+	/**
+	 * Tries to delete a file by path.
+	 * If the file does not exists, it returns true.
+	 * This means, if you get true back from
+	 * this method, you can be sure the file isnt
+	 * there anymore.
+	 *
+	 * @param string Filename to delete
+	 * @return boolean True if file removed otherwise false
+	 */
+	public static function deleteFile($file) {
+		if (self::fileExists($file) === false) {
+			return true;
+		}
+
+		return unlink($file);
+	}
+
+	/**
+	 * Tries to delete a folder by path.
+	 * This method does not work recursive.
+	 * So if your folder isnt empty, it wont work.
+	 *
+	 * @param string Directoryname to delete
+	 * @return boolean True if directory removed otherwise false
+	 */
+	public static function deleteDirectory($directory) {
+		if (self::directoryExists($directory) === false) {
+			return true;
+		}
+		return rmdir($directory);
+	}
 
 	/**
 	 * Creates \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File
@@ -131,6 +210,9 @@ abstract class Abstraction {
 		return $array;
 	}
 
+
+
+	abstract public function delete();
 }
 
 ?>

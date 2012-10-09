@@ -206,7 +206,9 @@ class File extends Abstraction {
 		return array('path' => $path, 'name' => $name);
 	}
 
-
+	public function delete() {
+		return Abstraction::deleteFile($this->_path . $this->_name);
+	}
 
 
 
