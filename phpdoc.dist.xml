@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<title><![CDATA[<b>Spaf  - S</b>imple <b>P</b>HP <b>A</b>pplication <b>F</b>ramework]]></title>
+	<parser>
+		<target>../SpafDocs/</target>
+	</parser>
+	<transformer>
+		<target>../SpafDocs/</target>
+	</transformer>
+	<transformations>
+		<template name="responsive" />
+		<!--
+			Available templates:
+			* new-black
+			* abstract
+			* zend
+			* responsive
+			* old-ocean
+			* checkstyle
+		-->		
+	</transformations>
+	<files>
+		<directory>.</directory>
+		<ignore>_tests/*</ignore>
+		<ignore>_tools/*</ignore>
+	</files>
+</phpdoc>
