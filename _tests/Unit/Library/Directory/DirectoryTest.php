@@ -150,21 +150,21 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 
 		// check not exists subfolders and file
 		$this->assertFalse(
-			\Spaf\Library\Directory\Abstraction::fileExists($newFile)
+			\Spaf\Library\Directory\Manager::fileExists($newFile)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Abstraction::directoryExists($folderToDelete)
+			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
 		);
 
 		// create subfolders and file
-		\Spaf\Library\Directory\Abstraction::createFile($newFile);
+		\Spaf\Library\Directory\Manager::createFile($newFile);
 
 		// check exists subfolders and file
 		$this->assertTrue(
-			\Spaf\Library\Directory\Abstraction::fileExists($newFile)
+			\Spaf\Library\Directory\Manager::fileExists($newFile)
 		);
 		$this->assertTrue(
-			\Spaf\Library\Directory\Abstraction::directoryExists($folderToDelete)
+			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
 		);
 
 		// delete main dir recursive
@@ -173,10 +173,10 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 
 		// check not exists subfolders and file
 		$this->assertFalse(
-			\Spaf\Library\Directory\Abstraction::fileExists($newFile)
+			\Spaf\Library\Directory\Manager::fileExists($newFile)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Abstraction::directoryExists($folderToDelete)
+			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
 		);
 
 		unset($folderToDelete);

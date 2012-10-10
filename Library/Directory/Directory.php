@@ -94,7 +94,7 @@ class Directory extends Abstraction {
 		if ($type === 'dir' || $type === 'directory') {
 			$onlyDir = true;
 		}
-		$childs = Abstraction::readContent($this->_path . $this->_name, $pattern, $onlyDir);
+		$childs = Manager::readContent($this->_path . $this->_name, $pattern, $onlyDir);
 
 		if ($recursive !== true) {
 			return $childs;
@@ -103,7 +103,7 @@ class Directory extends Abstraction {
 		$newChilds = $childs;
 
 		if ($type === 'file') {
-			$newChilds = Abstraction::readContent($this->_path . $this->_name, '*', true);
+			$newChilds = Manager::readContent($this->_path . $this->_name, '*', true);
 		}
 
 		foreach ($newChilds as $child) {
@@ -127,7 +127,7 @@ class Directory extends Abstraction {
 			$child->delete();
 		}
 
-		return Abstraction::deleteDirectory($this->_path . $this->_name);
+		return Manager::deleteDirectory($this->_path . $this->_name);
 	}
 
 }

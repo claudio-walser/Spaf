@@ -80,7 +80,7 @@ class File extends Abstraction {
 			throw new Exception('File «' . $file . '»does not exists!');
 		}
 
-		$parts = self::_getNameAndPath($file);
+		$parts = self::getNameAndPath($file);
 
 		$this->_name = $parts['name'];
 		$this->_path = $parts['path'];
@@ -182,11 +182,11 @@ class File extends Abstraction {
 			$file = $this->_path . $this->_name;
 		}
 
-		$parts = self::_getNameAndPath($file);
+		$parts = self::getNameAndPath($file);
 		$name = $parts['name'];
 		$path = $parts['path'];
 
-		\Spaf\Library\Directory\Abstraction::createDirectory($path);
+		\Spaf\Library\Directory\Manager::createDirectory($path);
 
 		if (!file_put_contents($file, $this->_content)) {
 			throw new Exception('Could not write file: ' . $file);
@@ -201,7 +201,7 @@ class File extends Abstraction {
 	 * @return boolean True if deletion was successful
 	 */
 	public function delete() {
-		return Abstraction::deleteFile($this->_path . $this->_name);
+		return Manager::deleteFile($this->_path . $this->_name);
 	}
 
 
