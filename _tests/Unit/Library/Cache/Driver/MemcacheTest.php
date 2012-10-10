@@ -74,29 +74,29 @@ class MemcacheTest extends \PHPUnit_Framework_TestCase {
 	public function testAdd() {
 		// check if key does not exists yet
 		/*$current = $this->_memcache->get($this->_key);
-		
+
 		$this->assertFalse(
 			$this->_memcache->get($this->_key)
 		);
-		
-		
+
+
 		// assert write to the store is true
 		$this->assertTrue(
 			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
 		);*/
-		
+
 		$this->_memcache->add($this->_key, $this->_value, $this->_lifetime);
 		echo $this->_memcache->get($this->_key);
 		$this->_memcache->delete($this->_key);
 		die();
-		
+
 		/*
 		echo $this->_memcache->get($this->_key);
 		die();
 		/*$this->assertTrue(
 			$this->_memcache->get($this->_key) === $this->_value
 		);*/
-		
+
 	}
 
 	/**
