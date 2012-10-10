@@ -4,13 +4,12 @@
  * $ID$
  *
  * Spaf/Library/Cache/Driver/Abstraction.php
+ * @created Wed Oct 10 20:58:52 +0200 2012
  * @author Claudio Walser
- * @created Wed Oct 03 11:02:06 +0200 2012
  * @reviewer TODO
  */
-
 namespace Spaf\Library\Cache\Driver;
-
+	
 /**
  * \Spaf\Library\Cache\Driver\Abstract
  *
@@ -22,7 +21,6 @@ namespace Spaf\Library\Cache\Driver;
  * @package Spaf\Library\Cache\Driver
  * @namespace Spaf\Library\Cache\Driver
  */
-
 abstract class Abstraction {
 
 	/**
