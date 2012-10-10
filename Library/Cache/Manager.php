@@ -43,7 +43,7 @@ abstract class Manager {
     /**
      * Factory instances
      *
-     * @var array Array with Spaf\Library\Cache\Abstraction Objects
+     * @var array Array with Spaf\Library\Cache\Driver\Abstraction Objects
      */
     private static $_instances = array();
 
@@ -76,10 +76,10 @@ abstract class Manager {
         if (!isset(self::$_instances[$cacheType]) || !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Abstraction) {
             switch ($cacheType) {
                 case 'apc':
-                    self::$_instances[$cacheType] = new Apc();
+                    self::$_instances[$cacheType] = new Driver\Apc();
                     break;
                 default:
-                    self::$_instances[$cacheType] = new Memcache();
+                    self::$_instances[$cacheType] = new Driver\Memcache();
                     break;
             }
         }

@@ -3,22 +3,59 @@
 /**
  * $ID$
  *
- * Spaf/Library/cache.php
+ * Spaf/Library/Cache/Driver/Abstraction.php
  * @author Claudio Walser
  * @created Wed Oct 03 11:02:06 +0200 2012
+ * @reviewer TODO
  */
 
-namespace Spaf\Library\Cache;
+namespace Spaf\Library\Cache\Driver;
 
 /**
- * Abstract
+ * \Spaf\Library\Cache\Driver\Abstract
+ *
+ * Abstract Cache Driver Class.
+ * Any concrete driver has to extend
+ * its abstract methods at least.
+ *
+ * @author Claudio Walser
+ * @package Spaf\Library\Cache\Driver
+ * @namespace Spaf\Library\Cache\Driver
  */
+
 abstract class Abstraction {
 
-    /*
-    abstract public function store($key, $value, $expire = 0, $flag = false);
+	/**
+	 * Default cache lifetime in seconds.
+	 * One hour by default.
+	 *
+	 * @var integer
+	 */
+	protected $_lifetime = 3600;
 
-    abstract public function update($key, $value, $expire = 0, $flag = false);
+	/**
+	 * Set default lifetime in seconds.
+	 *
+	 * @param integer New default lifetime in seconds
+	 * @return boolean True
+	 */
+	public function setDefaultLifetime($lifetime) {
+		$this->_lifetime = (int) $lifetime;
+
+		return true;
+	}
+
+    /**
+	 * Add a variable to the store.
+	 *
+	 * @param string Key for this value
+	 * @param mixed Value itself
+	 * @param integer Time to life, default to default lifetime.
+	 * @return boolean True if it was able to save the value.
+	 */
+    abstract public function add($key, $value, $ttl = null);
+
+    /*abstract public function update($key, $value, $expire = 0, $flag = false);
 
     abstract public function remove($key);
 
