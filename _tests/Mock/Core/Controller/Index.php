@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core\Controller;
  * Mocking of \Spaf\Controller\Index.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Controller
- * @namespace \Spaf\_tests\Mock\Controller
+ * @package Spaf\_tests\Mock\Controller
+ * @namespace Spaf\_tests\Mock\Controller
  */
 class Index extends \Spaf\Core\Controller\Index {}
 

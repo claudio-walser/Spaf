@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core\Request;
  * Http Response Mock
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core\Request
- * @namespace \Spaf\_tests\Mock\Core\Request
+ * @package Spaf\_tests\Mock\Core\Request
+ * @namespace Spaf\_tests\Mock\Core\Request
  * @abstract
  */
 class Http extends \Spaf\Core\Request\Http {

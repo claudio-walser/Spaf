@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
- namespace Spaf\Library\Directory;
+namespace Spaf\Library\Directory;
 
 /**
  * \Spaf\Library\Directory\File

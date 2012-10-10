@@ -18,8 +18,8 @@ namespace Spaf\Core;
  * other tiers.
  *
  * @author Claudio Walser
- * @package \Spaf\Core
- * @namespace \Spaf\Core
+ * @package Spaf\Core
+ * @namespace Spaf\Core
  */
 class Registry {
 

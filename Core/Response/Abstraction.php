@@ -17,8 +17,8 @@ namespace Spaf\Core\Response;
  * Any concrete response should extend this class.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Response
- * @namespace \Spaf\Core\Response
+ * @package Spaf\Core\Response
+ * @namespace Spaf\Core\Response
  * @abstract
  */
 abstract class Abstraction {

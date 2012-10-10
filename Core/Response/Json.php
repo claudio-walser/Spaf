@@ -18,8 +18,8 @@ namespace Spaf\Core\Response;
  * api client.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Response
- * @namespace \Spaf\Core\Response
+ * @package Spaf\Core\Response
+ * @namespace Spaf\Core\Response
  */
 class Json extends Php {
 

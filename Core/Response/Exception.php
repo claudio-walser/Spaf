@@ -16,8 +16,8 @@ namespace Spaf\Core\Response;
  * Should be used to throw any response exception.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Response
- * @namespace \Spaf\Core\Response
+ * @package Spaf\Core\Response
+ * @namespace Spaf\Core\Response
  */
 class Exception extends \Exception {}
 

@@ -19,8 +19,8 @@ namespace Spaf\Core\Request;
  * a php controller in some views
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Request
- * @namespace \Spaf\Core\Request
+ * @package Spaf\Core\Request
+ * @namespace Spaf\Core\Request
  */
 class Php extends Http {
 

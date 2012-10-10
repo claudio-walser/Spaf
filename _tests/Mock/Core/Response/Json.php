@@ -18,8 +18,8 @@ namespace Spaf\_tests\Mock\Core\Response;
  * api client.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core\Response
- * @namespace \Spaf\_tests\Mock\Core\Response
+ * @package Spaf\_tests\Mock\Core\Response
+ * @namespace Spaf\_tests\Mock\Core\Response
  */
 class Json extends Php {}
 

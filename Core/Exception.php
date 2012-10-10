@@ -16,8 +16,8 @@ namespace Spaf\Core;
  * Should be used to throw any core exception.
  *
  * @author Claudio Walser
- * @package \Spaf\Core
- * @namespace \Spaf\Core
+ * @package Spaf\Core
+ * @namespace Spaf\Core
  */
 class Exception extends \Exception {}
 

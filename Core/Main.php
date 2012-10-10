@@ -19,8 +19,8 @@ namespace Spaf\Core;
  * There are also methods to inject all those objects as mock objects for testing purpose.
  *
  * @author Claudio Walser
- * @package \Spaf\Core
- * @namespace \Spaf\Core
+ * @package Spaf\Core
+ * @namespace Spaf\Core
  */
 class Main {
 

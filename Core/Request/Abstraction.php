@@ -17,8 +17,8 @@ namespace Spaf\Core\Request;
  * Any concrete request should extend this class.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Request
- * @namespace \Spaf\Core\Request
+ * @package Spaf\Core\Request
+ * @namespace Spaf\Core\Request
  * @abstract
  */
 abstract class Abstraction {

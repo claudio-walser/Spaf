@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Core;
  * The DispatcherTest class tests any aspect of \Spaf\Core\Dispatcher.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Core
- * @namespace \Spaf\_tests\Core
+ * @package Spaf\_tests\Core
+ * @namespace Spaf\_tests\Core
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase {
 

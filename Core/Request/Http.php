@@ -18,8 +18,8 @@ namespace Spaf\Core\Request;
  * in web environment. This is used for ajax calls as well
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Request
- * @namespace \Spaf\Core\Request
+ * @package Spaf\Core\Request
+ * @namespace Spaf\Core\Request
  */
 class Http extends Abstraction {
 

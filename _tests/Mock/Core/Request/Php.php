@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core\Request;
  * PHP Request Mock
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core\Request
- * @namespace \Spaf\_tests\Mock\Core\Request
+ * @package Spaf\_tests\Mock\Core\Request
+ * @namespace Spaf\_tests\Mock\Core\Request
  */
 class Php extends \Spaf\Core\Request\Php {}
 

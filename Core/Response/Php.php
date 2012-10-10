@@ -18,8 +18,8 @@ namespace Spaf\Core\Response;
  * calls from a php view.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Response
- * @namespace \Spaf\Core\Response
+ * @package Spaf\Core\Response
+ * @namespace Spaf\Core\Response
  */
 class Php extends Abstraction {
 

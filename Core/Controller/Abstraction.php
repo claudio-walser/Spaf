@@ -17,8 +17,8 @@ namespace Spaf\Core\Controller;
  * Any concrete controller should extend this class.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Controller
- * @namespace \Spaf\Core\Controller
+ * @package Spaf\Core\Controller
+ * @namespace Spaf\Core\Controller
  * @abstract
  */
 abstract class Abstraction {

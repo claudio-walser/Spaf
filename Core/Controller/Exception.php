@@ -16,8 +16,8 @@ namespace Spaf\Core\Controller;
  * Should be used to throw any controller exception.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Controller
- * @namespace \Spaf\Core\Controller
+ * @package Spaf\Core\Controller
+ * @namespace Spaf\Core\Controller
  */
 class Exception extends \Exception {}
 

@@ -18,8 +18,8 @@ namespace Spaf\Core;
  * and calls the correct Controller class based on that.
  *
  * @author Claudio Walser
- * @package \Spaf\Core
- * @namespace \Spaf\Core
+ * @package Spaf\Core
+ * @namespace Spaf\Core
  */
 class Dispatcher {
 

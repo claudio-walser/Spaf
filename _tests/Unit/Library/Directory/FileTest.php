@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * The FileTest class tests any aspect of \Spaf\Library\Directory\File.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Unit\Library\Directory
- * @namespace \Spaf\_tests\Unit\Library\Directory
+ * @package Spaf\_tests\Unit\Library\Directory
+ * @namespace Spaf\_tests\Unit\Library\Directory
  */
 class FileTest extends \PHPUnit_Framework_TestCase {
 

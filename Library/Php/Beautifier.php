@@ -33,6 +33,13 @@ class Beautifier {
 	private $_files = array();
 
 	/**
+	 * Namespace is starting with a \ or not
+	 *
+	 * @var boolean
+	 */
+	private $_startingBackslash = false;
+
+	/**
 	 * Set files to handle with the beautifier
 	 *
 	 * @param mixed Array with \Spaf\Library\Directory\File objects or a single object to handle
@@ -77,7 +84,7 @@ class Beautifier {
 
 		$this->_handleTabs($file);
 		$this->_removeTrailingSpaces($file);
-
+		$this->_fixStartingBackslash($file);
 		return true;
 	}
 
@@ -110,6 +117,43 @@ class Beautifier {
 
 		foreach ($lines as $key => $line) {
 			$lines[$key] = rtrim($line);
+		}
+
+		$file->setLines($lines);
+
+		return true;
+	}
+
+	private function _fixStartingBackslash(\Spaf\Library\Directory\File $file) {
+		$lines = $file->getLines();
+
+		foreach ($lines as $key => $line) {
+			$line = ltrim($line);
+			//namespace \Spaf\Core
+			if (strtolower(substr($line, 0, 9)) === 'namespace') {
+				if ($this->_startingBackslash === true) {
+					$lines[$key] = str_replace('namespace Spaf', 'namespace \\Spaf', $line);
+				} else {
+					$lines[$key] = str_replace('namespace \\Spaf', 'namespace Spaf', $line);
+				}
+				echo $lines[$key] . "\n";
+			// * @package \Spaf\Core
+			} else if (strtolower(substr($line, 0, 10)) === '* @package') {
+				if ($this->_startingBackslash === true) {
+					$lines[$key] = str_replace('* @package Spaf', ' * @package \\Spaf', $line);
+				} else {
+					$lines[$key] = str_replace('* @package \\Spaf', ' * @package Spaf', $line);
+				}
+				echo $lines[$key] . "\n";
+			// * @namespace \Spaf\Core
+			} else if (strtolower(substr($line, 0, 12)) === '* @namespace') {
+				if ($this->_startingBackslash === true) {
+					$lines[$key] = str_replace('* @namespace Spaf', ' * @namespace \\Spaf', $line);
+				} else {
+					$lines[$key] = str_replace('* @namespace \\Spaf', ' * @namespace Spaf', $line);
+				}
+				echo $lines[$key] . "\n";
+			}
 		}
 
 		$file->setLines($lines);

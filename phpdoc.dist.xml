@@ -8,13 +8,13 @@
 		<target>../SpafDocs/</target>
 	</transformer>
 	<transformations>
-		<template name="responsive" />
+		<template name="new-black" />
 		<!--
 			Available templates:
+			* responsive
 			* new-black
 			* abstract
 			* zend
-			* responsive
 			* old-ocean
 			* checkstyle
 		-->		

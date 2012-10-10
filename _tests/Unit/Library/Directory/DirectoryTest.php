@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * The DirectoryTest class tests any aspect of \Spaf\Library\Directory\Directory.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Unit\Library\Directory
- * @namespace \Spaf\_tests\Unit\Library\Directory
+ * @package Spaf\_tests\Unit\Library\Directory
+ * @namespace Spaf\_tests\Unit\Library\Directory
  */
 class DirectoryTest extends \PHPUnit_Framework_TestCase {
 

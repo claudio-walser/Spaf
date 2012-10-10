@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Core\Controller;
  * The DispatcherTest class tests any aspect of \Spaf\Core\Controller\Index.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Core\Controller
- * @namespace \Spaf\_tests\Core\Controller
+ * @package Spaf\_tests\Core\Controller
+ * @namespace Spaf\_tests\Core\Controller
  */
 class NotFoundTest extends \PHPUnit_Framework_TestCase {
 

@@ -17,8 +17,8 @@ namespace Spaf\Core;
  * Any concrete controller should extend this class.
  *
  * @author Claudio Walser
- * @package \Spaf\Core
- * @namespace \Spaf\Core
+ * @package Spaf\Core
+ * @namespace Spaf\Core
  * @abstract
  */
 class Autoloader {

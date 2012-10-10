@@ -24,7 +24,7 @@ namespace Spaf\Library\Directory;
  * @namespace Spaf\Library\Directory
  */
 abstract class Abstraction {
-	
+
 	/**
 	 * Defines if a path has to be wellformed or not.
 	 *
@@ -98,7 +98,7 @@ abstract class Abstraction {
 
 		return array('path' => $path, 'name' => $name);
 	}
-	
+
 	/**
 	 * Every child class has to have a delete method.
 	 *

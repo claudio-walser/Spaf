@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core\Controller;
  * Mocking of \Spaf\Controller\NotFound.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Controller
- * @namespace \Spaf\_tests\Mock\Controller
+ * @package Spaf\_tests\Mock\Controller
+ * @namespace Spaf\_tests\Mock\Controller
  */
 class NotFound extends \Spaf\Core\Controller\NotFound {}
 

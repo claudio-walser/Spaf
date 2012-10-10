@@ -16,8 +16,8 @@ namespace Spaf\Core\Request;
  * Should be used to throw any request exception.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Request
- * @namespace \Spaf\Core\Request
+ * @package Spaf\Core\Request
+ * @namespace Spaf\Core\Request
  */
 class Exception extends \Exception {}
 

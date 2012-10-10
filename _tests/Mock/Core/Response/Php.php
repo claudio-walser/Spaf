@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core\Response;
  * PHP Response Mock
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core\Response
- * @namespace \Spaf\_tests\Mock\Core\Response
+ * @package Spaf\_tests\Mock\Core\Response
+ * @namespace Spaf\_tests\Mock\Core\Response
  */
 class Php extends \Spaf\Core\Response\Php {}
 

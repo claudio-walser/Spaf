@@ -16,8 +16,8 @@ namespace Spaf\_tests\Mock\Core;
  * Mocking of \Spaf\Core\Main.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core
- * @namespace \Spaf\_tests\Mock\Core
+ * @package Spaf\_tests\Mock\Core
+ * @namespace Spaf\_tests\Mock\Core
  */
 class Main extends \Spaf\Core\Main {}
 

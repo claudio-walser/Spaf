@@ -19,8 +19,8 @@ require_once('../Core/Autoloader.php');
  * Autoloader for test environment.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Mock\Core
- * @namespace \Spaf\_tests\Mock\Core
+ * @package Spaf\_tests\Mock\Core
+ * @namespace Spaf\_tests\Mock\Core
  */
 final class Autoloader Extends \Spaf\Core\Autoloader {
 

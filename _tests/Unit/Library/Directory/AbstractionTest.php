@@ -20,8 +20,8 @@ namespace Spaf\_tests\Unit\Library\Directory;
  *
  * @todo Test, or let me say, implement Mockable Classes for Directory and File
  * @author Claudio Walser
- * @package \Spaf\_tests\Unit\Library\Directory
- * @namespace \Spaf\_tests\Unit\Library\Directory
+ * @package Spaf\_tests\Unit\Library\Directory
+ * @namespace Spaf\_tests\Unit\Library\Directory
  */
 class AbstractionTest extends \PHPUnit_Framework_TestCase {
 

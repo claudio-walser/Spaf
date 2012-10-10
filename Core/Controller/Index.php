@@ -16,8 +16,8 @@ namespace Spaf\Core\Controller;
  * Default index controller.
  *
  * @author Claudio Walser
- * @package \Spaf\Core\Controller
- * @namespace \Spaf\Core\Controller
+ * @package Spaf\Core\Controller
+ * @namespace Spaf\Core\Controller
  */
 class Index extends Abstraction {
 

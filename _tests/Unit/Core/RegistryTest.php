@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Core;
  * The RegistryTest class tests any aspect of \Spaf\Core\Registry.
  *
  * @author Claudio Walser
- * @package \Spaf\_tests\Core
- * @namespace \Spaf\_tests\Core
+ * @package Spaf\_tests\Core
+ * @namespace Spaf\_tests\Core
  */
 class RegistryTest extends \PHPUnit_Framework_TestCase {
 
