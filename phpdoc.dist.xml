@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
-	<title><![CDATA[<b>Spaf  - S</b>imple <b>P</b>HP <b>A</b>pplication <b>F</b>ramework]]></title>
+	<title>Simple Php Application Framework</title>
 	<parser>
 		<target>../SpafDocs/</target>
 	</parser>
@@ -8,7 +8,7 @@
 		<target>../SpafDocs/</target>
 	</transformer>
 	<transformations>
-		<template name="new-black" />
+		<template name="responsive" />
 		<!--
 			Available templates:
 			* responsive
