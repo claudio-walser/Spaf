@@ -9,7 +9,7 @@
  * @reviewer TODO
  */
 namespace Spaf\Library\Cache\Driver;
-	
+
 /**
  * \Spaf\Library\Cache\Driver\Abstract
  *
@@ -53,6 +53,15 @@ abstract class Abstraction {
 	 */
     abstract public function add($key, $value, $ttl = null);
 
+	/**
+	 * Check if a variable exists by passing
+	 * its key
+	 *
+	 * @param string Key of the value
+	 * @return boolean True or false wheter the cache-key exists or not
+	 */
+	abstract public function exists($key);
+
     /*abstract public function update($key, $value, $expire = 0, $flag = false);
 
     abstract public function remove($key);
@@ -61,7 +70,7 @@ abstract class Abstraction {
 
     abstract public function update();
 
-    abstract public function exists();
+
 
     abstract public function debug();
     */
