@@ -8,7 +8,7 @@
 		<target>../SpafDocs/</target>
 	</transformer>
 	<transformations>
-		<template name="responsive" />
+		<template name="new-black" />
 		<!--
 			Available templates:
 			* responsive
@@ -21,7 +21,8 @@
 	</transformations>
 	<files>
 		<directory>.</directory>
-		<ignore>_tests/*</ignore>
-		<!--<ignore>_tools/*</ignore>-->
+		<ignore>_tests/Data/</ignore>
+		<!--<ignore>_tests/*</ignore>
+		<ignore>_tools/*</ignore>-->
 	</files>
 </phpdoc>
