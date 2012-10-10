@@ -37,10 +37,10 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	}
 
 	/**
-	 * Autoloader for the Cwa Framework classes
+	 * Autoloader for the Spaf Framework classes
 	 *
-	 * @param		String		Classname with complete namespace
-	 * @return		boolean
+	 * @param string Classname with complete namespace
+	 * @return boolean
 	 */
 	public function Spaf($name) {
 		$file = $this->_getFilename($name);
@@ -61,10 +61,10 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	}
 
 	/**
-	 * Autoloader for my Documentor classes
+	 * Autoloader for PHPUnit classes
 	 *
-	 * @param		String		Classname with complete namespace
-	 * @return		boolean
+	 * @param String Classname with complete namespace
+	 * @return boolean
 	 */
 	public function PHPUnit($name) {
 		$file = '/usr/share/php/' . $this->_getFilename($name, '_');
