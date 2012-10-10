@@ -4,8 +4,8 @@
  * $ID$
  *
  * Spaf/Library/Cache/Driver/Apc.php
- * @author Claudio Walser
  * @created Wed Oct 10 18:57:56 +0200 2012
+ * @author Claudio Walser
  * @reviewer TODO
  */
 namespace Spaf\Library\Cache\Driver;
@@ -46,8 +46,57 @@ class Apc extends Abstraction {
 		if ($ttl === null) {
 			$ttl = $this->_lifetime;
 		}
-		
-		return apc_add($key, $value, $ttl);
+
+		$return = apc_add($key, $value, $ttl);
+
+		if ($return === false) {
+			//throw new Exception('Value with key ' . $key . ' already exists.');
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get a value by key
+	 * Returns false if nothing found with this key
+	 *
+	 * @param string Key to fetch
+	 * @return mixed Stored value or false if nothing found
+	 */
+	public function get($key) {
+		$value = apc_fetch($key, $success);
+		if ($success === false) {
+			$value = false;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Check if a variable exists by key
+	 *
+	 * @param string Key of the value
+	 * @return boolean True or false wheter the cache-key exists or not
+	 */
+	public function exists($key) {
+		$key = (string) $key;
+
+		return apc_exists($key);
+	}
+
+	/**
+	 * Remove a variable by key
+	 *
+	 * @param string Key of the value to delete
+	 * @return boolean True if deletion was successful
+	 */
+	public function delete($key) {
+		$key = (string) $key;
+		// delete by key
+		apc_delete($key);
+
+		// return true if key does not exists anymore
+		return !$this->exists($key);
 	}
 
 }
