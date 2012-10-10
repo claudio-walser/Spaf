@@ -4,12 +4,22 @@
 /**
  * $Id$
  *
- * Spaf/tests/cli.php
+ * Spaf/_tools/beautify.php
  * @created Tue Sep 25 19:26:27 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
  */
 namespace Spaf\_tools;
+
+/**
+ * \Spaf\_tools\test
+ *
+ * Tool for beautify the code to Spaf rules
+ *
+ * @author Claudio Walser
+ * @package Spaf\_tools
+ * @namespace Spaf\_tools
+ */
 
 // hack server argv for windows console
 if (!isset($_SERVER['argv']) && !empty($_GET)) {
