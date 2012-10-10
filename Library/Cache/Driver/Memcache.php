@@ -42,16 +42,16 @@ class Memcache extends Abstraction {
 	 * an exeption will be thrown by any further operation.
 	 *
 	 * @param string Memcache Host
-	 * @param integer Port where this host is listening
+	 * @param integer Port where this host is listening, default to 11211
 	 * @param integer Connection timeout in seconds. Think twice before changing the default value of 1 second - you can lose all the advantages of caching if your connection is too slow.
 	 * @return boolean True if connection was successful, otherwise false
 	 */
-	public function connect($host, $port, $timeout = 1) {
+	public function connect($host, $port = 11211, $timeout = 1) {
 		if ($this->_memcache !== null) {
 			throw new Exception('You can only connect to one memcache master.');
 		}
 
-		$this->_memcache = memcache_connect($host, $port, $timeout);
+		$this->_memcache = \memcache_connect($host, $port, $timeout);
 		if ($this->_memcache === false) {
 			$this->_memcache = null;
 			throw new Exception('Could not connect to memcache server');
@@ -106,6 +106,16 @@ class Memcache extends Abstraction {
 		return true;
 	}
 
+	/**
+	 * Get a value by key
+	 * Returns false if nothing found with this key
+	 *
+	 * @param string Key to fetch
+	 * @return mixed Stored value or false if nothing found
+	 */
+	public function get($key) {
+		return $this->_memcache->get($key);
+	}
 
 	/**
 	 * Check if a variable exists by key
@@ -131,15 +141,8 @@ class Memcache extends Abstraction {
 		$this->_checkInstance();
 
 		$key = (string) $key;
-		// delete by key
-		//apc_delete($key);
-
-		// return true if key does not exists anymore
-		return !$this->exists($key);
+		return $this->_memcache->delete($key);
 	}
-
-
-
 
 	/**
 	 * Check if memcache instance exists.
