@@ -11,61 +11,25 @@
 namespace Spaf\Library\Cache;
 
 /**
- * Abstract 
+ * Abstract
  */
 abstract class Abstraction {
-    
-    /**
-     * Default cache type. Possible values are
-     * memcache || apc
-     * 
-     * @var string
-     */
-    private static $_cacheType = 'memcache';
-    
-    private static $_allowedCacheTypes = array('apc', 'memcache');
-    
-    /**
-     * Factory instances
-     * 
-     * @var array Array with Spaf\Library\Cache\Abstraction Objects
-     */
-    private static $_instances = array();
-    
-    public static function factory($cacheType = 'memcache') {
-        
-        $cacheType = strtolower($cacheType);
-        
-        if (!in_array($cacheType, self::$_allowedCacheTypes)) {
-            $cacheType = self::$_cacheType;
-        }
-        
-        if (!isset(self::$_instances[$cacheType]) || !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Abstraction) {
-            switch ($cacheType) {
-                case 'apc':
-                    self::$_instances['apc'] = new Apc();
-                    break;
-                default:
-                    self::$_instances['memcache'] = new Memcache();
-                    break;
-            }
-        }
-    }
-    
+
+    /*
     abstract public function store($key, $value, $expire = 0, $flag = false);
-    
-    abstract public function overwrite($key, $value, $expire = 0, $flag = false);
-    
+
+    abstract public function update($key, $value, $expire = 0, $flag = false);
+
     abstract public function remove($key);
-    
+
     abstract public function fetch();
-    
+
     abstract public function update();
-    
+
     abstract public function exists();
-    
+
     abstract public function debug();
-    
+    */
 }
 
 
@@ -116,7 +80,8 @@ Memcache — The Memcache class
 
 Memcache Funktionen
 
-    memcache_debug — Turn debug output on/off  
+    memcache_debug — Turn debug output on/off
 
 
  */
+?>

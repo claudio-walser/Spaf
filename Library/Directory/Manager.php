@@ -13,7 +13,7 @@ namespace Spaf\Library\Directory;
 /**
  * \Spaf\Library\Directory\Manager
  *
- * The base directory class.
+ * The directory manager class.
  * This abstract class handles some base stuff,
  * like creating Directory and File objects of a directory path.
  * Also that class is a main tier for handling utf-8 de-/encodes

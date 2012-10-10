@@ -11,20 +11,9 @@
 namespace Spaf\_tools;
 
 /**
- * \Spaf\_tools\test
+ * \Spaf\_tools\Test
  *
  * Tool for running the tests
- *
- * @author Claudio Walser
- * @package Spaf\_tools
- * @namespace Spaf\_tools
- */
-
-
-/**
- * \Spaf\_tests\Test
- *
- * Autoloader for test environment.
  *
  * @author Claudio Walser
  * @package Spaf\_tools
