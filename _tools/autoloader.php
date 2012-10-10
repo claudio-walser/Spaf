@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\_tests\Unit;
+namespace Spaf\_tools;
 
 // Spaf abstract autoloader class for extending here
 require_once('../Core/Autoloader.php');

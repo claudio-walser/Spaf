@@ -9,6 +9,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
+namespace Spaf\_tools;
 
 // hack server argv for windows console
 if (!isset($_SERVER['argv']) && !empty($_GET)) {
@@ -27,7 +28,7 @@ chdir(__DIR__);
 
 // requiere test-autoloader environment
 require_once('autoloader.php');
-$loader = new \Spaf\_tests\Unit\Autoloader(false);
+$loader = new \Spaf\_tools\Autoloader(false);
 
 // find all test files
 $directory = new \Spaf\Library\Directory\Directory('../_tests/');

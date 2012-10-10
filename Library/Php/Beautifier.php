@@ -124,11 +124,20 @@ class Beautifier {
 		return true;
 	}
 
+	/**
+	 * Sometimes, i tend to add a starting backslash in namespace defintion or tags
+	 * it might work but end up in a documentation error.
+	 * So here comes the fix.
+	 *
+	 * @param \Spaf\Library\Directory\File File to process
+	 * @return boolean True
+	 */
 	private function _fixStartingBackslash(\Spaf\Library\Directory\File $file) {
 		$lines = $file->getLines();
 
 		foreach ($lines as $key => $line) {
 			$line = ltrim($line);
+
 			//namespace \Spaf\Core
 			if (strtolower(substr($line, 0, 9)) === 'namespace') {
 				if ($this->_startingBackslash === true) {
@@ -136,7 +145,8 @@ class Beautifier {
 				} else {
 					$lines[$key] = str_replace('namespace \\Spaf', 'namespace Spaf', $line);
 				}
-				echo $lines[$key] . "\n";
+				$lines[$key] = ltrim($lines[$key]);
+
 			// * @package \Spaf\Core
 			} else if (strtolower(substr($line, 0, 10)) === '* @package') {
 				if ($this->_startingBackslash === true) {
@@ -144,7 +154,8 @@ class Beautifier {
 				} else {
 					$lines[$key] = str_replace('* @package \\Spaf', ' * @package Spaf', $line);
 				}
-				echo $lines[$key] . "\n";
+				$lines[$key] = ' ' . ltrim($lines[$key]);
+
 			// * @namespace \Spaf\Core
 			} else if (strtolower(substr($line, 0, 12)) === '* @namespace') {
 				if ($this->_startingBackslash === true) {
@@ -152,7 +163,8 @@ class Beautifier {
 				} else {
 					$lines[$key] = str_replace('* @namespace \\Spaf', ' * @namespace Spaf', $line);
 				}
-				echo $lines[$key] . "\n";
+				$lines[$key] = ' ' . ltrim($lines[$key]);
+
 			}
 		}
 

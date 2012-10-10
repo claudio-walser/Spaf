@@ -22,6 +22,6 @@
 	<files>
 		<directory>.</directory>
 		<ignore>_tests/*</ignore>
-		<ignore>_tools/*</ignore>
+		<!--<ignore>_tools/*</ignore>-->
 	</files>
 </phpdoc>
