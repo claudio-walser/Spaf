@@ -33,7 +33,7 @@ class ApcTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var string Key for this tests
 	 */
-	private $_key = 'Spaf\\_tests\\Unit\\Library\\Cache\Driver\\ApcTestSack';
+	private $_key = 'Spaf\\_tests\\Unit\\Library\\Cache\Driver\\ApcTest';
 
 	/**
 	 * Content for executing this tests
