@@ -53,7 +53,7 @@ abstract class Manager {
 	 *
 	 * @return array All cache types
 	 */
-	public static function getAllowedCacheTypes() {
+	public static function getAllowedTypes() {
 		return self::$_allowedCacheTypes;
 	}
 
