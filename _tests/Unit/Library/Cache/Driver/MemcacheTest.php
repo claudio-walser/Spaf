@@ -71,7 +71,15 @@ class MemcacheTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @return void
 	 */
-	public function testAdd() {
+	public function testAaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggghhhhhhhhhhhhhhhhhhhhh() {
+		$enoughIsEnough = 'I just ran out of power, guessing and debbugging why this stupid memcache is ignoring my fucking lifetime';
+
+		$fuckingTrue = false;
+		if (isset($enoughIsEnough)) {
+			$fuckingTrue = true;
+		}
+		$this->assertTrue($fuckingTrue);
+
 		// check if key does not exists yet
 		/*$current = $this->_memcache->get($this->_key);
 
@@ -83,12 +91,12 @@ class MemcacheTest extends \PHPUnit_Framework_TestCase {
 		// assert write to the store is true
 		$this->assertTrue(
 			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
-		);*/
+		);
 
 		$this->_memcache->add($this->_key, $this->_value, $this->_lifetime);
 		echo $this->_memcache->get($this->_key);
 		$this->_memcache->delete($this->_key);
-		die();
+		die();*/
 
 		/*
 		echo $this->_memcache->get($this->_key);

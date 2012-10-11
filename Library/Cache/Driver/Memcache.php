@@ -95,9 +95,13 @@ class Memcache extends Abstraction {
 			$ttl = $this->_lifetime;
 		}
 
+		$compress = is_bool($value) || is_int($value) || is_float($value) ? false : MEMCACHE_COMPRESSED;
+
 		// memcache needs a timestamp, so add time to life to current time()
-		$ttl = time() + $ttl;
-		$return = $this->_memcache->add($key, $value, $ttl);
+		//$ttl = time() + $ttl;
+		$return = $this->_memcache->set($key, $value, $ttl, $compress);
+
+		var_dump($ttl);
 
 		if ($return === false) {
 			throw new Exception('Value with key ' . $key . ' already exists.');
@@ -109,12 +113,14 @@ class Memcache extends Abstraction {
 	/**
 	 * Get a value by key
 	 * Returns false if nothing found with this key
+	 * PHP Notice is hidden if value not set yet.
 	 *
 	 * @param string Key to fetch
-	 * @return mixed Stored value or false if nothing found
+	 * @return mixed Stored value or null if nothing found
 	 */
 	public function get($key) {
-		return $this->_memcache->get($key);
+		$value = @$this->_memcache->get($key);
+		return $value === false ? null : $value;
 	}
 
 	/**
@@ -127,8 +133,7 @@ class Memcache extends Abstraction {
 		$this->_checkInstance();
 
 		$key = (string) $key;
-
-		return true;//apc_exists($key);
+		return $this->get($key) === null ? false : true;//apc_exists($key);
 	}
 
 	/**
@@ -142,6 +147,10 @@ class Memcache extends Abstraction {
 
 		$key = (string) $key;
 		return $this->_memcache->delete($key);
+	}
+
+	public function clear() {
+		return $this->_memcache->flush();
 	}
 
 	/**

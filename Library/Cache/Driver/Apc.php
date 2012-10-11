@@ -50,7 +50,7 @@ class Apc extends Abstraction {
 		$return = apc_add($key, $value, $ttl);
 
 		if ($return === false) {
-			//throw new Exception('Value with key ' . $key . ' already exists.');
+			throw new Exception('Value with key ' . $key . ' already exists.');
 		}
 
 		return true;
@@ -61,12 +61,12 @@ class Apc extends Abstraction {
 	 * Returns false if nothing found with this key
 	 *
 	 * @param string Key to fetch
-	 * @return mixed Stored value or false if nothing found
+	 * @return mixed Stored value or null if nothing found
 	 */
 	public function get($key) {
 		$value = apc_fetch($key, $success);
 		if ($success === false) {
-			$value = false;
+			$value = null;
 		}
 
 		return $value;

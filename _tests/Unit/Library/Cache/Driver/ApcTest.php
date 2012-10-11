@@ -67,11 +67,11 @@ class ApcTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test adding a value
+	 * Test adding and fetching a value
 	 *
 	 * @return void
 	 */
-	public function testAdd() {
+	public function testAddGet() {
 		// check if key does not exists yet
 		$this->assertFalse(
 			$this->_apc->exists($this->_key)
@@ -82,9 +82,15 @@ class ApcTest extends \PHPUnit_Framework_TestCase {
 			$this->_apc->add($this->_key, $this->_value, $this->_lifetime)
 		);
 
+		// assert content
+		$this->assertEquals(
+			$this->_value,
+			$this->_apc->get($this->_key)
+		);
+
 		// boy apc is crap
-		/*//check lifetime with 1 second
-		$this->_apc->delete($this->_key);
+		//check lifetime with 1 second
+		/*$this->_apc->delete($this->_key);
 		$this->_apc->add($this->_key, $this->_value, 1);
 		// sleep 1.2 seconds
 		var_dump($this->_apc->get($this->_key));
