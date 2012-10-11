@@ -59,6 +59,9 @@ abstract class Manager {
 	 * different instances of the same type.
 	 * I'll see if this really is usefull, if not,
 	 * i have to pimp this a bit.
+	 *
+	 * @param string Logtype, to see possible values, call Spaf\Library\Log\Manager::getAllowedTypes()
+	 * @return Spaf\Library\Loc\Driver\Abstraction Object of the asked logtype or file logger as default
 	 */
     public static function factory($logType = 'file') {
         // always lower case
@@ -71,9 +74,9 @@ abstract class Manager {
 		// check and if needed, create instance
         if (!isset(self::$_instances[$logType]) || !self::$_instances[$logType] instanceof \Spaf\Library\Log\Abstraction) {
             switch ($logType) {
-                case 'apc':
+                /*case 'apc':
                     self::$_instances[$logType] = new Driver\Database();
-                    break;
+                    break;*/
                 default:
                     self::$_instances[$logType] = new Driver\File();
                     break;

@@ -21,8 +21,20 @@ namespace Spaf\_tests\Unit\Core\Controller;
  */
 class NotFoundTest extends \PHPUnit_Framework_TestCase {
 
+	/**
+	 * Current controller instance
+	 *
+	 * @var \Spaf\Core\Controller\NotFound
+	 */
 	private $_controller = null;
+
+	/**
+	 * Mocked registry to pass
+	 *
+	 * @var \Spaf\_tests\Mock\Core\Registry
+	 */
 	private $_registry = null;
+
 	/**
 	 * Setup both, normal and mock registry objects
 	 *
@@ -43,7 +55,9 @@ class NotFoundTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test the return value of the default view
+	 * Test the return value of the not-found view
+	 *
+	 * @return void
 	 */
 	public function testView() {
 		$expectedData = array(

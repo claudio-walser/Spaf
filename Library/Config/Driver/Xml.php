@@ -63,7 +63,6 @@ class Xml extends Abstraction {
 		return $array;
 	}
 
-
 	/**
 	 * Write the config back to the xml file currently set.
 	 *

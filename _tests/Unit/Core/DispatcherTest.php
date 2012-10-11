@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Core/DispatcherTest.php
+ * Spaf/_tests/Unit/Core/DispatcherTest.php
  * @created Wed Oct 3 19:56:13 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,13 +11,13 @@
 namespace Spaf\_tests\Unit\Core;
 
 /**
- * \Spaf\_tests\Core\DispatcherTest
+ * \Spaf\_tests\Unit\Core\DispatcherTest
  *
  * The DispatcherTest class tests any aspect of \Spaf\Core\Dispatcher.
  *
  * @author Claudio Walser
- * @package Spaf\_tests\Core
- * @namespace Spaf\_tests\Core
+ * @package Spaf\_tests\Unit\Core
+ * @namespace Spaf\_tests\Unit\Core
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
@@ -40,6 +40,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test the default values of \Spaf\Core\Dispatcher.
+	 *
+	 * @return void
 	 */
 	public function testDefaultProperties() {
 		$defaultController = '\\Spaf\\Core\\Controller\\Index';
@@ -70,6 +72,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Test to set a registry object and compare
 	 * the return value of getRegistry with your given object.
+	 *
+	 * @return void
 	 */
 	public function setGetRegistry() {
 		$registry = \Spaf\_tests\Mock\Core\Registry::getInstance();
@@ -87,6 +91,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Tests the methods to set and get a defaultController class
+	 *
+	 * @return void
 	 */
 	public function testSetGetDefaultController() {
 		$controllerName = '\\Spaf\\_tests\\Mock\\Core\\Controller\\Index';
@@ -100,6 +106,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Tests the methods to set and get a notFoundController class
+	 *
+	 * @return void
 	 */
 	public function testSetGetNotFoundController() {
 		$controllerName = '\\Spaf\\_tests\\Mock\\Core\\Controller\\NotFound';
@@ -113,6 +121,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Tests the methods to set and get a notFoundController class
+	 *
+	 * @return void
 	 */
 	public function testSetGetDefaultAction() {
 		$methodName = 'viewMock';
@@ -125,7 +135,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test the dispatch method itself.
+	 *
 	 * @TODO this one has to be implemented
+	 * @return void
 	 */
 	public function testDispatch() {
 		return;
@@ -146,6 +158,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test all exceptions this class can throw
+	 *
+	 * @return void
 	 */
 	public function testNotFoundControllerException() {
 		// try to set an inexistent notFound Controller Class
@@ -155,6 +169,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test all exceptions this class can throw
+	 *
+	 * @return void
 	 */
 	public function testDefaultControllerException() {
 		// try to set an inexistent notFound Controller Class

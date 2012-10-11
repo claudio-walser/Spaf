@@ -21,11 +21,22 @@ namespace Spaf\_tests\Unit\Core\Controller;
  */
 class IndexTest extends \PHPUnit_Framework_TestCase {
 
+	/**
+	 * Current controller instance
+	 *
+	 * @var \Spaf\Core\Controller\Index
+	 */
 	private $_controller = null;
+
+	/**
+	 * Mocked registry to pass
+	 *
+	 * @var \Spaf\_tests\Mock\Core\Registry
+	 */
 	private $_registry = null;
 
 	/**
-	 * Setup both, normal and mock registry objects
+	 * Setup some objects
 	 *
 	 * @return void
 	 */
@@ -44,6 +55,8 @@ class IndexTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test the return value of the default view
+	 *
+	 * @return void
 	 */
 	public function testView() {
 		$expectedData = array(

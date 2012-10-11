@@ -63,6 +63,9 @@ abstract class Manager {
 	 * different instances of the same type.
 	 * I'll see if this really is usefull, if not,
 	 * i have to pimp this a bit.
+	 *
+	 * @param string Cachetype, to see possible values, call Spaf\Library\Cache\Manager::getAllowedTypes()
+	 * @return Spaf\Library\Cache\Driver\Abstraction Object of the asked cachetype or memcache object as default
 	 */
     public static function factory($cacheType = 'memcache') {
         // always lower case

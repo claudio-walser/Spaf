@@ -43,7 +43,6 @@ class Json extends Abstraction {
 		return $array;
 	}
 
-
 	/**
 	 * Write the config back to the json file currently set.
 	 *
@@ -57,6 +56,6 @@ class Json extends Abstraction {
 		return $this->_sourceFile->write();
 	}
 
-
 }
+
 ?>
