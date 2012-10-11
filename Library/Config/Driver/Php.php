@@ -50,7 +50,6 @@ class Php extends Abstraction {
 
 	}
 
-
 	/**
 	 * Write the config back to the php file currently set.
 	 *
@@ -88,6 +87,6 @@ class Php extends Abstraction {
 		return $this->_sourceFile->write();
 	}
 
-
 }
+
 ?>

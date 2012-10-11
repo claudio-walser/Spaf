@@ -55,7 +55,7 @@ class File extends Abstraction {
 
 		$content = $this->_sourceFile->getContent();
 		$content .= "\n" . $log;
-		
+
 		$this->_sourceFile->setContent($content);
 	}
 

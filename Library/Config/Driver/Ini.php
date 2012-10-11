@@ -43,7 +43,6 @@ class Ini extends Abstraction {
 		return $array;
 	}
 
-
 	/**
 	 * Write the config back to the ini file currently set.
 	 *
@@ -73,6 +72,6 @@ class Ini extends Abstraction {
 		return $this->_sourceFile->write();
 	}
 
-
 }
+
 ?>

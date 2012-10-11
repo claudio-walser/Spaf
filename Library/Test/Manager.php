@@ -91,7 +91,7 @@ class Manager {
 	 *
 	 * @var string
 	 */
-	private $_method = 'help';
+	private $_method = 'execute';
 
 	/**
 	 * Found tests, an array with class-and filenames

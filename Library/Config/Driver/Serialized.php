@@ -43,7 +43,6 @@ class Serialized extends Abstraction {
 		return $array;
 	}
 
-
 	/**
 	 * Write the config back to the serialized php file currently set.
 	 *
@@ -57,6 +56,6 @@ class Serialized extends Abstraction {
 		return $this->_sourceFile->write();
 	}
 
-
 }
+
 ?>

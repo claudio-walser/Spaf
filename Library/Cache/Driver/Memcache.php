@@ -149,6 +149,13 @@ class Memcache extends Abstraction {
 		return $this->_memcache->delete($key);
 	}
 
+
+	/**
+	 * Clears the whole cache
+	 *
+	 * @return boolean True
+	 */
+
 	public function clear() {
 		return $this->_memcache->flush();
 	}

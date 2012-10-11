@@ -32,11 +32,16 @@ class Registry extends \Spaf\Core\Registry {
 	 * Private methods for beeing singleton
 	 */
 	private function __construct() {}
+
+	/**
+	 * Private methods for beeing singleton
+	 */
 	private function __clone() {}
 
 	/**
 	 * mock get instance, return the mock for sure
 	 *
+	 * @param \Spaf\Core\Registry Any registry object to change its instance druing runtime
 	 * @return \Spaf\_tests\Mock\Core\Registry
 	 */
 	public static function getInstance(\Spaf\Core\Registry $registry = null) {

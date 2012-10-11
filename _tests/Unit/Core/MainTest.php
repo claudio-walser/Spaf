@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Core/MainTest.php
+ * Spaf/_tests/Unit/Core/MainTest.php
  * @created Wed Sep 26 19:26:27 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,13 +11,13 @@
 namespace Spaf\_tests\Unit\Core;
 
 /**
- * \Spaf\_tests\Core\MainTest
+ * \Spaf\_tests\Unit\Core\MainTest
  *
  * The MainTest class tests any aspect of \Spaf\Core\Main.
  *
  * @author Claudio Walser
- * @package Spaf\_tests\Core
- * @namespace Spaf\_tests\Core
+ * @package Spaf\_tests\Unit\Core
+ * @namespace Spaf\_tests\Unit\Core
  */
 class MainTest extends \PHPUnit_Framework_TestCase {
 
@@ -174,6 +174,7 @@ class MainTest extends \PHPUnit_Framework_TestCase {
 	 * Test setRequest and getRequest.
 	 * Means test it by normal request object.
 	 *
+	 * @todo Implement with mock objects not sending any headers
 	 * @return void
 	  */
 	/*public function testSetGetResponse() {

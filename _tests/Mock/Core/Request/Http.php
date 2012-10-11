@@ -37,7 +37,7 @@ class Http extends \Spaf\Core\Request\Http {
 	 *
 	 * @param string Name of the key
 	 * @param mixed Default value to return if there is no value with the given key
-	 * @return string Value of the given key or the default value if nothing found
+	 * @return string The mock is always returning the given default value
 	 */
 	public function getParam($name, $default = null) {
 		return $default;
@@ -47,6 +47,8 @@ class Http extends \Spaf\Core\Request\Http {
 	 * Shortcut for self::getParam
 	 *
 	 * @see \Spaf\Core\Request\Http::getParam()
+	 * @param string Keyname
+	 * @param mixed Default value to return if nothing found
 	 */
 	public function get($name, $default = null) {
 		return $this->getParam($name, $default);
