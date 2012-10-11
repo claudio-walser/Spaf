@@ -11,10 +11,10 @@
 namespace Spaf\_tools;
 
 /**
+ * \Spaf\_tools\TestCache
+ *
  * Class to test the cache in php-fpm
  * on nginx
- *
- * WTF?
  *
  * @author Claudio Walser
  * @package Spaf\_tools

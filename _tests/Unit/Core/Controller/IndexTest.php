@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Core/Controller/IndexTest.php
+ * Spaf/_tests/Unit/Core/Controller/IndexTest.php
  * @created Wed Oct 3 19:56:13 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -16,8 +16,8 @@ namespace Spaf\_tests\Unit\Core\Controller;
  * The DispatcherTest class tests any aspect of \Spaf\Core\Controller\Index.
  *
  * @author Claudio Walser
- * @package Spaf\_tests\Core\Controller
- * @namespace Spaf\_tests\Core\Controller
+ * @package Spaf\_tests\Unit\Core\Controller
+ * @namespace Spaf\_tests\Unit\Core\Controller
  */
 class IndexTest extends \PHPUnit_Framework_TestCase {
 
