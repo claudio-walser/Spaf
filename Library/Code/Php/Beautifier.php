@@ -3,16 +3,16 @@
 /**
  * $Id$
  *
- * Spaf/Library/Php/Beautifier.php
+ * Spaf/Library/Code/Php/Beautifier.php
  * @created Mon Oct 08 23:28:54 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Library\Php;
+namespace Spaf\Library\Code\Php;
 
 
 /**
- * \Spaf\Library\Php\Beautifier
+ * \Spaf\Library\Code\Php\Beautifier
  *
  * The Directory class represents a directory object and
  * gives you some functionanlity like
