@@ -8,7 +8,7 @@
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Log\Config;
+namespace Spaf\Library\Log;
 
 /**
  * \Spaf\Library\Log\Exception
