@@ -18,6 +18,9 @@ namespace Spaf\Library\Validator;
  * Abstract validation class, any concrete
  * validator has to extend this
  *
+ * @todo Maybe a session validator for proof of session-hijacking
+ * @todo Implement something for setting and fetching a error message for what currently went wrong
+ * @todo Implement something for convert input to a valid value. Maybe usefull for guessing something in a form input
  * @author Claudio Walser
  * @package Spaf\Library\Validator
  * @namespace Spaf\Library\Validator

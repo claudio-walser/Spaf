@@ -1,9 +1,18 @@
 <?php
 
 /**
+ * $ID$
+ *
+ * .php
+ * @created Wed Oct 10 21:11:04 +0200 2012
+ * @author Claudio Walser
+ * @reviewer TODO
+ */
+
+/**
  * $Id$
  *
- * Spaf/_tests/Unit/Library/Validator/EmailTest.php
+ * Spaf/_tests/Unit/Library/Validator/UrlTest.php
  * @created Wed Oct 10 21:11:04 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,29 +20,29 @@
 namespace Spaf\_tests\Unit\Library\Validator;
 
 /**
- * \Spaf\_tests\Unit\Library\Validator\EmailTest
+ * \Spaf\_tests\Unit\Library\Validator\UrlTest
  *
- * The ArrayTest class tests any aspect of \Spaf\Library\Validator\Email.
+ * The ArrayTest class tests any aspect of \Spaf\Library\Validator\Url.
  *
  * @author Claudio Walser
  * @package Spaf\_tests\Unit\Library\Validator
  * @namespace Spaf\_tests\Unit\Library\Validator
  */
-class EmailTest extends \PHPUnit_Framework_TestCase {
+class UrlTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Validator instance
 	 *
-	 * @var \Spaf\Library\Validator\Email
+	 * @var \Spaf\Library\Validator\Url
 	 */
 	private $_validator = null;
 
 	/**
-	 * TestEmail
+	 * TestUrl
 	 *
 	 * @var string
 	 */
-	private $_testValue = 'info@uwd.ch';
+	private $_testValue = 'uwd.ch';
 
 	/**
 	 * Setup
@@ -41,16 +50,15 @@ class EmailTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-		$this->_validator = new \Spaf\Library\Validator\Email($this->_testValue);
+		$this->_validator = new \Spaf\Library\Validator\Url($this->_testValue);
 	}
 
 	/**
-	 * Test simple and fast email validation
+	 * Test simple and fast Url validation
 	 *
 	 * @return void
 	 */
 	public function testSimple() {
-		// needs an internet connection during the tests
 		$this->assertTrue(
 			$this->_validator->validate()
 		);
@@ -86,29 +94,11 @@ class EmailTest extends \PHPUnit_Framework_TestCase {
 	public function testDnsValidation() {
 		// needs an internet connection during the tests
 		$this->_validator->useDnsValidation(true);
-		// should be true, on the given address the mx is mail.uwd.ch
+		// should be true, on the given address since its reachable over the net
 		$this->assertTrue(
 			$this->_validator->validate()
 		);
 	}
-
-	/**
-	 * Test with mx validation
-	 * Needs some time cause of the dns request
-	 * over network.
-	 * Fails without established network connection
-	 *
-	 * @return void
-	 */
-	public function testMxValidation() {
-		// needs an internet connection during the tests
-		$this->_validator->useMxValidation(true);
-		// should be true, on the given address the mx is mail.uwd.ch
-		$this->assertTrue(
-			$this->_validator->validate()
-		);
-	}
-
 
 	/**
 	 * Release some memory maybe

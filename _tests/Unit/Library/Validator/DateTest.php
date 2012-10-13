@@ -24,7 +24,7 @@ class DateTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Validator instance
 	 *
-	 * @var \Spaf\Library\Validator\Array
+	 * @var \Spaf\Library\Validator\Date
 	 */
 	private $_validator = null;
 
