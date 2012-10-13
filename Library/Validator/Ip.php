@@ -35,6 +35,9 @@ class Ip extends Abstraction {
 	/**
 	 * Set allow wildcards to true.
 	 * If set, wildcard * is allowed as well
+	 *
+	 * @param boolean True for using wildcard *
+	 * @return boolean True
 	 */
 	public function useWildcards($bool) {
 		$this->_allowWildcards = (bool) $bool;
