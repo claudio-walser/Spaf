@@ -26,7 +26,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Abstraction {
+abstract class Abstraction {
 
 	/**
 	 * Value to validate
@@ -46,6 +46,26 @@ class Abstraction {
 	 * @var integer
 	 */
 	protected $_maxLength = null;
+
+	/**
+	 * Set min length
+	 *
+	 * @param integer Min Length
+	 * @return boolean True
+	 */
+	public function setMinLength($length) {
+		$this->_minLength = $length;
+	}
+
+	/**
+	 * Set max length
+	 *
+	 * @param integer Max Length
+	 * @return boolean True
+	 */
+	public function setMaxLength($length) {
+		$this->_maxLength = $length;
+	}
 
 	/**
 	 * Constructor is taking a value and creates the validator object
@@ -84,23 +104,14 @@ class Abstraction {
 	}
 
 	/**
-	 * Set min length
+	 * Get a guess from validator class
+	 * Might be usefull in case of email or url validation.
+	 * Might be not usefull at all :p
 	 *
-	 * @param integer Min Length
-	 * @return boolean True
+	 * @return mixed Guess what the given value could mean
 	 */
-	public function setMinLength($length) {
-		$this->_minLength = $length;
-	}
-
-	/**
-	 * Set max length
-	 *
-	 * @param integer Max Length
-	 * @return boolean True
-	 */
-	public function setMaxLength($length) {
-		$this->_maxLength = $length;
+	public function getGuess() {
+		return $this->_value;
 	}
 
 	/**
@@ -108,25 +119,7 @@ class Abstraction {
 	 *
 	 * @return boolean Returns the validation result
 	 */
-	public function validate() {
-
-		// chekck min length
-		if ($this->_minLength !== null) {
-			if (strlen($this->_value) < $this->_minLength) {
-				return false;
-			}
-		}
-
-		// check max length
-		if ($this->_maxLength !== null) {
-			if (strlen($this->_value) > $this->_maxLength) {
-				return false;
-			}
-		}
-
-		// return true
-		return true;
-	}
+	abstract public function validate();
 
 }
 
