@@ -29,25 +29,31 @@ class ArraysTest extends \PHPUnit_Framework_TestCase {
 	private $_validator = null;
 
 	/**
+	 * Array to run the tests with
+	 *
+	 * @var array
+	 */
+	private $_testArray = array(
+		'one',
+		'two',
+		'three'
+	);
+
+	/**
 	 * Setup
 	 *
 	 * @return void
 	 */
 	protected function setUp() {
-		$testArray = array(
-			'one',
-			'two',
-			'three'
-		);
 
-		$this->_validator = new \Spaf\Library\Validator\Arrays($testArray);
+		$this->_validator = new \Spaf\Library\Validator\Arrays($this->_testArray);
 
 		unset($directory);
 		unset($directories);
 	}
 
 	/**
-	 * Test getName.
+	 * Test minLength.
 	 *
 	 * @return void
 	 */
@@ -61,9 +67,47 @@ class ArraysTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(
 			$this->_validator->validate()
 		);
-
 	}
 
+	/**
+	 * Test minLength.
+	 *
+	 * @return void
+	 */
+	public function testMaxLength() {
+		$this->_validator->setMaxLength(3);
+		$this->assertTrue(
+			$this->_validator->validate()
+		);
+
+		$this->_validator->setMaxLength(2);
+		$this->assertFalse(
+			$this->_validator->validate()
+		);
+	}
+
+	/**
+	 * Test set a new value during runtime
+	 */
+	public function testSetValue() {
+		$newTestArray = array(
+			'one',
+			'two'
+		);
+
+		$this->assertEquals(
+			$this->_testArray,
+			$this->_validator->getValue()
+		);
+
+		$this->_validator->setValue($newTestArray);
+
+		$this->assertEquals(
+			$newTestArray,
+			$this->_validator->getValue()
+		);
+
+	}
 
 	/**
 	 * Release some memory maybe

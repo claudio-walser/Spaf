@@ -55,6 +55,10 @@ class Abstraction {
 
 	/**
 	 * Set a value after construction
+	 * You most probably want to overwrite this
+	 * in any child class for doing
+	 * type hinting or maybe type casting or any other initial
+	 * operation.
 	 *
 	 * @param mixed Value to validate
 	 * @return boolean True
@@ -63,6 +67,17 @@ class Abstraction {
 		$this->_value = $value;
 
 		return true;
+	}
+
+	/**
+	 * Get the value. Note setValue most probably does
+	 * a type casting on it, so maybe you wont get back
+	 * the exact same value as you set.
+	 *
+	 * @return mixed Value
+	 */
+	public function getValue() {
+		return $this->_value;
 	}
 
 	/**
@@ -91,10 +106,6 @@ class Abstraction {
 	 * @return boolean Returns the validation result
 	 */
 	public function validate() {
-		// if no value is set, throw an exeception
-		if ($this->_value === null) {
-			throw new Exception('Doesent make any sense to validate something without setting a value first.');
-		}
 
 		// chekck min length
 		if ($this->_minLength !== null) {

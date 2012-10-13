@@ -32,6 +32,15 @@ namespace Spaf\Library\Validator;
 class Arrays extends Abstraction {
 
 	/**
+	 * Just overwrite it for doint type hinting
+	 *
+	 * @param array Array to validate
+	 */
+	public function setValue(array $array) {
+		parent::setValue($array);
+	}
+
+	/**
 	 * The array validator cannot use
 	 * parents validation since its working with arrays
 	 * instead of scalars.
