@@ -49,7 +49,6 @@ class String extends Abstraction {
 		return is_string($this->_value);
 	}
 
-
 }
 
 ?>

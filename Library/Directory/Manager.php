@@ -19,6 +19,7 @@ namespace Spaf\Library\Directory;
  * Also that class is a main tier for handling utf-8 de-/encodes
  * and well formatted paths.
  *
+ * @todo Think about put folder/file actions into traits
  * @author Claudio Walser
  * @package Spaf\Library\Directory
  * @namespace Spaf\Library\Directory
@@ -106,6 +107,36 @@ abstract class Manager {
 		}
 
 		return is_readable($file);
+	}
+
+	/**
+	 * Returns file size in byte or false
+	 * if the file doesnt exist.
+	 *
+	 * @param string Path to file
+	 * @return mixed File size in byte or false in case of an error
+	 */
+	public static function getFileSize($file) {
+		if (self::fileExists($file) === false) {
+			return false;
+		}
+
+		return filesize($file);
+	}
+
+	/**
+	 * Returns file size in byte or false
+	 * if the file doesnt exist.
+	 *
+	 * @param string Path to file
+	 * @return mixed File size in byte or false in case of an error
+	 */
+	public static function getFileMd5($file) {
+		if (self::fileExists($file) === false) {
+			return false;
+		}
+
+		return md5_file($file);
 	}
 
 	/**

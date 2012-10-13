@@ -140,6 +140,24 @@ class File extends Abstraction {
 	}
 
 	/**
+	 * Get the file size in byte
+	 *
+	 * @return int File size in byte
+	 */
+	public function getSize() {
+		return Manager::getFileSize($this->_path . $this->_name);
+	}
+
+	/**
+	 * Returns md5 hash of the file.
+	 *
+	 * @return string Md5 hasch of the file
+	 */
+	public function getMd5() {
+		return Manager::getFileMd5($this->_path . $this->_name);
+	}
+
+	/**
 	 * Set the content for this file.
 	 * This is only usefull if you going to write
 	 * it as well i guess.
