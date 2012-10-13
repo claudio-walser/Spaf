@@ -8,7 +8,7 @@
 		<target>../SpafDocs/</target>
 	</transformer>
 	<transformations>
-		<template name="new-black" />
+		<template name="responsive" />
 		<!--
 			Available templates:
 			* responsive

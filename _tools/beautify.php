@@ -44,10 +44,10 @@ final class Beautify {
 
 		// requiere test-autoloader environment
 		require_once('autoloader.php');
-		$loader = new \Spaf\_tools\Autoloader(false);
+		$loader = new \Spaf\_tools\Autoloader();
 
 		// instantiate manager
-		$beautifier = new \Spaf\Library\Php\Beautifier();
+		$beautifier = new \Spaf\Library\Code\Php\Beautifier();
 		$directory = new \Spaf\Library\Directory\Directory('../');
 		$files = $directory->getChildren('*.php', 'file', true);
 
