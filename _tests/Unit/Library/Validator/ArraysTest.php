@@ -13,7 +13,7 @@ namespace Spaf\_tests\Unit\Library\Validator;
 /**
  * \Spaf\_tests\Unit\Library\Validator\ArraysTest
  *
- * The ArrayTest class tests any aspect of \Spaf\Library\Validator\Array.
+ * The ArraysTest class tests any aspect of \Spaf\Library\Validator\Arrays.
  *
  * @author Claudio Walser
  * @package Spaf\_tests\Unit\Library\Validator
@@ -45,11 +45,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-
 		$this->_validator = new \Spaf\Library\Validator\Arrays($this->_testArray);
-
-		unset($directory);
-		unset($directories);
 	}
 
 	/**
@@ -107,6 +103,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase {
 			$this->_validator->getValue()
 		);
 
+		unset($newTestArray);
 	}
 
 	/**
@@ -116,9 +113,8 @@ class ArraysTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	public function tearDown() {
-		unset($this->_directory);
-		unset($this->_testName);
-		unset($this->_testPath);
+		unset($this->_testArray);
+		unset($this->_validator);
 	}
 
 }
