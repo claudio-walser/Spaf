@@ -22,6 +22,18 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Integer extends Abstraction {}
+class Integer extends Abstraction {
+
+	/**
+	 * Simple check, if a value is numeric
+	 * its supposed to be an integer for
+	 * this validation.
+	 *
+	 * @return boolean True if the value is numeric
+	 */
+	public function validate() {
+		return is_numeric($this->_value);
+	}
+}
 
 ?>
