@@ -82,7 +82,36 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		unset($directory);
 		unset($directoryContent);
 	}
+	
+	/**
+	 * Test readContent with mocked objects.
+	 *
+	 * @return void
+	 */
+	public function testReadContentMocked() {
+		$directory = $this->_testsDataBasePath . 'Directory/ToRead';
+		
+		// set mock classes to read
+		\Spaf\Library\Directory\Manager::setDirectoryClass('\Spaf\_tests\Mock\Library\Directory\Directory');
+		\Spaf\Library\Directory\Manager::setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
+		// read and compare all
+		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory);
+		
+		$this->assertEquals(
+			'Spaf\_tests\Mock\Library\Directory\Directory',
+			get_class($directoryContent[0])
+		);
+		
+		$this->assertEquals(
+			'Spaf\_tests\Mock\Library\Directory\File',
+			get_class($directoryContent[1])
+		);
 
+		unset($directory);
+		unset($directoryContent);
+	}
+	
+	
 	/**
 	 * Test to create a directory
 	 * And test to delete a directory at the same time

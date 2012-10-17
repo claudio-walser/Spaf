@@ -25,7 +25,45 @@ namespace Spaf\Library\Directory;
  * @namespace Spaf\Library\Directory
  */
 abstract class Manager {
+  
+	/**
+	 * Classname to instantiate directories
+	 * 
+	 * @var string
+	 */
+	private static $_directoryClass = '\Spaf\Library\Directory\Directory';
 
+	/**
+	 * Classname to instantiate files
+	 * 
+	 * @var string
+	 */
+	private static $_fileClass = '\Spaf\Library\Directory\File';
+  	
+	/**
+	 * Set a different class to take for directories
+	 * 
+	 * @param string Classname to take for directories
+	 * @return boolean
+	 */
+    public static function setDirectoryClass($className) {
+        self::$_directoryClass = $className;
+		
+		return true;
+    }
+    
+	/**
+	 * Set a different class to take for files
+	 * 
+	 * @param string Classname to take for files
+	 * @return boolean True
+	 */
+     public static function setFileClass($className) {
+        self::$_fileClass = $className;
+		
+		return true;
+    }    
+  
 	/**
 	 * Returns an array with \Spaf\Library\Directory\Directory
 	 * and \Spaf\Library\Directory\File objects.
@@ -182,9 +220,9 @@ abstract class Manager {
 	protected static function _createObjects(array $array) {
 		foreach ($array as $key => $value) {
 			if (self::directoryExists($value)) {
-				$array[$key] = new Directory($value);
+				$array[$key] = new self::$_directoryClass($value);
 			} else if (self::fileIsReadable($value)) {
-				$array[$key] = new File($value);
+				$array[$key] = new self::$_fileClass($value);
 			} else {
 				unset($array[$key]);
 			}

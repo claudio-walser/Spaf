@@ -140,6 +140,35 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test getChildren in with mocked objects.
+	 *
+	 * @return void
+	 */
+	public function testGetChildrenMocked() {
+		// set mock classes to read
+		$this->_directory->setDirectoryClass('\Spaf\_tests\Mock\Library\Directory\Directory');
+		$this->_directory->setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
+		
+		$directoryContent = $this->_directory->getChildren();
+		
+		print_r($directoryContent);
+		die();
+		
+		$this->assertEquals(
+			'Spaf\_tests\Mock\Library\Directory\Directory',
+			get_class($directoryContent[0])
+		);
+		
+		$this->assertEquals(
+			'Spaf\_tests\Mock\Library\Directory\File',
+			get_class($directoryContent[1])
+		);
+
+		unset($directory);
+		unset($directoryContent);
+	}
+
+	/**
 	 * Test to delete a directory with all its content
 	 *
 	 * @return void
