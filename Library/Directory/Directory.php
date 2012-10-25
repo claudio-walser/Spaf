@@ -37,36 +37,14 @@ class Directory extends Abstraction {
 	 * @var string
 	 */
 	private $_path = '';
- 
-	/**
-	 * Default classname to instantiate directories
-	 * 
-	 * @var string
-	 */
-	protected $_defaultDirectoryClass = '\Spaf\Library\Directory\Directory';
 
 	/**
-	 * Default classname to instantiate files
+	 * Manager object
 	 * 
-	 * @var string
+	 * @var \Spaf\Library\Directory\Manager
 	 */
-	protected $_defaultFileClass = '\Spaf\Library\Directory\File';
+	private $_manager = null;
 
-	/**
-	 * Classname to instantiate directories
-	 * 
-	 * @var string
-	 */
-	private $_directoryClass = '';
-
-	/**
-	 * Classname to instantiate files
-	 * 
-	 * @var string
-	 */
-	private $_fileClass = '';
-
- 	
 	/**
 	 * Splits the path in foldername and folderpath.
 	 *
@@ -74,8 +52,7 @@ class Directory extends Abstraction {
 	 * @return boolean
 	 */
 	public function __construct($path) {
-		$this->_directoryClass = $this->_defaultDirectoryClass;
-		$this->_fileClass = $this->_defaultFileClass;
+		$this->_manager = new Manager();
 		
 		$path = self::formPath($path, false);
 
@@ -92,31 +69,31 @@ class Directory extends Abstraction {
 			$this->_path = '';
 		}
 	}
-	
+
 	/**
 	 * Set a different class to take for directories
-	 * 
+	 *
 	 * @param string Classname to take for directories
 	 * @return boolean
 	 */
 	public function setDirectoryClass($className) {
-		$this->_directoryClass = $className;
+		$this->_manager->setDirectoryClass($className);
 		
 		return true;
 	}
 
 	/**
 	 * Set a different class to take for files
-	 * 
+	 *
 	 * @param string Classname to take for files
 	 * @return boolean
 	 */
 	public function setFileClass($className) {
-		$this->_fileClass = $className;
+		$this->_manager->setFileClass($className);
 		
 		return true;
-	}	
-	
+	}
+
 	/**
 	 * Returns the foldername without path
 	 *
@@ -134,7 +111,7 @@ class Directory extends Abstraction {
 	public function getPath() {
 		return $this->_path;
 	}
-	
+
 	/**
 	 * Reads the children and returns \Spaf\Library\Directory\Directory
 	 * and \Spaf\Library\Directory\File objects.
@@ -145,26 +122,13 @@ class Directory extends Abstraction {
 	 * @param array Array with folder-names to ignore, only usefull if recursive === true
 	 * @return boolean
 	 */
-	public function getChildren($pattern = '*', $type = null, $recursive = false, array $ignoreDirectories = array(), $bool = false) {
-		// set classnames if set
-		if ($this->_directoryClass !== $this->_defaultDirectoryClass) {
-			Manager::setDirectoryClass($this->_directoryClass);
-		}
-		if ($this->_fileClass !== $this->_defaultFileClass) {
-			Manager::setDirectoryClass($this->_fileClass);
-		}
-		
-		if ($bool === true) {
-			echo $this->_defaultDirectoryClass . "\n";
-			echo $this->_defaultFileClass . "\n";
-		}
-		
+	public function getChildren($pattern = '*', $type = null, $recursive = false, array $ignoreDirectories = array()) {
 		$onlyDir = false;
 		if ($type === 'dir' || $type === 'directory') {
 			$onlyDir = true;
 		}
-		$childs = Manager::readContent($this->_path . $this->_name, $pattern, $onlyDir);
-		
+		$childs = $this->_manager->readContent($this->_path . $this->_name, $pattern, $onlyDir);
+
 		if ($recursive !== true) {
 			return $childs;
 		}
@@ -172,7 +136,7 @@ class Directory extends Abstraction {
 		$newChilds = $childs;
 
 		if ($type === 'file') {
-			$newChilds = Manager::readContent($this->_path . $this->_name, '*', true);
+			$newChilds = $this->_manager->readContent($this->_path . $this->_name, '*', true);
 		}
 
 		foreach ($newChilds as $child) {
@@ -180,9 +144,9 @@ class Directory extends Abstraction {
 				$childs = array_merge($childs, $child->getChildren($pattern, $type, $recursive, $ignoreDirectories, true));
 			}
 		}
-		
+
 		return $childs;
-	}
+    }
 
 	/**
 	 * Delete this folder and its content
@@ -196,7 +160,7 @@ class Directory extends Abstraction {
 			$child->delete();
 		}
 
-		return Manager::deleteDirectory($this->_path . $this->_name);
+		return $this->_manager->deleteDirectory($this->_path . $this->_name);
 	}
 
 }

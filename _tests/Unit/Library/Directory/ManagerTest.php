@@ -24,7 +24,14 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * @namespace Spaf\_tests\Unit\Library\Directory
  */
 class ManagerTest extends \PHPUnit_Framework_TestCase {
-
+	
+	/**
+	 * Manager object
+	 * 
+	 * @var \Spaf\Library\
+	 */
+	private $_manager = null;
+	
 	/**
 	 * Setup
 	 *
@@ -33,7 +40,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$directory = '/home/claudio.walser/sandboxes/Spaf/_tests/Unit/Library/Directory';
 		$directory = __DIR__;
-
+		
 		$directories = explode(DIRECTORY_SEPARATOR, $directory);
 		array_pop($directories);
 		array_pop($directories);
@@ -41,7 +48,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		$directory = implode(DIRECTORY_SEPARATOR, $directories) . '/Data/';
 		$this->_testsDataBasePath = $directory;
-
+		
+		$this->_manager = new \Spaf\Library\Directory\Manager();
+		
 		unset($directory);
 		unset($directories);
 	}
@@ -60,29 +69,29 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		$directory = $this->_testsDataBasePath . 'Directory/ToRead';
 
 		// read and compare all
-		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory);
+		$directoryContent = $this->_manager->readContent($directory);
 		// has to have 3 elements
 		$this->assertTrue(count($directoryContent) === 4);
 
 		// read and compare only directories
-		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory, '*', true);
+		$directoryContent = $this->_manager->readContent($directory, '*', true);
 		// has to have 1 element
 		$this->assertTrue(count($directoryContent) === 2);
 
 		// read and compare only php files
-		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory, '*.php');
+		$directoryContent = $this->_manager->readContent($directory, '*.php');
 		// has to have 2 elements
 		$this->assertTrue(count($directoryContent) === 2);
 
 		// read a file by pattern
-		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory, '*pattern*');
+		$directoryContent = $this->_manager->readContent($directory, '*pattern*');
 		// has to have 1 element
 		$this->assertTrue(count($directoryContent) === 1);
 
 		unset($directory);
 		unset($directoryContent);
 	}
-	
+
 	/**
 	 * Test readContent with mocked objects.
 	 *
@@ -90,18 +99,18 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testReadContentMocked() {
 		$directory = $this->_testsDataBasePath . 'Directory/ToRead';
-		
+
 		// set mock classes to read
-		\Spaf\Library\Directory\Manager::setDirectoryClass('\Spaf\_tests\Mock\Library\Directory\Directory');
-		\Spaf\Library\Directory\Manager::setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
+		$this->_manager->setDirectoryClass('\Spaf\_tests\Mock\Library\Directory\Directory');
+		$this->_manager->setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
 		// read and compare all
-		$directoryContent = \Spaf\Library\Directory\Manager::readContent($directory);
-		
+		$directoryContent = $this->_manager->readContent($directory);
+
 		$this->assertEquals(
 			'Spaf\_tests\Mock\Library\Directory\Directory',
 			get_class($directoryContent[0])
 		);
-		
+
 		$this->assertEquals(
 			'Spaf\_tests\Mock\Library\Directory\File',
 			get_class($directoryContent[1])
@@ -110,8 +119,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		unset($directory);
 		unset($directoryContent);
 	}
-	
-	
+
+
 	/**
 	 * Test to create a directory
 	 * And test to delete a directory at the same time
@@ -124,14 +133,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		// does not exists yet
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($newDirectory)
+			$this->_manager->directoryExists($newDirectory)
 		);
 
-		\Spaf\Library\Directory\Manager::createDirectory($newDirectory);
+		$this->_manager->createDirectory($newDirectory);
 
 		// has to exists now
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::directoryExists($newDirectory)
+			$this->_manager->directoryExists($newDirectory)
 		);
 
 
@@ -141,10 +150,10 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		// does not exists anymore
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($newDirectory)
+			$this->_manager->directoryExists($newDirectory)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($dirToDelete)
+			$this->_manager->directoryExists($dirToDelete)
 		);
 
 		unset($newDirectory);
@@ -164,14 +173,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		// does not exists yet
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 
-		\Spaf\Library\Directory\Manager::createFile($newFile);
+		$this->_manager->createFile($newFile);
 
 		// has to exists now
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 
 		// delete it again and check its deletion, even if its not specially part of this test
@@ -180,10 +189,10 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		// does not exists anymore
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($dirToDelete)
+			$this->_manager->directoryExists($dirToDelete)
 		);
 
 		unset($newFile);
@@ -201,11 +210,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		$doesNotExist = $this->_testsDataBasePath . 'DoesNotExist';
 
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::directoryExists($doesExist)
+			$this->_manager->directoryExists($doesExist)
 		);
 
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($doesNotExist)
+			$this->_manager->directoryExists($doesNotExist)
 		);
 
 		unset($doesExist);
@@ -222,11 +231,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		$doesNotExist = $this->_testsDataBasePath . 'Directory/ToRead/doesNotExist.php';
 
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::fileExists($doesExist)
+			$this->_manager->fileExists($doesExist)
 		);
 
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileExists($doesNotExist)
+			$this->_manager->fileExists($doesNotExist)
 		);
 
 		unset($doesExist);
@@ -243,7 +252,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		$doesNotExist = $this->_testsDataBasePath . 'Directory/ToRead/notReadable.php';
 
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::fileIsReadable($doesExist)
+			$this->_manager->fileIsReadable($doesExist)
 		);
 
 		// @note If you run the command line test.php Script as root, this test will
@@ -251,7 +260,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 		// if it does fail without beeing logged in as root
 		// chmod the file: sudo chmod 0100 _tests/Data/Directory/ToRead/notReadable.php
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileIsReadable($doesNotExist)
+			$this->_manager->fileIsReadable($doesNotExist)
 		);
 
 		unset($doesExist);
@@ -265,6 +274,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	public function tearDown() {
+		unset($this->_manager);
 		unset($this->_testsDataBasePath);
 	}
 

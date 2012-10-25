@@ -24,46 +24,46 @@ namespace Spaf\Library\Directory;
  * @package Spaf\Library\Directory
  * @namespace Spaf\Library\Directory
  */
-abstract class Manager {
-  
+class Manager {
+
 	/**
 	 * Classname to instantiate directories
-	 * 
+	 *
 	 * @var string
 	 */
-	private static $_directoryClass = '\Spaf\Library\Directory\Directory';
+	private $_directoryClass = '\Spaf\Library\Directory\Directory';
 
 	/**
 	 * Classname to instantiate files
-	 * 
+	 *
 	 * @var string
 	 */
-	private static $_fileClass = '\Spaf\Library\Directory\File';
-  	
+	private $_fileClass = '\Spaf\Library\Directory\File';
+
 	/**
 	 * Set a different class to take for directories
-	 * 
+	 *
 	 * @param string Classname to take for directories
 	 * @return boolean
 	 */
-    public static function setDirectoryClass($className) {
-        self::$_directoryClass = $className;
-		
+    public function setDirectoryClass($className) {
+        $this->_directoryClass = $className;
+
 		return true;
     }
-    
+
 	/**
 	 * Set a different class to take for files
-	 * 
+	 *
 	 * @param string Classname to take for files
 	 * @return boolean True
 	 */
-     public static function setFileClass($className) {
-        self::$_fileClass = $className;
-		
+    public function setFileClass($className) {
+        $this->_fileClass = $className;
+
 		return true;
-    }    
-  
+    }
+
 	/**
 	 * Returns an array with \Spaf\Library\Directory\Directory
 	 * and \Spaf\Library\Directory\File objects.
@@ -73,10 +73,10 @@ abstract class Manager {
 	 * @param boolean Read only directories - true || false
 	 * @return array Array of \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File objects
 	 */
-	 public static function readContent($path, $pattern = '*', $onlyDir = false) {
+	 public function readContent($path, $pattern = '*', $onlyDir = false) {
 		$path = Abstraction::formPath($path);
 		$GLOB = $onlyDir === true ? GLOB_ONLYDIR : GLOB_BRACE;
-		return self::_createObjects(glob($path . $pattern, $GLOB));
+		return $this->_createObjects(glob($path . $pattern, $GLOB));
 	}
 
 	/**
@@ -86,7 +86,7 @@ abstract class Manager {
 	 * @param Mode for access. Read http://ch.php.net/chmod for more info
 	 * @return boolean True or false if it wasnt possible to create the directory
 	 */
-	 public static function createDirectory($directory, $mode = 01777) {
+	 public function createDirectory($directory, $mode = 01777) {
 	 	if (is_dir($directory)) {
 	 		return true;
 	 	}
@@ -100,14 +100,14 @@ abstract class Manager {
 	 * @param string Filename
 	 * @return boolean True or false if create failed
 	 */
-	public static function createFile($file) {
+	public function createFile($file) {
 		$parts = Abstraction::getNameAndPath($file);
 
 		$file = $parts['name'];
 		$directory = $parts['path'];
 
-		if (self::directoryExists($directory) === false) {
-			self::createDirectory($directory);
+		if ($this->directoryExists($directory) === false) {
+			$this->createDirectory($directory);
 		}
 
 		return file_put_contents($directory . $file, '');
@@ -119,7 +119,7 @@ abstract class Manager {
 	 * @param Directory path to check
 	 * @return boolean True or false if the directory does not exist yet
 	 */
-	public static function directoryExists($directory) {
+	public function directoryExists($directory) {
 		return is_dir($directory);
 	}
 
@@ -129,7 +129,7 @@ abstract class Manager {
 	 * @param File path to check
 	 * @return boolean True or false if the file does not exist yet
 	 */
-	public static function fileExists($file) {
+	public function fileExists($file) {
 		return is_file($file);
 	}
 
@@ -139,8 +139,8 @@ abstract class Manager {
 	 * @param File path to check
 	 * @return boolean True or false wether if the file is readable
 	 */
-	public static function fileIsReadable($file) {
-		if (self::fileExists($file) === false) {
+	public function fileIsReadable($file) {
+		if ($this->fileExists($file) === false) {
 			return false;
 		}
 
@@ -154,8 +154,8 @@ abstract class Manager {
 	 * @param string Path to file
 	 * @return mixed File size in byte or false in case of an error
 	 */
-	public static function getFileSize($file) {
-		if (self::fileExists($file) === false) {
+	public function getFileSize($file) {
+		if ($this->fileExists($file) === false) {
 			return false;
 		}
 
@@ -169,8 +169,8 @@ abstract class Manager {
 	 * @param string Path to file
 	 * @return mixed File size in byte or false in case of an error
 	 */
-	public static function getFileMd5($file) {
-		if (self::fileExists($file) === false) {
+	public function getFileMd5($file) {
+		if ($this->fileExists($file) === false) {
 			return false;
 		}
 
@@ -187,8 +187,8 @@ abstract class Manager {
 	 * @param string Filename to delete
 	 * @return boolean True if file removed otherwise false
 	 */
-	public static function deleteFile($file) {
-		if (self::fileExists($file) === false) {
+	public function deleteFile($file) {
+		if ($this->fileExists($file) === false) {
 			return true;
 		}
 
@@ -203,8 +203,8 @@ abstract class Manager {
 	 * @param string Directoryname to delete
 	 * @return boolean True if directory removed otherwise false
 	 */
-	public static function deleteDirectory($directory) {
-		if (self::directoryExists($directory) === false) {
+	public function deleteDirectory($directory) {
+		if ($this->directoryExists($directory) === false) {
 			return true;
 		}
 		return rmdir($directory);
@@ -217,12 +217,12 @@ abstract class Manager {
 	 * @param array Array with file/folder paths
 	 * @return array Array with \Spaf\Library\Directory\File or \Spaf\Library\Directory\Directory objects
 	 */
-	protected static function _createObjects(array $array) {
+	protected function _createObjects(array $array) {
 		foreach ($array as $key => $value) {
-			if (self::directoryExists($value)) {
-				$array[$key] = new self::$_directoryClass($value);
-			} else if (self::fileIsReadable($value)) {
-				$array[$key] = new self::$_fileClass($value);
+			if ($this->directoryExists($value)) {
+				$array[$key] = new $this->_directoryClass($value);
+			} else if ($this->fileIsReadable($value)) {
+				$array[$key] = new $this->_fileClass($value);
 			} else {
 				unset($array[$key]);
 			}
