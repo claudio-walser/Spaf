@@ -65,10 +65,10 @@ class File extends Abstraction {
 	 * @var string Content as string
 	 */
 	private $_content = null;
-	
+
 	/**
 	 * Manager object
-	 * 
+	 *
 	 * @var \Spaf\Library\Directory\Manager
 	 */
 	private $_manager = null;
@@ -82,7 +82,7 @@ class File extends Abstraction {
 	public function __construct($file) {
 		$file = self::formPath($file, false);
 		$this->_manager = new Manager();
-		
+
 		if (!is_readable($file)) {
 			throw new Exception('File «' . $file . '»does not exists!');
 		}

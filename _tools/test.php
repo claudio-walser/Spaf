@@ -54,11 +54,18 @@ final class Test {
 		foreach ($files as $file) {
 			// @TODO Write a class Spaf\Library\Test\File for it maybe
 			$fileName = $file->getPath() . $file->getName();
-			$className = '\\Spaf\\' . str_replace(array('..' . DIRECTORY_SEPARATOR, '.php', DIRECTORY_SEPARATOR), array('', '', '\\'), $fileName);
+			$className = '\\Spaf\\' . str_replace(array('../', '.php', '/'), array('', '', '\\'), $fileName);
 			$tests[] = array(
 				'file' => $fileName,
 				'class' => $className
 			);
+		}
+
+		foreach ($tests as $test) {
+			if (!class_exists($test['class'])) {
+				echo $test['class'] . ' doesent extist';
+				die('aus die maus');
+			}
 		}
 
 

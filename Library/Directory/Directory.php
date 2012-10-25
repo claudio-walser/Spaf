@@ -40,7 +40,7 @@ class Directory extends Abstraction {
 
 	/**
 	 * Manager object
-	 * 
+	 *
 	 * @var \Spaf\Library\Directory\Manager
 	 */
 	private $_manager = null;
@@ -53,7 +53,7 @@ class Directory extends Abstraction {
 	 */
 	public function __construct($path) {
 		$this->_manager = new Manager();
-		
+
 		$path = self::formPath($path, false);
 
 		if (!is_dir($path)) {
@@ -78,7 +78,7 @@ class Directory extends Abstraction {
 	 */
 	public function setDirectoryClass($className) {
 		$this->_manager->setDirectoryClass($className);
-		
+
 		return true;
 	}
 
@@ -90,7 +90,7 @@ class Directory extends Abstraction {
 	 */
 	public function setFileClass($className) {
 		$this->_manager->setFileClass($className);
-		
+
 		return true;
 	}
 

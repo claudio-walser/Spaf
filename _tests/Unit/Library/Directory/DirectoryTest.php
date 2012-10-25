@@ -41,14 +41,14 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 * @var string
 	 */
 	private $_testName = 'ToRead';
-	
+
 	/**
 	 * Manager object
-	 * 
+	 *
 	 * @var \Spaf\Library\Directory\Manager
 	 */
 	private $_manager = null;
-	
+
 	/**
 	 * Setup
 	 *
@@ -66,7 +66,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 		array_push($directories, 'Directory');
 
 		$this->_manager = new \Spaf\Library\Directory\Manager();
-		
+
 		$this->_testPath = implode(DIRECTORY_SEPARATOR, $directories) . '/';
 		$directory = $this->_testPath . $this->_testName .  '/';
 		$this->_directory = new \Spaf\Library\Directory\Directory($directory);
@@ -158,8 +158,8 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 		$this->_directory->setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
 
 		$directoryContent = $this->_directory->getChildren();
-		
-		
+
+
 		foreach ($directoryContent as $content) {
 			$this->assertTrue(
 				get_class($content) === 'Spaf\_tests\Mock\Library\Directory\Directory' ||

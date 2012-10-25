@@ -24,14 +24,14 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * @namespace Spaf\_tests\Unit\Library\Directory
  */
 class ManagerTest extends \PHPUnit_Framework_TestCase {
-	
+
 	/**
 	 * Manager object
-	 * 
+	 *
 	 * @var \Spaf\Library\
 	 */
 	private $_manager = null;
-	
+
 	/**
 	 * Setup
 	 *
@@ -40,7 +40,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$directory = '/home/claudio.walser/sandboxes/Spaf/_tests/Unit/Library/Directory';
 		$directory = __DIR__;
-		
+
 		$directories = explode(DIRECTORY_SEPARATOR, $directory);
 		array_pop($directories);
 		array_pop($directories);
@@ -48,9 +48,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase {
 
 		$directory = implode(DIRECTORY_SEPARATOR, $directories) . '/Data/';
 		$this->_testsDataBasePath = $directory;
-		
+
 		$this->_manager = new \Spaf\Library\Directory\Manager();
-		
+
 		unset($directory);
 		unset($directories);
 	}

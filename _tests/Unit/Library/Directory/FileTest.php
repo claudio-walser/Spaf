@@ -71,7 +71,7 @@ class FileTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Manager object
-	 * 
+	 *
 	 * @var \Spaf\Library\Directory\Manager
 	 */
 	private $_manager = null;
@@ -97,9 +97,9 @@ class FileTest extends \PHPUnit_Framework_TestCase {
 		$this->_testPath = implode(DIRECTORY_SEPARATOR, $directories) . '/';
 		$file = $this->_testPath . $this->_testName;
 		$this->_file = new \Spaf\Library\Directory\File($file);
-		
+
 		$this->_manager = new \Spaf\Library\Directory\Manager();
-		
+
 		unset($directory);
 		unset($directories);
 	}
