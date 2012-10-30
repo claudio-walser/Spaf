@@ -39,12 +39,21 @@ class Directory extends Abstraction {
 	private $_path = '';
 
 	/**
+	 * Manager object
+	 *
+	 * @var \Spaf\Library\Directory\Manager
+	 */
+	private $_manager = null;
+
+	/**
 	 * Splits the path in foldername and folderpath.
 	 *
 	 * @param string Path to the directory
 	 * @return boolean
 	 */
 	public function __construct($path) {
+		$this->_manager = new Manager();
+
 		$path = self::formPath($path, false);
 
 		if (!is_dir($path)) {
@@ -59,6 +68,30 @@ class Directory extends Abstraction {
 		if ($this->_path === '/') {
 			$this->_path = '';
 		}
+	}
+
+	/**
+	 * Set a different class to take for directories
+	 *
+	 * @param string Classname to take for directories
+	 * @return boolean
+	 */
+	public function setDirectoryClass($className) {
+		$this->_manager->setDirectoryClass($className);
+
+		return true;
+	}
+
+	/**
+	 * Set a different class to take for files
+	 *
+	 * @param string Classname to take for files
+	 * @return boolean
+	 */
+	public function setFileClass($className) {
+		$this->_manager->setFileClass($className);
+
+		return true;
 	}
 
 	/**
@@ -94,7 +127,7 @@ class Directory extends Abstraction {
 		if ($type === 'dir' || $type === 'directory') {
 			$onlyDir = true;
 		}
-		$childs = Manager::readContent($this->_path . $this->_name, $pattern, $onlyDir);
+		$childs = $this->_manager->readContent($this->_path . $this->_name, $pattern, $onlyDir);
 
 		if ($recursive !== true) {
 			return $childs;
@@ -103,17 +136,17 @@ class Directory extends Abstraction {
 		$newChilds = $childs;
 
 		if ($type === 'file') {
-			$newChilds = Manager::readContent($this->_path . $this->_name, '*', true);
+			$newChilds = $this->_manager->readContent($this->_path . $this->_name, '*', true);
 		}
 
 		foreach ($newChilds as $child) {
 			if ($child instanceof Directory && !in_array($child->getName(), $ignoreDirectories)) {
-				$childs = array_merge($childs, $child->getChildren($pattern, $type, $recursive, $ignoreDirectories));
+				$childs = array_merge($childs, $child->getChildren($pattern, $type, $recursive, $ignoreDirectories, true));
 			}
 		}
 
 		return $childs;
-	}
+    }
 
 	/**
 	 * Delete this folder and its content
@@ -127,7 +160,7 @@ class Directory extends Abstraction {
 			$child->delete();
 		}
 
-		return Manager::deleteDirectory($this->_path . $this->_name);
+		return $this->_manager->deleteDirectory($this->_path . $this->_name);
 	}
 
 }

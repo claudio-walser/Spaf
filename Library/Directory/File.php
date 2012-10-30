@@ -66,6 +66,12 @@ class File extends Abstraction {
 	 */
 	private $_content = null;
 
+	/**
+	 * Manager object
+	 *
+	 * @var \Spaf\Library\Directory\Manager
+	 */
+	private $_manager = null;
 
 	/**
 	 * Splits the path in filename and filepath.
@@ -75,6 +81,7 @@ class File extends Abstraction {
 	 */
 	public function __construct($file) {
 		$file = self::formPath($file, false);
+		$this->_manager = new Manager();
 
 		if (!is_readable($file)) {
 			throw new Exception('File «' . $file . '»does not exists!');
@@ -145,7 +152,7 @@ class File extends Abstraction {
 	 * @return int File size in byte
 	 */
 	public function getSize() {
-		return Manager::getFileSize($this->_path . $this->_name);
+		return $this->_manager->getFileSize($this->_path . $this->_name);
 	}
 
 	/**
@@ -154,7 +161,7 @@ class File extends Abstraction {
 	 * @return string Md5 hasch of the file
 	 */
 	public function getMd5() {
-		return Manager::getFileMd5($this->_path . $this->_name);
+		return $this->_manager->getFileMd5($this->_path . $this->_name);
 	}
 
 	/**
@@ -204,7 +211,7 @@ class File extends Abstraction {
 		$name = $parts['name'];
 		$path = $parts['path'];
 
-		\Spaf\Library\Directory\Manager::createDirectory($path);
+		$this->_manager->createDirectory($path);
 
 		if (!file_put_contents($file, $this->_content)) {
 			throw new Exception('Could not write file: ' . $file);
@@ -219,7 +226,7 @@ class File extends Abstraction {
 	 * @return boolean True if deletion was successful
 	 */
 	public function delete() {
-		return Manager::deleteFile($this->_path . $this->_name);
+		return $this->_manager->deleteFile($this->_path . $this->_name);
 	}
 
 

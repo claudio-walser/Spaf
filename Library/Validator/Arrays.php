@@ -36,7 +36,10 @@ class Arrays extends Abstraction {
 	 *
 	 * @param array Array to validate
 	 */
-	public function setValue(array $array) {
+	public function setValue($array) {
+		if (!is_array($array)) {
+			throw new Exception('Param for setValue has to be an array.');
+		}
 		parent::setValue($array);
 	}
 

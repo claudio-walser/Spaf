@@ -43,6 +43,13 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	private $_testName = 'ToRead';
 
 	/**
+	 * Manager object
+	 *
+	 * @var \Spaf\Library\Directory\Manager
+	 */
+	private $_manager = null;
+
+	/**
 	 * Setup
 	 *
 	 * @return void
@@ -58,6 +65,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 		array_push($directories, 'Data');
 		array_push($directories, 'Directory');
 
+		$this->_manager = new \Spaf\Library\Directory\Manager();
 
 		$this->_testPath = implode(DIRECTORY_SEPARATOR, $directories) . '/';
 		$directory = $this->_testPath . $this->_testName .  '/';
@@ -140,6 +148,29 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test getChildren in with mocked objects.
+	 *
+	 * @return void
+	 */
+	public function testGetChildrenMocked() {
+		// set mock classes to read
+		$this->_directory->setDirectoryClass('\Spaf\_tests\Mock\Library\Directory\Directory');
+		$this->_directory->setFileClass('\Spaf\_tests\Mock\Library\Directory\File');
+
+		$directoryContent = $this->_directory->getChildren();
+
+
+		foreach ($directoryContent as $content) {
+			$this->assertTrue(
+				get_class($content) === 'Spaf\_tests\Mock\Library\Directory\Directory' ||
+				get_class($content) === 'Spaf\_tests\Mock\Library\Directory\File'
+			);
+		}
+
+		unset($directoryContent);
+	}
+
+	/**
 	 * Test to delete a directory with all its content
 	 *
 	 * @return void
@@ -150,21 +181,21 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 
 		// check not exists subfolders and file
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
+			$this->_manager->directoryExists($folderToDelete)
 		);
 
 		// create subfolders and file
-		\Spaf\Library\Directory\Manager::createFile($newFile);
+		$this->_manager->createFile($newFile);
 
 		// check exists subfolders and file
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 		$this->assertTrue(
-			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
+			$this->_manager->directoryExists($folderToDelete)
 		);
 
 		// delete main dir recursive
@@ -173,10 +204,10 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 
 		// check not exists subfolders and file
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::fileExists($newFile)
+			$this->_manager->fileExists($newFile)
 		);
 		$this->assertFalse(
-			\Spaf\Library\Directory\Manager::directoryExists($folderToDelete)
+			$this->_manager->directoryExists($folderToDelete)
 		);
 
 		unset($folderToDelete);
@@ -205,6 +236,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	public function tearDown() {
+		unset($this->_manager);
 		unset($this->_directory);
 		unset($this->_testName);
 		unset($this->_testPath);
