@@ -40,9 +40,22 @@ class IniTest extends Abstraction {
         parent::setUp();
     }
 
-    public function testSomething() {
-        print_r($this->_config);
-        $this->assertTrue(true);
+    public function testReadValue() {
+        $masterServer = $this->_config->memcache->master_server;
+        
+        $this->assertEquals(
+            'cache01',
+            $masterServer
+        );
+    }
+    
+    public function testSetValue() {
+        $this->_config->memcache->master_server = 'cache-test';
+        
+        var_dump($this->_config->memcache->test);
+        $this->_config->memcache->test = 'just a test value';
+        var_dump($this->_config->memcache->test);
+        
     }
 
 

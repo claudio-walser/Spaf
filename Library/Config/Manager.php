@@ -112,17 +112,42 @@ class Manager {
      * @return boolean True
      */
 	public function read() {
-		$this->_storedData = $this->_driver->read($file);
+	    if ($this->_driver === null) {
+	        throw new Exception('Initialize a driver first');
+	    }
 
+		$data = $this->_driver->read();
+        foreach ($data['data'] as $key => $data) {
+            $this->_storedData[$key] = new Section($data);
+        }
+        
 		return true;
 	}
+
+    public function __get($name) {
+        if ($this->_storedData === null) {
+            $this->read();
+        }
+
+        if (isset($this->_storedData[$name])) {
+            return $this->_storedData[$name];
+        }
+        
+        // if not existent, just return an empty section object
+        return new Section(array());
+    }
+
+    public function __set($name, $value) {
+        $section = $this->__get($name);
+        return $section;
+    }
 
     /**
      * Get the configs of one section as array
      *
      * @param string Section to read
      * @return mixed NULL or the given section as array
-     */
+     * /
 	public function getSection($section) {
 		if (is_array($this->_storedData['data']) && array_key_exists($section, $this->_storedData['data'])) {
 			return $this->_storedData['data'][$section];
@@ -136,7 +161,7 @@ class Manager {
      *
      * @param string Section to define as constants
      * @return boolean True
-     */
+     * /
 	public function getSectionAsConstants($section) {
 		$configs = $this->getSection($section);
 		if ($configs !== null) {
@@ -154,7 +179,7 @@ class Manager {
      * Returns the config variables of all sections
      *
      * @return array Multinested array with all sections
-     */
+     * /
 	public function getAll() {
 		return $this->_storedData['data'];
 	}
@@ -165,7 +190,7 @@ class Manager {
      * @param array Associative array with the values
      * @param string Name of the section
      * @return boolean True
-     */
+     * /
 	public function setSection(array $assoc_array, $section) {
 		$this->_storedData['data'][$section] = $assoc_array;
 
@@ -177,7 +202,7 @@ class Manager {
      *
      * @param string Name of the section to remove
      * @return boolean True
-     */
+     * /
 	public function deleteSection($section_name) {
 		if (isset($this->_storedData['data'][$section_name])) {
 			unset($this->_storedData['data'][$section_name]);
@@ -190,7 +215,7 @@ class Manager {
      * Remove all sections
      *
      * @return boolean True
-     */
+     * /
 	public function deleteAll() {
 		if (isset($this->_storedData)) {
 			$this->_storedData = null;
@@ -206,12 +231,14 @@ class Manager {
 	 *
      * @param array Multinested array to set new data
      * @return boolean True
-	 */
+	 * /
 	public function setAll(Array $assoc_array) {
 		$this->_storedData = $assoc_array;
 
 		return true;
 	}
+
+
 
 	/**
 	 * Write the config file back to its source
