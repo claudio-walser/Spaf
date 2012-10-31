@@ -27,13 +27,13 @@ class Section {
      * @var array
      */
     private $_storedData = array();
-    
+
     public function __construct($data) {
         $this->_storedData = $data;
-        
+
         //print_r($data);
     }
-    
+
     public function __get($name) {
         if (isset($this->_storedData[$name])) {
             return $this->_storedData[$name];
@@ -43,10 +43,10 @@ class Section {
 
     public function __set($name, $value) {
         $this->_storedData[$name] = $value;
-        
+
         return true;
     }
-    
+
 }
 
 ?>

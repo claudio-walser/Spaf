@@ -176,6 +176,7 @@ class File extends Abstraction {
 	public function setContent($content) {
 		$this->_content = (string) $content;
 		$this->_lines = explode("\n", $this->_content);
+		$this->_rtrimLines();
 
 		return true;
 	}
@@ -191,7 +192,10 @@ class File extends Abstraction {
 	 */
 	public function setLines(array $lines) {
 		$this->_lines = $lines;
+		$this->_rtrimLines();
 		$this->_content = implode("\n", $this->_lines);
+
+		return true;
 	}
 
 	/**
@@ -229,7 +233,11 @@ class File extends Abstraction {
 		return $this->_manager->deleteFile($this->_path . $this->_name);
 	}
 
-
+	private function _rtrimLines() {
+		foreach ($this->_lines as $key => $line) {
+			$this->_line[$key] = rtrim($line);
+		}
+	}
 
 
 

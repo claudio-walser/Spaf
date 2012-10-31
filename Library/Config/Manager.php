@@ -120,7 +120,7 @@ class Manager {
         foreach ($data['data'] as $key => $data) {
             $this->_storedData[$key] = new Section($data);
         }
-        
+
 		return true;
 	}
 
@@ -132,7 +132,7 @@ class Manager {
         if (isset($this->_storedData[$name])) {
             return $this->_storedData[$name];
         }
-        
+
         // if not existent, just return an empty section object
         return new Section(array());
     }
