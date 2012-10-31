@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Library\Validator;
  * @package Spaf\_tests\Unit\Library\Validator
  * @namespace Spaf\_tests\Unit\Library\Validator
  */
-class FileTest extends \PHPUnit_Framework_TestCase {
+class FileTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Validator instance

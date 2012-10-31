@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Library\Cache\Driver;
  * @package Spaf\_tests\Unit\Library\Cache\Driver
  * @namespace Spaf\_tests\Unit\Library\Cache\Driver
  */
-class ApcTest extends \PHPUnit_Framework_TestCase {
+class ApcTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Apc instance

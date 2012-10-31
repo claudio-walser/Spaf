@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * @package Spaf\_tests\Unit\Library\Directory
  * @namespace Spaf\_tests\Unit\Library\Directory
  */
-class DirectoryTest extends \PHPUnit_Framework_TestCase {
+class DirectoryTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Directory instance
@@ -55,19 +55,9 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-		$directory = __DIR__;
-
-		$directories = explode(DIRECTORY_SEPARATOR, $directory);
-		array_pop($directories);
-		array_pop($directories);
-		array_pop($directories);
-
-		array_push($directories, 'Data');
-		array_push($directories, 'Directory');
-
 		$this->_manager = new \Spaf\Library\Directory\Manager();
 
-		$this->_testPath = implode(DIRECTORY_SEPARATOR, $directories) . '/';
+		$this->_testPath = $this->_getTestPath() . '/Data/Directory/';
 		$directory = $this->_testPath . $this->_testName .  '/';
 		$this->_directory = new \Spaf\Library\Directory\Directory($directory);
 
@@ -177,7 +167,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testDelete() {
 		$folderToDelete = $this->_directory->getPath() . $this->_directory->getName() . '/Temp/';
-		$newFile = $folderToDelete . '/Temp/Demo/TestFile.tmp';
+		$newFile = $folderToDelete . '/Demo/TestFile.tmp';
 
 		// check not exists subfolders and file
 		$this->assertFalse(

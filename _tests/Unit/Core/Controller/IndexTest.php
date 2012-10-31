@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Core\Controller;
  * @package Spaf\_tests\Unit\Core\Controller
  * @namespace Spaf\_tests\Unit\Core\Controller
  */
-class IndexTest extends \PHPUnit_Framework_TestCase {
+class IndexTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Current controller instance

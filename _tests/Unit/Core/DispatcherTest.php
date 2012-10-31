@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Core;
  * @package Spaf\_tests\Unit\Core
  * @namespace Spaf\_tests\Unit\Core
  */
-class DispatcherTest extends \PHPUnit_Framework_TestCase {
+class DispatcherTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * The normal registry object

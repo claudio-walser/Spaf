@@ -34,7 +34,7 @@ class Manager {
      *
      * @var string
      */
-	private $_default = 'Driver\\Ini';
+	private $_default = '\Spaf\Library\Config\Driver\Ini';
 
     /**
      * Current config file.
@@ -54,29 +54,37 @@ class Manager {
      * Register one of the driver type.
 	 * Currently supported is ini, xml, json, php (simple array) and a simple serialized format
      *
-     * @param string Driver type
+     * @param mixed String with the driver type or driver object itself
      * @return boolean True
      */
 	public function registerDriver($driver) {
+		// if its a driver object
+		if ($driver instanceof \Spaf\Library\Config\Driver\Abstraction) {
+		    $this->_driver = $driver;
+
+            return true;
+		}
+
+        // if its just a string (driver type)
 		switch (strtoupper($driver)) {
 			case 'ini':
-				$this->_driver = new Driver\Ini();
+				$this->_driver = new \Spaf\Library\Config\Driver\Ini();
 				break;
 
 			case 'xml':
-				$this->_driver = new Driver\Xml();
+				$this->_driver = new \Spaf\Library\Config\Driver\Xml();
 				break;
 
 			case 'php':
-				$this->_driver = new Driver\Php();
+				$this->_driver = new \Spaf\Library\Config\Driver\Php();
 				break;
 
 			case 'json':
-				$this->_driver = new Driver\Json();
+				$this->_driver = new \Spaf\Library\Config\Driver\Json();
 				break;
 
 			case 'serialized':
-				$this->_driver = new Driver\Serialized();
+				$this->_driver = new \Spaf\Library\Config\Driver\Serialized();
 				break;
 
 			default:

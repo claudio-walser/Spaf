@@ -23,7 +23,7 @@ namespace Spaf\_tests\Unit\Library\Directory;
  * @package Spaf\_tests\Unit\Library\Directory
  * @namespace Spaf\_tests\Unit\Library\Directory
  */
-class AbstractionTest extends \PHPUnit_Framework_TestCase {
+class AbstractionTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Setup

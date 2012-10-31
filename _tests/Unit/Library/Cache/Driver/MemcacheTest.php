@@ -19,7 +19,7 @@ namespace Spaf\_tests\Unit\Library\Cache\Driver;
  * @package Spaf\_tests\Unit\Library\Cache\Driver
  * @namespace Spaf\_tests\Unit\Library\Cache\Driver
  */
-class MemcacheTest extends \PHPUnit_Framework_TestCase {
+class MemcacheTest extends \Spaf\_tests\Unit\TestCase {
 
 	/**
 	 * Memcache instance
