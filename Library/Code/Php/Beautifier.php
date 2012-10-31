@@ -85,6 +85,7 @@ class Beautifier {
 		$this->_handleTabs($file);
 		$this->_removeTrailingSpaces($file);
 		$this->_fixStartingBackslash($file);
+		$this->_fixNewLines($file);
 		return true;
 	}
 
@@ -169,6 +170,23 @@ class Beautifier {
 		}
 
 		$file->setLines($lines);
+
+		return true;
+	}
+
+
+	/**
+	 * Fixes windows new lines and changes into linux styled ones.
+	 *
+	 * @param \Spaf\Library\Directory\File File to process
+	 * @return boolean True
+	 */
+	private function _fixNewLines(\Spaf\Library\Directory\File $file) {
+		$content = $file->getContent();
+
+		$content = str_replace("\r\n", "\n", $content);
+		echo 'fixed newlines : ';
+		$file->setContent($content);
 
 		return true;
 	}
