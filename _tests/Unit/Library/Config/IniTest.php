@@ -21,30 +21,30 @@ namespace Spaf\_tests\Unit\Library\Config;
  */
 class IniTest extends Abstraction {
 
-    /**
-     * Driver to call
-     */
-    protected $_driver = 'ini';
+	/**
+	 * Driver to call
+	 */
+	protected $_driver = 'ini';
 
-    /**
-     * Filename for this config driver test
-     */
-    protected $_filename = 'config.ini';
+	/**
+	 * Filename for this config driver test
+	 */
+	protected $_filename = 'config.ini';
 
-    /**
-     * Filename of the copy for this config driver test
-     */
-    protected $_filenameCopy = 'config-copy.ini';
+	/**
+	 * Filename of the copy for this config driver test
+	 */
+	protected $_filenameCopy = 'config-copy.ini';
 
 
-    /**
-     * Setup
-     *
-     * @return void
-     */
-    protected function setUp() {
-        parent::setUp();
-    }
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
+	protected function setUp() {
+		parent::setUp();
+	}
 
 
 	/**
@@ -57,9 +57,9 @@ class IniTest extends Abstraction {
 	 * @see \Spaf\_tests\Unit\Library\Config\Abstraction::readValue()
 	 * @return void
 	 */
-	    public function testReadValue() {
-        parent::readValue();
-    }
+		public function testReadValue() {
+		parent::readValue();
+	}
 
 	/**
 	 * Test change a value
@@ -77,9 +77,9 @@ class IniTest extends Abstraction {
 	 * @see \Spaf\_tests\Unit\Library\Config\Abstraction::setValueInExistentSection()
 	 * @return void
 	 */
-    public function testSetValueInExistentSection() {
+	public function testSetValueInExistentSection() {
 		parent::setValueInExistentSection();
-    }
+	}
 
 	/**
 	 * Test set a new value in a new section
@@ -104,15 +104,15 @@ class IniTest extends Abstraction {
 		parent::save();
 	}
 
-    /**
-     * Release some memory maybe
-     * (guess not since the instance is still somewhere, just not in this class as prop)
-     *
-     * @return void
-     */
-    protected function tearDown() {
-        parent::tearDown();
-    }
+	/**
+	 * Release some memory maybe
+	 * (guess not since the instance is still somewhere, just not in this class as prop)
+	 *
+	 * @return void
+	 */
+	protected function tearDown() {
+		parent::tearDown();
+	}
 
 }
 

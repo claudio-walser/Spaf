@@ -46,11 +46,11 @@ class Manager {
 	 * @param string Classname to take for directories
 	 * @return boolean
 	 */
-    public function setDirectoryClass($className) {
-        $this->_directoryClass = $className;
+	public function setDirectoryClass($className) {
+		$this->_directoryClass = $className;
 
 		return true;
-    }
+	}
 
 	/**
 	 * Set a different class to take for files
@@ -58,11 +58,11 @@ class Manager {
 	 * @param string Classname to take for files
 	 * @return boolean True
 	 */
-    public function setFileClass($className) {
-        $this->_fileClass = $className;
+	public function setFileClass($className) {
+		$this->_fileClass = $className;
 
 		return true;
-    }
+	}
 
 	/**
 	 * Returns an array with \Spaf\Library\Directory\Directory

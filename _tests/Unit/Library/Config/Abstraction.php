@@ -22,22 +22,22 @@ namespace Spaf\_tests\Unit\Library\Config;
  */
 abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 
-    /**
-     * Config instance
-     *
-     * @var \Spaf\Library\Config\Manager
-     */
-    protected $_config = null;
+	/**
+	 * Config instance
+	 *
+	 * @var \Spaf\Library\Config\Manager
+	 */
+	protected $_config = null;
 
-    /**
-     * Driver to call
-     */
-    protected $_driver = 'ini';
+	/**
+	 * Driver to call
+	 */
+	protected $_driver = 'ini';
 
-    /**
-     * Filename for this config driver test
-     */
-    protected $_filename = 'config.ini';
+	/**
+	 * Filename for this config driver test
+	 */
+	protected $_filename = 'config.ini';
 
 	/**
 	 * Source File object
@@ -46,23 +46,23 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 	 */
 	 protected $_sourceFile = null;
 
-    /**
-     * Setup
-     *
-     * @return void
-     */
-    protected function setUp() {
-        $path = $this->_getTestPath() . '/Data/Config/';
-        // instantiate file object
-        $this->_sourceFile = new \Spaf\Library\Directory\File($path . $this->_filename);
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
+	protected function setUp() {
+		$path = $this->_getTestPath() . '/Data/Config/';
+		// instantiate file object
+		$this->_sourceFile = new \Spaf\Library\Directory\File($path . $this->_filename);
 
-        // instantiate config manager object and pass file and driver type
-        $this->_config = new \Spaf\Library\Config\Manager();
-        $this->_config->registerDriver($this->_driver);
-        $this->_config->setSourceFile($this->_sourceFile);
+		// instantiate config manager object and pass file and driver type
+		$this->_config = new \Spaf\Library\Config\Manager();
+		$this->_config->registerDriver($this->_driver);
+		$this->_config->setSourceFile($this->_sourceFile);
 
-        unset($path);
-    }
+		unset($path);
+	}
 
 	/**
 	 * Abstract tests, cause they are the same for all drivers
@@ -73,16 +73,16 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 	 *
 	 * @return void
 	 */
-    public function readValue() {
-        $masterServer = $this->_config->memcache->master_server;
+	public function readValue() {
+		$masterServer = $this->_config->memcache->master_server;
 
-        $this->assertEquals(
-            'cache01',
-            $masterServer
-        );
+		$this->assertEquals(
+			'cache01',
+			$masterServer
+		);
 
 		unset($masterServer);
-    }
+	}
 
 	/**
 	 * Test change a value
@@ -91,17 +91,17 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 	 */
  	public function changeValue() {
 		$this->assertEquals(
-            'cache01',
-            $this->_config->memcache->master_server
-        );
+			'cache01',
+			$this->_config->memcache->master_server
+		);
 
 		$newValue = 'cache03';
 		$this->_config->memcache->master_server = $newValue;
 
 		$this->assertEquals(
-            $newValue,
-            $this->_config->memcache->master_server
-        );
+			$newValue,
+			$this->_config->memcache->master_server
+		);
 
 		unset($newValue);
 	}
@@ -111,22 +111,22 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 	 *
 	 * @return void
 	 */
-    public function setValueInExistentSection() {
+	public function setValueInExistentSection() {
 		$this->assertEquals(
-            null,
-            $this->_config->memcache->dev_server
-        );
+			null,
+			$this->_config->memcache->dev_server
+		);
 
 		$newValue = 'cache-dev';
 		$this->_config->memcache->dev_server = $newValue;
 
 		$this->assertEquals(
-            $newValue,
-            $this->_config->memcache->dev_server
-        );
+			$newValue,
+			$this->_config->memcache->dev_server
+		);
 
 		unset($newValue);
-    }
+	}
 
 	/**
 	 * Test set a new value in a new section
@@ -135,16 +135,16 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 	 */
 	public function setValueInNewSection() {
 		$this->assertEquals(
-            array(),
-            $this->_config->newsection->toArray()
-        );
+			array(),
+			$this->_config->newsection->toArray()
+		);
 
 		$this->_config->newsection->foo = 'bar';
 
 		$this->assertEquals(
-            array('foo' => 'bar'),
-            $this->_config->newsection->toArray()
-        );
+			array('foo' => 'bar'),
+			$this->_config->newsection->toArray()
+		);
 	}
 
 	/**
@@ -190,18 +190,18 @@ abstract class Abstraction extends \Spaf\_tests\Unit\TestCase {
 		unset($config);
 	}
 
-    /**
-     * Release some memory maybe
-     * (guess not since the instance is still somewhere, just not in this class as prop)
-     *
-     * @return void
-     */
-    protected function tearDown() {
-        unset($this->_config);
-        unset($this->_driver);
-        unset($this->_filename);
-        unset($this->_sourceFile);
-    }
+	/**
+	 * Release some memory maybe
+	 * (guess not since the instance is still somewhere, just not in this class as prop)
+	 *
+	 * @return void
+	 */
+	protected function tearDown() {
+		unset($this->_config);
+		unset($this->_driver);
+		unset($this->_filename);
+		unset($this->_sourceFile);
+	}
 
 }
 

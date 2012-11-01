@@ -23,50 +23,50 @@ namespace Spaf\Library\Config;
  */
 class Manager {
 
-    /**
-     * The driver object
+	/**
+	 * The driver object
 	 *
-     * @var \Spaf\Library\Config\Driver\Abstraction
-     */
+	 * @var \Spaf\Library\Config\Driver\Abstraction
+	 */
 	private $_driver = null;
 
-    /**
-     * Default driver to choose.
-     *
-     * @var string
-     */
+	/**
+	 * Default driver to choose.
+	 *
+	 * @var string
+	 */
 	private $_default = '\Spaf\Library\Config\Driver\Ini';
 
-    /**
-     * Current config file.
-     *
-     * @var \Spaf\Library\Directory\File
-     */
+	/**
+	 * Current config file.
+	 *
+	 * @var \Spaf\Library\Directory\File
+	 */
 	private $_configFile = null;
 
-    /**
-     * Data store for the config array.
-     *
-     * @var array
-     */
+	/**
+	 * Data store for the config array.
+	 *
+	 * @var array
+	 */
 	private $_storedData = null;
 
-    /**
-     * Register one of the driver type.
+	/**
+	 * Register one of the driver type.
 	 * Currently supported is ini, xml, json, php (simple array) and serialized||srz (a simple serialized format)
-     *
-     * @param mixed String with the driver type or driver object itself
-     * @return boolean True
-     */
+	 *
+	 * @param mixed String with the driver type or driver object itself
+	 * @return boolean True
+	 */
 	public function registerDriver($driver) {
 		// if its a driver object
 		if ($driver instanceof \Spaf\Library\Config\Driver\Abstraction) {
-		    $this->_driver = $driver;
+			$this->_driver = $driver;
 
-            return true;
+			return true;
 		}
 
-        // if its just a string (driver type)
+		// if its just a string (driver type)
 		switch (strtolower($driver)) {
 			case 'ini':
 				$this->_driver = new \Spaf\Library\Config\Driver\Ini();
@@ -107,21 +107,21 @@ class Manager {
 		return $this->_driver->setSourceFile($file);
 	}
 
-    /**
-     * Read and also parse a config file.
-     *
-     * @throws \Spaf\Library\Config\Exception Throws an exception if no driver set yet
-     * @return boolean True
-     */
+	/**
+	 * Read and also parse a config file.
+	 *
+	 * @throws \Spaf\Library\Config\Exception Throws an exception if no driver set yet
+	 * @return boolean True
+	 */
 	public function read() {
-	    if ($this->_driver === null) {
-	        throw new Exception('Initialize a driver first');
-	    }
+		if ($this->_driver === null) {
+			throw new Exception('Initialize a driver first');
+		}
 
 		$data = $this->_driver->read();
-        foreach ($data['data'] as $key => $data) {
-            $this->_storedData[$key] = new Section($data);
-        }
+		foreach ($data['data'] as $key => $data) {
+			$this->_storedData[$key] = new Section($data);
+		}
 
 		return true;
 	}
@@ -153,21 +153,21 @@ class Manager {
 	 *
 	 * @return \Spaf\Library\Config\Section The section you asked for
 	 */
-    public function __get($name) {
-        $this->_checkIsRad();
+	public function __get($name) {
+		$this->_checkIsRad();
 
-        if (!isset($this->_storedData[$name])) {
+		if (!isset($this->_storedData[$name])) {
 			$this->_storedData[$name] = new Section(array());
-        }
+		}
 
 		return $this->_storedData[$name];
-    }
+	}
 
 	/**
 	 * Write the config file back to its source
 	 *
 	 * @param string Where to save the file, default to null to take the current one
-     * @return boolean True if writing was successful
+	 * @return boolean True if writing was successful
 	 */
 	public function save($filename = null) {
 		return $this->_driver->save(array('data' => $this->toArray()), $filename);
@@ -181,8 +181,8 @@ class Manager {
 	 */
 	private function _checkIsRad() {
 		if ($this->_storedData === null) {
-            $this->read();
-        }
+			$this->read();
+		}
 
 		return true;
 	}

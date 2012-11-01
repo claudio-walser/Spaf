@@ -21,29 +21,29 @@ namespace Spaf\Library\Config;
  */
 class Section {
 
-    /**
-     * Current config array.
-     *
-     * @var array
-     */
-    private $_storedData = array();
+	/**
+	 * Current config array.
+	 *
+	 * @var array
+	 */
+	private $_storedData = array();
 
 	/**
 	 * Constructor just stores the given
 	 * data array into class prop.
 	 */
-    public function __construct($data) {
-        if (is_object($data)) {
-        	$array = array();
-        	foreach ($data as $key => $value) {
-        		$array[$key] = $value;
-        	}
+	public function __construct($data) {
+		if (is_object($data)) {
+			$array = array();
+			foreach ($data as $key => $value) {
+				$array[$key] = $value;
+			}
 			$data = $array;
-        }
-        $this->_storedData = $data;
+		}
+		$this->_storedData = $data;
 
 		return true;
-    }
+	}
 
 	/**
 	 * Return the whole section data as array
@@ -62,12 +62,12 @@ class Section {
 	 * @TODO Think about conversion of some types 'true' to boolean and stuff like that, think i had that in earlier versions of my framework
 	 * @return string The property you asked for
 	 */
-    public function __get($name) {
-        if (isset($this->_storedData[$name])) {
-            return $this->_storedData[$name];
-        }
-        return null;
-    }
+	public function __get($name) {
+		if (isset($this->_storedData[$name])) {
+			return $this->_storedData[$name];
+		}
+		return null;
+	}
 
 	/**
 	 * Magic set for just set by property
@@ -79,11 +79,11 @@ class Section {
 	 * @param string The property value you want to give
 	 * @return boolean
 	 */
-    public function __set($name, $value) {
-        $this->_storedData[$name] = $value;
+	public function __set($name, $value) {
+		$this->_storedData[$name] = $value;
 
-        return true;
-    }
+		return true;
+	}
 
 }
 

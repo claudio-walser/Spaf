@@ -27,25 +27,25 @@ namespace Spaf\Library\Cache;
  */
 abstract class Manager {
 
-    /**
-     * Default cache type. Possible values are
-     * memcache | apc
-     *
-     * @var string
-     */
-    private static $_defaultCacheType = 'memcache';
+	/**
+	 * Default cache type. Possible values are
+	 * memcache | apc
+	 *
+	 * @var string
+	 */
+	private static $_defaultCacheType = 'memcache';
 
 	/**
 	 * All allowed cache types.
 	 */
-    private static $_allowedCacheTypes = array('apc', 'memcache');
+	private static $_allowedCacheTypes = array('apc', 'memcache');
 
-    /**
-     * Factory instances
-     *
-     * @var array Array with Spaf\Library\Cache\Driver\Abstraction Objects
-     */
-    private static $_instances = array();
+	/**
+	 * Factory instances
+	 *
+	 * @var array Array with Spaf\Library\Cache\Driver\Abstraction Objects
+	 */
+	private static $_instances = array();
 
 	/**
 	 * Get all allowed cache types
@@ -67,29 +67,29 @@ abstract class Manager {
 	 * @param string Cachetype, to see possible values, call Spaf\Library\Cache\Manager::getAllowedTypes()
 	 * @return Spaf\Library\Cache\Driver\Abstraction Object of the asked cachetype or memcache object as default
 	 */
-    public static function factory($cacheType = 'memcache') {
-        // always lower case
-        $cacheType = strtolower($cacheType);
-        // check if allowed type
-        if (!in_array($cacheType, self::$_allowedCacheTypes)) {
-            $cacheType = self::$_defaultCacheType;
-        }
+	public static function factory($cacheType = 'memcache') {
+		// always lower case
+		$cacheType = strtolower($cacheType);
+		// check if allowed type
+		if (!in_array($cacheType, self::$_allowedCacheTypes)) {
+			$cacheType = self::$_defaultCacheType;
+		}
 
 		// check and if needed, create instance
-        if (!isset(self::$_instances[$cacheType]) || !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Abstraction) {
-            switch ($cacheType) {
-                case 'apc':
-                    self::$_instances[$cacheType] = new Driver\Apc();
-                    break;
-                default:
-                    self::$_instances[$cacheType] = new Driver\Memcache();
-                    break;
-            }
-        }
+		if (!isset(self::$_instances[$cacheType]) || !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Abstraction) {
+			switch ($cacheType) {
+				case 'apc':
+					self::$_instances[$cacheType] = new Driver\Apc();
+					break;
+				default:
+					self::$_instances[$cacheType] = new Driver\Memcache();
+					break;
+			}
+		}
 
 		// return instance
 		return self::$_instances[$cacheType];
-    }
+	}
 
 }
 

@@ -24,11 +24,11 @@ namespace Spaf\Library\Log\Driver;
 abstract class Abstraction {
 
 	/**
-     * Notify method of each log driver
-     *
+	 * Notify method of each log driver
+	 *
 	 * @param string String to handle with the log driver
 	 * @return boolean True if notification was successful
-     */
+	 */
 	abstract public function notify($log);
 
 }

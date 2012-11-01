@@ -22,25 +22,25 @@ namespace Spaf\_tests\Unit;
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * Get path to the current directory
-     *
-     * @return void
-     */
-    protected function _getTestPath() {
-        // build the full path
-        $directory = __DIR__;
+	/**
+	 * Get path to the current directory
+	 *
+	 * @return void
+	 */
+	protected function _getTestPath() {
+		// build the full path
+		$directory = __DIR__;
 
-        $directories = explode(DIRECTORY_SEPARATOR, $directory);
-        array_pop($directories);
-        //array_pop($directories);
-        //array_pop($directories);
+		$directories = explode(DIRECTORY_SEPARATOR, $directory);
+		array_pop($directories);
+		//array_pop($directories);
+		//array_pop($directories);
 
 
-        $path = implode(DIRECTORY_SEPARATOR, $directories);
+		$path = implode(DIRECTORY_SEPARATOR, $directories);
 
-        return $path;
-    }
+		return $path;
+	}
 
 }
 

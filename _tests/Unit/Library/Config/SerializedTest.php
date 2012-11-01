@@ -21,30 +21,30 @@ namespace Spaf\_tests\Unit\Library\Config;
  */
 class SerializedTest extends Abstraction {
 
-    /**
-     * Driver to call
-     */
-    protected $_driver = 'serialized';
+	/**
+	 * Driver to call
+	 */
+	protected $_driver = 'serialized';
 
-    /**
-     * Filename for this config driver test
-     */
-    protected $_filename = 'config.srz';
+	/**
+	 * Filename for this config driver test
+	 */
+	protected $_filename = 'config.srz';
 
-    /**
-     * Filename of the copy for this config driver test
-     */
-    protected $_filenameCopy = 'config-copy.srz';
+	/**
+	 * Filename of the copy for this config driver test
+	 */
+	protected $_filenameCopy = 'config-copy.srz';
 
 
-    /**
-     * Setup
-     *
-     * @return void
-     */
-    protected function setUp() {
-        parent::setUp();
-    }
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
+	protected function setUp() {
+		parent::setUp();
+	}
 
 
 	/**
@@ -58,8 +58,8 @@ class SerializedTest extends Abstraction {
 	 * @return void
 	 */
 	public function testReadValue() {
-        parent::readValue();
-    }
+		parent::readValue();
+	}
 
 	/**
 	 * Test change a value
@@ -77,9 +77,9 @@ class SerializedTest extends Abstraction {
 	 * @see \Spaf\_tests\Unit\Library\Config\Abstraction::setValueInExistentSection()
 	 * @return void
 	 */
-    public function testSetValueInExistentSection() {
+	public function testSetValueInExistentSection() {
 		parent::setValueInExistentSection();
-    }
+	}
 
 	/**
 	 * Test set a new value in a new section
@@ -104,15 +104,15 @@ class SerializedTest extends Abstraction {
 		parent::save();
 	}
 
-    /**
-     * Release some memory maybe
-     * (guess not since the instance is still somewhere, just not in this class as prop)
-     *
-     * @return void
-     */
-    protected function tearDown() {
-        parent::tearDown();
-    }
+	/**
+	 * Release some memory maybe
+	 * (guess not since the instance is still somewhere, just not in this class as prop)
+	 *
+	 * @return void
+	 */
+	protected function tearDown() {
+		parent::tearDown();
+	}
 
 }
 

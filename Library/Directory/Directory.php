@@ -146,7 +146,7 @@ class Directory extends Abstraction {
 		}
 
 		return $childs;
-    }
+	}
 
 	/**
 	 * Delete this folder and its content

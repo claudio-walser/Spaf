@@ -99,7 +99,9 @@ class Beautifier {
 		$lines = $file->getLines();
 
 		foreach ($lines as $key => $line) {
-			$lines[$key] = str_replace('	', "\t", $line);
+			// haha, of course its replacing this four spaces as well
+			// so it just worked for the first time, hope it doesent change too much now :-P
+			$lines[$key] = str_replace('  ' . '  ', "\t", $line);
 		}
 
 		$file->setLines($lines);

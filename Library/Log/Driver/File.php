@@ -41,12 +41,12 @@ class File extends Abstraction {
 	}
 
 	/**
-     * Notify method of each log driver
-     *
+	 * Notify method of each log driver
+	 *
 	 * @todo Most simple solution now, improve that
 	 * @param string String to write into the file
 	 * @return boolean True if save the file was successfull
-     */
+	 */
 	public function notify($log) {
 		if ($this->_sourceFile === null) {
 			throw new Exception('Set a source file before read');

@@ -26,8 +26,8 @@ class Serialized extends Abstraction {
 	 * Read the current given serialized php file.
 	 *
 	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
-     * @access public
-     * @return array Nested array of the whole config
+	 * @access public
+	 * @return array Nested array of the whole config
 	 */
 	public function read() {
 		if ($this->_sourceFile === null) {
@@ -48,7 +48,7 @@ class Serialized extends Abstraction {
 	 *
 	 * @param array Nested array with complete config to write
 	 * @param string Where to save the file, default to null to take the current one
-     * @return bool True if writing the file was successfull
+	 * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array, $filename = null) {
 		parent::save($assoc_array, $filename);

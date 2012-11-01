@@ -26,8 +26,8 @@ class Xml extends Abstraction {
 	 * Read the current given xml file.
 	 *
 	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
-     * @access public
-     * @return array Nested array of the whole config
+	 * @access public
+	 * @return array Nested array of the whole config
 	 */
 	public function read() {
 		$xml_string = $this->_sourceFile->getContent();
@@ -67,7 +67,7 @@ class Xml extends Abstraction {
 	 * Write the config back to the xml file currently set.
 	 *
 	 * @param array Nested array with complete config to write
-     * @return bool True if writing the file was successfull
+	 * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array, $filename = null) {
 		parent::save($assoc_array, $filename);
@@ -75,7 +75,7 @@ class Xml extends Abstraction {
 		$file_content  = '<?xml version=\'1.0\'?>' . "\n";
 		$file_content .= '<config>' . "\n\n";
 		foreach ($assoc_array as $section => $section_array) {
-			$file_content .= '    <section name="' . $section . '">' . "\n";
+			$file_content .= '	<section name="' . $section . '">' . "\n";
 			if (is_array($section_array)) {
 				foreach ($section_array as $key => $value) {
 					if ($value === false) {
@@ -85,9 +85,9 @@ class Xml extends Abstraction {
 					} else if ($value === null){
 						$value = 'null';
 					}
-					$file_content .= '        <para name="' . $key . '">' . $value . '</para>' . "\n";
+					$file_content .= '		<para name="' . $key . '">' . $value . '</para>' . "\n";
 				}
-				$file_content .= '    </section>' . "\n\n";
+				$file_content .= '	</section>' . "\n\n";
 			}
 		}
 		$file_content .= '</config>';

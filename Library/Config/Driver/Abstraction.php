@@ -43,19 +43,19 @@ abstract class Abstraction {
 	}
 
 	/**
-     * Read has to be implemented in any driver.
-     *
+	 * Read has to be implemented in any driver.
+	 *
 	 * @return array Config Array
-     */
+	 */
 	abstract public function read();
 
 	/**
-     * Read has to be implemented in any driver.
-     *
+	 * Read has to be implemented in any driver.
+	 *
 	 * @param array Config Array
 	 * @param string Filename to save the file, null to save to the current file object
 	 * @return boolean True if saving the file was successful
-     */
+	 */
 	public function save(array $array, $filename = null) {
 		if ($this->_sourceFile === null && $filename === null) {
 			throw new Exception('Set a source file or give a filename to save the data.');
