@@ -122,7 +122,7 @@ class Manager {
         foreach ($data['data'] as $key => $data) {
             $this->_storedData[$key] = new Section($data);
         }
-
+        
 		return true;
 	}
 

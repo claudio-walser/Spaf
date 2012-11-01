@@ -47,7 +47,7 @@ class Xml extends Abstraction {
 					break;
 
 				case 'PARA':
-					$array['data'][$section_name][$element['attributes']['NAME']] = empty($element['value']) ? 'empty' : $element['value'];
+					$array[$section_name][$element['attributes']['NAME']] = empty($element['value']) ? 'empty' : $element['value'];
 					break;
 
 				default:
@@ -56,11 +56,11 @@ class Xml extends Abstraction {
 			}
 		}
 
-		if (!is_array($array['data']) || empty($array['data'])) {
-			$array['data'] = null;
+		if (!is_array($array) || empty($array)) {
+			$array = array();
 		}
 
-		return $array;
+		return array('data' => $array);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Xml extends Abstraction {
 	 * @param array Nested array with complete config to write
      * @return bool True if writing the file was successfull
 	 */
-	public function save(Array $assoc_array) {
+	public function save(Array $assoc_array, $filename = null) {
 		$assoc_array = $assoc_array['data'];
 		$file_content  = '<?xml version=\'1.0\'?>' . "\n";
 		$file_content .= '<config>' . "\n\n";
@@ -91,9 +91,9 @@ class Xml extends Abstraction {
 		}
 		$file_content .= '</config>';
 
-		$this->_soucreFile->setContent($file_content);
+		$this->_sourceFile->setContent($file_content);
 
-		return $this->_sourceFile->write();
+		return $this->_sourceFile->write($filename);
 	}
 
 }
