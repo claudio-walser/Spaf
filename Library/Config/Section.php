@@ -28,12 +28,33 @@ class Section {
      */
     private $_storedData = array();
 
+	/**
+	 * Constructor just stores the given
+	 * data array into class prop.
+	 */
     public function __construct($data) {
         $this->_storedData = $data;
 
-        //print_r($data);
+		return true;
     }
 
+	/**
+	 * Return the whole section data as array
+	 *
+	 * @return array Array with the whole section data
+	 */
+	public function toArray() {
+		return $this->_storedData;
+	}
+
+	/**
+	 * Magic getter for just fetch by property
+	 *
+	 * Get a property of this section
+	 *
+	 * @TODO Think about conversion of some types 'true' to boolean and stuff like that, think i had that in earlier versions of my framework
+	 * @return string The property you asked for
+	 */
     public function __get($name) {
         if (isset($this->_storedData[$name])) {
             return $this->_storedData[$name];
@@ -41,6 +62,16 @@ class Section {
         return null;
     }
 
+	/**
+	 * Magic set for just set by property
+	 *
+	 * Set/overwrite a property of this section
+	 *
+	 * @TODO Think about conversion of some types boolean to 'true' and stuff like that, think i had that in earlier versions of my framework
+	 * @param string The property name you want to set/overwrite
+	 * @param string The property value you want to give
+	 * @return boolean
+	 */
     public function __set($name, $value) {
         $this->_storedData[$name] = $value;
 

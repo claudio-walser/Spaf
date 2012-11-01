@@ -47,9 +47,10 @@ class Ini extends Abstraction {
 	 * Write the config back to the ini file currently set.
 	 *
 	 * @param array Nested array with complete config to write
+	 * @param string Where to save the file, default to null to take the current one
      * @return bool True if writing the file was successfull
 	 */
-	public function save(Array $assoc_array) {
+	public function save(Array $assoc_array, $filename = null) {
 		$assoc_array = $assoc_array['data'];
 		$file_content = '';
 		foreach ($assoc_array as $section => $section_array) {
@@ -69,7 +70,7 @@ class Ini extends Abstraction {
 			$file_content .= "\n";
 		}
 		$this->_sourceFile->setContent($file_content);
-		return $this->_sourceFile->write();
+		return $this->_sourceFile->write($filename);
 	}
 
 }

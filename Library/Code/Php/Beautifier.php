@@ -85,7 +85,7 @@ class Beautifier {
 		$this->_handleTabs($file);
 		$this->_removeTrailingSpaces($file);
 		$this->_fixStartingBackslash($file);
-		$this->_fixNewLines($file);
+		//$this->_fixNewLines($file);
 		return true;
 	}
 
@@ -185,7 +185,6 @@ class Beautifier {
 		$content = $file->getContent();
 
 		$content = str_replace("\r\n", "\n", $content);
-		echo 'fixed newlines : ';
 		$file->setContent($content);
 
 		return true;
