@@ -47,13 +47,15 @@ class Json extends Abstraction {
 	 * Write the config back to the json file currently set.
 	 *
 	 * @param array Nested array with complete config to write
+	 * @param string Where to save the file, default to null to take the current one
      * @return bool True if writing the file was successfull
 	 */
-	public function save(Array $assoc_array) {
+	public function save(Array $assoc_array, $filename = null) {
+		parent::save($assoc_array, $filename);
 		$assoc_array = $assoc_array['data'];
 		$file_content = json_encode($assoc_array);
 		$this->_sourceFile->setContent($file_content);
-		return $this->_sourceFile->write();
+		return $this->_sourceFile->write($filename);
 	}
 
 }

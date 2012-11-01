@@ -53,9 +53,25 @@ abstract class Abstraction {
      * Read has to be implemented in any driver.
      *
 	 * @param array Config Array
+	 * @param string Filename to save the file, null to save to the current file object
 	 * @return boolean True if saving the file was successful
      */
-	abstract public function save(array $array);
+	public function save(array $array, $filename = null) {
+		if ($this->_sourceFile === null && $filename === null) {
+			throw new Exception('Set a source file or give a filename to save the data.');
+		}
+
+		if ($this->_sourceFile === null) {
+			$dirManager = new \Spaf\Library\Directory\Manager();
+			if (!$dirManager->fileExists($filename)) {
+				$dirManager->createFile($filename);
+			}
+
+			$this->_sourceFile = new \Spaf\Library\Directory\File($filename);
+		}
+
+		return true;
+	}
 
 }
 

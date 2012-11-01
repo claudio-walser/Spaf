@@ -66,6 +66,7 @@ class Php extends Abstraction {
      * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array, $filename = null) {
+		parent::save($assoc_array, $filename);
 		$assoc_array = $assoc_array['data'];
 		$file_content = '<?php' . "\n\n";
 		foreach ($assoc_array as $section => $section_array) {

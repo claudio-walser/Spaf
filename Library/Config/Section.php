@@ -33,6 +33,13 @@ class Section {
 	 * data array into class prop.
 	 */
     public function __construct($data) {
+        if (is_object($data)) {
+        	$array = array();
+        	foreach ($data as $key => $value) {
+        		$array[$key] = $value;
+        	}
+			$data = $array;
+        }
         $this->_storedData = $data;
 
 		return true;

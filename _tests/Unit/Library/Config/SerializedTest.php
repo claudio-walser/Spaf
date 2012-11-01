@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Unit/Library/Config/PhpTest.php
+ * Spaf/_tests/Unit/Library/Config/SerializedTest.php
  * @created Sat Oct 13 21:49:41 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,30 +11,30 @@
 namespace Spaf\_tests\Unit\Library\Config;
 
 /**
- * \Spaf\_tests\Unit\Library\Config\PhpTest
+ * \Spaf\_tests\Unit\Library\Config\SerializedTest
  *
- * The PhpTest class tests any aspect of \Spaf\Library\Config\Driver\Php.
+ * The SerializedTest class tests any aspect of \Spaf\Library\Config\Driver\Serialized.
  *
  * @author Claudio Walser
  * @package Spaf\_tests\Unit\Library\Config
  * @namespace Spaf\_tests\Unit\Library\Config
  */
-class PhpTest extends Abstraction {
+class SerializedTest extends Abstraction {
 
     /**
      * Driver to call
      */
-    protected $_driver = 'php';
+    protected $_driver = 'serialized';
 
     /**
      * Filename for this config driver test
      */
-    protected $_filename = 'config.php';
+    protected $_filename = 'config.srz';
 
     /**
      * Filename of the copy for this config driver test
      */
-    protected $_filenameCopy = 'config-copy.php';
+    protected $_filenameCopy = 'config-copy.srz';
 
 
     /**

@@ -36,7 +36,6 @@ class XmlTest extends Abstraction {
      */
     protected $_filenameCopy = 'config-copy.xml';
 
-
     /**
      * Setup
      *
@@ -45,7 +44,6 @@ class XmlTest extends Abstraction {
     protected function setUp() {
         parent::setUp();
     }
-
 
 	/**
 	 * Test just call the parant one, cause they are the same for all drivers
@@ -99,10 +97,10 @@ class XmlTest extends Abstraction {
 	 *
 	 * @see \Spaf\_tests\Unit\Library\Config\Abstraction::save()
 	 * @return void
-	 * /
+	 */
 	public function testSave() {
 		parent::save();
-	}*/
+	}
 
     /**
      * Release some memory maybe

@@ -70,6 +70,7 @@ class Xml extends Abstraction {
      * @return bool True if writing the file was successfull
 	 */
 	public function save(Array $assoc_array, $filename = null) {
+		parent::save($assoc_array, $filename);
 		$assoc_array = $assoc_array['data'];
 		$file_content  = '<?xml version=\'1.0\'?>' . "\n";
 		$file_content .= '<config>' . "\n\n";

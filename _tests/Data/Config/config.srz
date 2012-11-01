@@ -1,0 +1,1 @@
+a:1:{s:8:"memcache";a:2:{s:13:"master_server";s:7:"cache01";s:12:"slave_server";s:7:"cache02";}}
