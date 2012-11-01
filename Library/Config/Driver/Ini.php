@@ -37,7 +37,7 @@ class Ini extends Abstraction {
 		$array['data'] = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), 1);
 
 		if (!is_array($array) || empty($array)) {
-			$array['data'] = null;
+			$array['data'] = array();
 		}
 
 		return $array;

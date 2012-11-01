@@ -24,6 +24,13 @@ namespace Spaf\Library\Config\Driver;
  */
 class Php extends Abstraction {
 
+	private $_toEscape = array(
+		'\\'
+
+	);
+
+	private $_allowedToStrip = array();
+
 	/**
 	 * Read the current given php file.
 	 *
@@ -36,10 +43,10 @@ class Php extends Abstraction {
 			throw new Exception('Set a source file before read');
 		}
 
-		include($this->_sourceFile->getPath() . $this->_sourceFile->getName());
+		require($this->_sourceFile->getPath() . $this->_sourceFile->getName());
 
 		if (!isset($config)) {
-			$config = null;
+			$config = array();
 		}
 
 		$array = array(
@@ -53,10 +60,12 @@ class Php extends Abstraction {
 	/**
 	 * Write the config back to the php file currently set.
 	 *
+	 * @TODO Make it configurable if you want nice array notation or one complete single elment per line (as input against output of the copy file in the tests)
 	 * @param array Nested array with complete config to write
+	 * @param string Where to save the file, default to null to take the current one
      * @return bool True if writing the file was successfull
 	 */
-	public function save(Array $assoc_array) {
+	public function save(Array $assoc_array, $filename = null) {
 		$assoc_array = $assoc_array['data'];
 		$file_content = '<?php' . "\n\n";
 		foreach ($assoc_array as $section => $section_array) {
@@ -84,7 +93,7 @@ class Php extends Abstraction {
 		$file_content .= '?>';
 
 		$this->_sourceFile->setContent($file_content);
-		return $this->_sourceFile->write();
+		return $this->_sourceFile->write($filename);
 	}
 
 }

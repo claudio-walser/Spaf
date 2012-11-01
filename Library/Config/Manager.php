@@ -67,7 +67,7 @@ class Manager {
 		}
 
         // if its just a string (driver type)
-		switch (strtoupper($driver)) {
+		switch (strtolower($driver)) {
 			case 'ini':
 				$this->_driver = new \Spaf\Library\Config\Driver\Ini();
 				break;
