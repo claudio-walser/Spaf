@@ -77,12 +77,17 @@ class File extends Abstraction {
 	 * Splits the path in filename and filepath.
 	 *
 	 * @param string Path to the directory
+	 * @param boolean Try to create non existent file
 	 * @return boolean
 	 */
-	public function __construct($file) {
+	public function __construct($file, $create = false) {
 		$file = self::formPath($file, false);
 		$this->_manager = new Manager();
-
+		
+		if ($create === true && !$this->_manager->fileExists($file)) {
+			$this->_manager->createFile($file);
+		}
+		
 		if (!is_readable($file)) {
 			throw new Exception('File «' . $file . '»does not exists!');
 		}

@@ -1,10 +1,6 @@
 <?php
 
-$config = array(
-	'memcache' => array(
-		'master_server' => 'cache01',
-		'slave_server' => 'cache02'
-	)
-);
+$config['memcache']['master_server'] = 'cache01';
+$config['memcache']['slave_server'] = 'cache02';
 
 ?>

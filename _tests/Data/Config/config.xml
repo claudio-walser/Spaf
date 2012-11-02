@@ -1,8 +1,9 @@
 <?xml version='1.0'?>
 <config>
-    <section name="memcache">
-        <para name="master_server">cache01</para>
-        <para name="slave_server">cache02</para>
-        <slave_server>cache02</master_server>
-    </section>
+
+	<section name="memcache">
+		<para name="master_server">cache01</para>
+		<para name="slave_server">cache02</para>
+	</section>
+
 </config>
