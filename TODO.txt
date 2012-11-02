@@ -1,0 +1,22 @@
+Framework
+_________
+
+- Build Library/Code/Xml and its tests of course
+- Do something usefull with test or delete it (guess its better to handle everything in ./_tests/ directory as TestCase.php)
+- Fix Library/Cache
+- Make Library/Code/Php/Beatufier able to read configs like psa-standards (which i dont completly like btw :-P)
+- Integrate my Orm and make it a namespaced php5.3 beauty ;-)
+- Integrate and port other usefull stuff i have from past
+- Write some Soap, REST and co. classes 
+
+Unit-Tests
+__________
+
+- test Core/Response and Core/Request
+- test Library/Log
+- test Library/Cache
+- test Library/Code/Php/Beatufier
+
+
+
+Summary: boy, its a men-work ;-)
