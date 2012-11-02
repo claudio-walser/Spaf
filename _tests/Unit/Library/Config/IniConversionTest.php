@@ -23,12 +23,12 @@ class IniConversionTest extends Conversion {
 
 	/**
 	 * Main driver type for the current implementation
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_mainDriver = 'ini';
-	
-	
+
+
 	/**
 	 * Setup
 	 *
@@ -50,13 +50,13 @@ class IniConversionTest extends Conversion {
 		$this->_mainConfig->registerDriver('json');
 		$this->_mainConfig->setSourceFile($conversionFile);
 		$this->_mainConfig->save();
-		
+
 		// assert contents of conversion and origianl xml config
 		$this->assertEquals(
 			$this->_fileJson->getLines(),
 			$conversionFile->getLines()
 		);
-		
+
 		// clean up
 		$conversionFile->delete();
 		unset($conversionFile);
@@ -72,13 +72,13 @@ class IniConversionTest extends Conversion {
 		$this->_mainConfig->registerDriver('php');
 		$this->_mainConfig->setSourceFile($conversionFile);
 		$this->_mainConfig->save();
-		
+
 		// assert contents of conversion and origianl xml config
 		$this->assertEquals(
 			$this->_filePhp->getLines(),
 			$conversionFile->getLines()
 		);
-		
+
 		// clean up
 		$conversionFile->delete();
 		unset($conversionFile);
@@ -94,13 +94,13 @@ class IniConversionTest extends Conversion {
 		$this->_mainConfig->registerDriver('srz');
 		$this->_mainConfig->setSourceFile($conversionFile);
 		$this->_mainConfig->save();
-		
+
 		// assert contents of conversion and origianl xml config
 		$this->assertEquals(
 			$this->_fileSrz->getLines(),
 			$conversionFile->getLines()
 		);
-		
+
 		// clean up
 		$conversionFile->delete();
 		unset($conversionFile);
@@ -116,18 +116,18 @@ class IniConversionTest extends Conversion {
 		$this->_mainConfig->registerDriver('xml');
 		$this->_mainConfig->setSourceFile($conversionFile);
 		$this->_mainConfig->save();
-		
+
 		// assert contents of conversion and origianl xml config
 		$this->assertEquals(
 			$this->_fileXml->getLines(),
 			$conversionFile->getLines()
 		);
-		
+
 		// clean up
 		$conversionFile->delete();
 		unset($conversionFile);
 	}
-	
+
 	/**
 	 * Release some memory maybe
 	 * (guess not since the instance is still somewhere, just not in this class as prop)
