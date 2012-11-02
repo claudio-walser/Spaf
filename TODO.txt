@@ -2,6 +2,7 @@ Framework
 _________
 
 - Build Library/Code/Xml and its tests of course
+- Fix Library/Config/Driver/Xml to a useful format, therefore use Library/Code/Xml Reader and Writer
 - Do something usefull with test or delete it (guess its better to handle everything in ./_tests/ directory as TestCase.php)
 - Fix Library/Cache
 - Make Library/Code/Php/Beatufier able to read configs like psa-standards (which i dont completly like btw :-P)
