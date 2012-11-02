@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Unit/Library/Config/IniConversionTest.php
+ * Spaf/_tests/Unit/Library/Config/JsonConversionTest.php
  * @created Sat Oct 13 21:49:41 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,22 +11,22 @@
 namespace Spaf\_tests\Unit\Library\Config;
 
 /**
- * \Spaf\_tests\Unit\Library\Config\IniConversionTest
+ * \Spaf\_tests\Unit\Library\Config\JsonConversionTest
  *
- * The IniConversionTest class tests any aspect of \Spaf\Library\Config\Driver\Ini conversion.
+ * The JsonConversionTest class tests any aspect of \Spaf\Library\Config\Driver\Json conversion.
  *
  * @author Claudio Walser
  * @package Spaf\_tests\Unit\Library\Config
  * @namespace Spaf\_tests\Unit\Library\Config
  */
-class IniConversionTest extends Conversion {
+class JsonConversionTest extends Conversion {
 
 	/**
 	 * Main driver type for the current implementation
 	 *
 	 * @var string
 	 */
-	protected $_mainDriver = 'ini';
+	protected $_mainDriver = 'json';
 
 
 	/**
@@ -36,24 +36,24 @@ class IniConversionTest extends Conversion {
 	 */
 	protected function setUp() {
 		parent::setUp();
-		$this->_mainConfig->setSourceFile($this->_fileIni);
+		$this->_mainConfig->setSourceFile($this->_fileJson);
 		$this->_mainConfig->read();
 	}
 
 	/**
-	 * Test conversion to a Json Copy and compare the content with the original Json config file
+	 * Test conversion to a Ini Copy and compare the content with the original Ini config file
 	 *
 	 * @return void
 	 */
-	public function testToJson() {
-		$conversionFile = new \Spaf\Library\Directory\File($this->_fileIni->getPath() . $this->_filenameJsonCopy, true);
-		$this->_mainConfig->registerDriver('json');
+	public function testToIni() {
+		$conversionFile = new \Spaf\Library\Directory\File($this->_fileIni->getPath() . $this->_filenameIniCopy, true);
+		$this->_mainConfig->registerDriver('ini');
 		$this->_mainConfig->setSourceFile($conversionFile);
 		$this->_mainConfig->save();
 
 		// assert contents of conversion and origianl xml config
 		$this->assertEquals(
-			$this->_fileJson->getLines(),
+			$this->_fileIni->getLines(),
 			$conversionFile->getLines()
 		);
 

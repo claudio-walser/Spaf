@@ -70,6 +70,9 @@ class Ini extends Abstraction {
 			}
 			$file_content .= "\n";
 		}
+
+		$file_content = rtrim($file_content);
+
 		$this->_sourceFile->setContent($file_content);
 		return $this->_sourceFile->write($filename);
 	}
