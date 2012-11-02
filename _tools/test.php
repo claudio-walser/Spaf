@@ -88,7 +88,7 @@ final class Test {
 		}
 
 		// instantiate manager
-		$manager = new \Spaf\Library\Test\Cli();
+		$manager = new \Spaf\_tests\Unit\TestManager();
 		// set array with tests
 		$manager->setTests($tests);
 		// run test manager

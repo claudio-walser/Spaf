@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Unit/Library/Validator/Abstraction.php
+ * Spaf/_tests/Unit/TestCase.php
  * @created Wed Oct 10 21:11:04 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,14 +11,13 @@
 namespace Spaf\_tests\Unit;
 
 /**
- * \Spaf\_tests\Unit\Library\Config\Abstraction
+ * \Spaf\_tests\Unit\TestCase
  *
- * The Abstraction class is a base class for any further config test.
- * But its not a test by itself
+ * Abstract TestCase for Spaf unit-tests.
  *
  * @author Claudio Walser
- * @package Spaf\_tests\Unit\Library\Config
- * @namespace Spaf\_tests\Unit\Library\Config
+ * @package Spaf\_tests\Unit
+ * @namespace Spaf\_tests\Unit
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 

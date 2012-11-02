@@ -3,23 +3,23 @@
 /**
  * $Id$
  *
- * Spaf/Library/Test/Abstraction.php
+ * Spaf/_tests/Unit/TestManager.php
  * @created Wed Sep 26 19:26:27 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Library\Test;
+namespace Spaf\_tests\Unit;
 
 /**
- * \Spaf\Library\Test\Abstraction
+ * \Spaf\_tests\Unit\TestManager
  *
  * The Cli Test Manager class provides an interface for running the unit tests easely.
  *
  * @author Claudio Walser
- * @package Spaf\Library\Test
- * @namespace Spaf\Library\Test
+ * @package Spaf\_tests\Unit
+ * @namespace Spaf\_tests\Unit
  */
-class Manager {
+class TestManager {
 
 	/**
 	 * PHPUnit TestSuite
@@ -215,7 +215,7 @@ class Manager {
 				'verbose' => true
 			);
 			$result = $this->_runner->doRun($this->_suite, $params);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			echo $e->getMessage() . "\n\n";
 			exit(\PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
 		}
