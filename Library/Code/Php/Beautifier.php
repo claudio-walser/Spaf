@@ -85,6 +85,7 @@ class Beautifier {
 		$this->_handleTabs($file);
 		$this->_removeTrailingSpaces($file);
 		$this->_fixStartingBackslash($file);
+		$this->_fixDocumentationCreateTag($file);
 		//$this->_fixNewLines($file);
 		return true;
 	}
@@ -176,6 +177,29 @@ class Beautifier {
 		return true;
 	}
 
+	/**
+	 * Fix create Tag in doc blocks and set it with the
+	 * date of file creation
+	 *
+	 * @TODO Finish implementing, its kind of crap cause often the creation time is one checkout date for many files.
+	 * @param \Spaf\Library\Directory\File File to process
+	 * @return boolean True
+	 */
+	public function _fixDocumentationCreateTag (\Spaf\Library\Directory\File $file) {
+		$lines = $file->getLines();
+
+		foreach ($lines as $key => $line) {
+			// * @created Mon Oct 08 23:28:54 CET 2012
+			if (substr($line, 0, 12) === ' * @created ') {
+				$lines[$key] = ' * @created ' . date('D M d H:i:s Y', $file->getCreationTime());
+				//echo $file->getCreationTime() . " " . $lines[$key] . "\n";
+			}
+		}
+
+		//$file->setLines($lines);
+
+		return true;
+	}
 
 	/**
 	 * Fixes windows new lines and changes into linux styled ones.

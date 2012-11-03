@@ -25,6 +25,13 @@ namespace Spaf\Library\Directory;
 class File extends Abstraction {
 
 	/**
+	 * Allow spaces in the end of any line?
+	 * By default we dont want them ;-)
+	 *
+	 * @var boolean
+	 */
+	private $_trailingSpacesInContent = false;
+	/**
 	 * The file name without paths.
 	 *
 	 * @var string
@@ -238,10 +245,33 @@ class File extends Abstraction {
 		return $this->_manager->deleteFile($this->_path . $this->_name);
 	}
 
+	/**
+	 * Get creation timestamp of the file.
+	 * In Linux its the date of the last INODE change.
+	 * Since ext filesystem does not have anything like creation timestamp.
+	 * This usually changes whenever a meta-info changes.
+	 * On Windows its simply the creation timestamp.
+	 *
+	 * @return int Timestamp of creation
+	 */
+	public function getCreationTime() {
+		return filectime($this->_path . $this->_name);
+	}
+
+	/**
+	 * If we dont want trailing spaces, remove them.
+	 *
+	 * @return boolean True if spaces removed, false if nothing changed
+	 */
 	private function _rtrimLines() {
+		if ($this->_trailingSpacesInContent === true) {
+			return false;
+		}
 		foreach ($this->_lines as $key => $line) {
 			$this->_line[$key] = rtrim($line);
 		}
+
+		return true;
 	}
 
 
