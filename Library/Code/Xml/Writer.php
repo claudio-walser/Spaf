@@ -69,9 +69,9 @@ class Writer {
 		if ($this->_document === null) {
 			throw new Exception('Set a document before you try to write something.');
 		}
-		
+
 		$this->_document->toString($this->_writer);
-		
+
 		return $this->_writer->flush(false);
 	}
 

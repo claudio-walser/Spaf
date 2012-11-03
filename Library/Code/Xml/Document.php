@@ -43,6 +43,8 @@ class Document {
 	 */
 	private $_rootNode = null;
 
+	private $_writer = null;
+
 	/**
 	 * Instantiates a \XMLWriter object
 	 * to work with.
@@ -55,19 +57,19 @@ class Document {
 		$this->_version = (string) $version;
 		$this->_encoding = (string) $encoding;
 	}
-	
+
 	public function getVersion() {
 		return $this->_version;
 	}
-	
+
 	public function getEncoding() {
 		return $this->_encoding;
 	}
-	
+
 	public function getRootNode() {
 		return $this->_rootNode;
 	}
-	
+
 	/**
 	 * Set root node
 	 *
@@ -76,19 +78,38 @@ class Document {
 	 */
 	public function setRootNode(\Spaf\Library\Code\Xml\Node $node) {
 		$this->_rootNode = $node;
+		$this->_rootNode->setDocument($this);
+		$this->_rootNode->isRoot(true);
 
 		return true;
 	}
-	
-	public function toString($writer) {
-		$writer->startDocument($this->getVersion(), $this->getEncoding());
-		$this->getRootNode()->toString($writer);
-		$writer->endDocument();
-		
-		return true;
-		
+
+	public function getWriter() {
+		return $this->_writer;
 	}
-	
+
+	public function toString() {
+		// initialize XMLWriter
+		$this->_writer = new \XMLWriter();
+		$this->_writer->openMemory();
+
+		// write doc tag
+		$this->_writer->startDocument($this->getVersion(), $this->getEncoding());
+
+		// write root node
+		$this->getRootNode()->toString();
+
+		// close document
+		$this->_writer->endDocument();
+
+		// @todo Cache result and return flush(false) here. Then implement a function to really flush the cached XML on any relevant node or doc operation
+		return $this->_writer->flush();
+
+	}
+
+	public function __toString() {
+		return $this->toString();
+	}
 }
 
 ?>

@@ -48,11 +48,9 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 		$memcache->addChild($slaveServer);
 
 
-		$writer = new \Spaf\Library\Code\Xml\Writer();
-		$writer->setDocument($document);
-		
-		
-		echo $writer;
+		echo $slaveServer;
+
+		echo $document;
 
 		$this->assertTrue(true);
 	}
