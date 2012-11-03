@@ -24,29 +24,29 @@ class Document {
 
 	/**
 	 * XML Version
-	 * 
+	 *
 	 * @var string
 	 */
 	private $_version = '1.0';
-	
+
 	/**
 	 * Encoding
-	 * 
+	 *
 	 * @var string
 	 */
 	private $_encoding = 'UTF-8';
-	
+
 	/**
 	 * Root node
-	 * 
+	 *
 	 * @var \Spaf\Library\Code\Xml\Node
 	 */
 	private $_rootNode = null;
-	
+
 	/**
 	 * Instantiates a \XMLWriter object
 	 * to work with.
-	 * 
+	 *
 	 * @param string XML Version, default to 1.0
 	 * @param string Encoding, default to UTF-8
 	 * @return void
@@ -55,16 +55,16 @@ class Document {
 		$this->_version = (string) $version;
 		$this->_encoding = (string) $encoding;
 	}
-	
+
 	/**
 	 * Set root node
-	 * 
+	 *
 	 * @param \Spaf\Library\Code\Xml\Node
 	 * @return boolean True
 	 */
 	public function setRootNode(\Spaf\Library\Code\Xml\Node $noe) {
 		$this->_rootNode = $node;
-		
+
 		return true;
 	}
 }

@@ -24,60 +24,60 @@ class Writer {
 
 	/**
 	 * XML Writer object, see www.php.net/xmlwriter
-	 * 
+	 *
 	 * @var \XMLWriter
 	 */
 	private $_writer = null;
-	
+
 	/**
 	 * XML Document object to write
-	 * 
+	 *
 	 * @var \Spaf\Library\Code\Xml\Document
 	 */
 	private $_document = null;
-	
+
 	/**
 	 * Instantiates a \XMLWriter object
 	 * to work with.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct() {
 		$this->_writer = new \XMLWriter();
 		$this->_writer->openMemory();
 	}
-	
+
 	/**
 	 * Set an XML Document object to write.
-	 * 
+	 *
 	 * @param \Spaf\Library\Code\Xml\Document Document object to write
 	 * @return boolean True
 	 */
 	public function setDocument(\Spaf\Library\Code\Xml\Document $document) {
 		$this->_document = $document;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Parse the Document object into
 	 * a string and return it.
-	 * 
+	 *
 	 * @return string XML String based on Document object
 	 */
 	public function write() {
 		return 'write the content';
 	}
-	
+
 	/**
 	 * __toString wrapper for calling echo $xmlWriter;
-	 * 
+	 *
 	 * @return string XML String based on Document object
 	 */
 	public function __toString() {
 		return $this->write();
 	}
-	
+
 }
 
 ?>
