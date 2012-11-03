@@ -88,6 +88,20 @@ class Document {
 		return $this->_writer;
 	}
 
+	public function fromString($xml) {
+		$reader = new \XMLReader();
+		$reader->xml($xml);
+
+		// build it from tokens
+		while($reader->read()) {
+			echo $reader->name . "\n";
+			echo $reader->nodeType . "\n";
+			echo $reader->value . "\n";
+		}
+
+		return true;
+	}
+
 	public function toString() {
 		// initialize XMLWriter
 		$this->_writer = new \XMLWriter();

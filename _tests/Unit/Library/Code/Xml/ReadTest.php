@@ -3,25 +3,25 @@
 /**
  * $Id$
  *
- * Spaf/_tests/Unit/Library/Code/Xnk/WriterTest.php
- * @created Sat Oct 03 3:31:44 +0200 2012
+ * Spaf/_tests/Unit/Library/Code/Xnk/ReadTest.php
+ * @created Sat Oct 03 13:33:27 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
  */
 namespace Spaf\_tests\Unit\Library\Code\Xml;
 
 /**
- * \Spaf\_tests\Unit\Library\Code\Xml\WriterTest
+ * \Spaf\_tests\Unit\Library\Code\Xml\ReadTest
  *
- * The WriterTest class tests any aspect of \Spaf\Library\Code\Xml\Writer.
+ * The ReadTest class tests any aspect of \Spaf\Library\Code\Xml\*.
  *
  * @author Claudio Walser
  * @package Spaf\_tests\Unit\Library\Config
  * @namespace Spaf\_tests\Unit\Library\Config
  */
-class WriterTest extends \Spaf\_tests\Unit\TestCase {
+class ReadTest extends \Spaf\_tests\Unit\TestCase {
 
-	private $_expectedContentXml = '<?xml version="1.0" encoding="UTF-8"?>
+	private $_sourceContentXml = '<?xml version="1.0" encoding="UTF-8"?>
 
 <config foo="bar">
 	<memcache>
@@ -44,8 +44,8 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 	}
 
 	public function testDocument() {
+		// created normall
 		$document = new \Spaf\Library\Code\Xml\Document();
-
 		$rootNode = new \Spaf\Library\Code\Xml\Node('config');
 		$rootNode->addAttribute('foo', 'bar');
 		$document->setRootNode($rootNode);
@@ -61,17 +61,16 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 		$slaveServer->setValue('cache02');
 		$memcache->addChild($slaveServer);
 
+		// from string
+		$testDocument = new \Spaf\Library\Code\Xml\Document();
+		$testDocument->fromString($this->_sourceContentXml);
 
-		//echo $slaveServer;
-
+		// assert both are the same
 		$this->assertEquals(
-			$this->_expectedContentXml,
-			$document->toString()
+			$document,
+			$testDocument
 		);
 
-		//echo $document;
-
-		$this->assertTrue(true);
 	}
 
 	/**
