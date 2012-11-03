@@ -3,7 +3,7 @@
 /**
  * $ID$
  *
- * Spaf/Library/Code/Xml/Reader.php
+ * Spaf/Library/Code/Xml/Writer.php
  * @created Wed Oct 10 21:11:04 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -12,9 +12,9 @@ namespace Spaf\Library\Code\Xml;
 
 
 /**
- * \Spaf\Library\Code\Xml\Reader
+ * \Spaf\Library\Code\Xml\Writer
  *
- * Easy interface for reading xml
+ * Easy interface for writing xml
  *
  * @author Claudio Walser
  * @package Spaf\Library\Code\Xml
@@ -23,45 +23,61 @@ namespace Spaf\Library\Code\Xml;
 class Writer {
 
 	/**
-	 * File instance to do I/O access
+	 * XML Writer object, see www.php.net/xmlwriter
+	 * 
+	 * @var \XMLWriter
 	 */
-	private $_file = null;
-
+	private $_writer = null;
+	
 	/**
-	 * Set a File object to work with
-	 *
-	 * @param \Spaf\Library\Directory\File
+	 * XML Document object to write
+	 * 
+	 * @var \Spaf\Library\Code\Xml\Document
+	 */
+	private $_document = null;
+	
+	/**
+	 * Instantiates a \XMLWriter object
+	 * to work with.
+	 * 
+	 * @return void
+	 */
+	public function __construct() {
+		$this->_writer = new \XMLWriter();
+		$this->_writer->openMemory();
+	}
+	
+	/**
+	 * Set an XML Document object to write.
+	 * 
+	 * @param \Spaf\Library\Code\Xml\Document Document object to write
 	 * @return boolean True
 	 */
-	public function setFile(\Spaf\Library\Directory\File $file) {
-		$this->_file = $file;
-
+	public function setDocument(\Spaf\Library\Code\Xml\Document $document) {
+		$this->_document = $document;
+		
 		return true;
 	}
-
+	
 	/**
-	 * Write the xml to a file.
-	 * If you pass one File, its stored over setFile() internally
-	 * and it will be taken again the next time you call write.
-	 * You dont have to passed it twice.
-	 *
-	 * @param \Spaf\Library\Directory\File File to write into, default to null which meens it takes the one from setFile
+	 * Parse the Document object into
+	 * a string and return it.
+	 * 
+	 * @return string XML String based on Document object
 	 */
-	public function write(\Spaf\Library\Directory\File $file = null) {
-		if ($file !== null) {
-			$this->setFile($file);
-		}
-
-		if ($this->_file === null) {
-			throw new Exception('Not set any file to save. Pass one per setFile() or directly to write()');
-		}
-
-		// store content
-		$file->setContent($this->toString());
-
-		return $file->write();
+	public function write() {
+		return 'write the content';
 	}
-
+	
+	/**
+	 * __toString wrapper for calling echo $xmlWriter;
+	 * 
+	 * @return string XML String based on Document object
+	 */
+	public function __toString() {
+		return $this->write();
+	}
+	
 }
 
 ?>

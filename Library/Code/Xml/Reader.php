@@ -23,29 +23,61 @@ namespace Spaf\Library\Code\Xml;
 class Reader {
 
 	/**
-	 * File instance to do I/O access
+	 * XML Writer object, see www.php.net/xmlreader
+	 * 
+	 * @var \XMLReader
 	 */
-	private $_file = null;
-
+	private $_reader = null;
+	
 	/**
-	 * Set a File object to work with
-	 *
-	 * @param \Spaf\Library\Directory\File
+	 * XML string to convert into Document object
+	 * 
+	 * @var string
+	 */
+	private $_xmlString = '';
+	
+	/**
+	 * XML Document object if already parsed.
+	 * 
+	 * @var \Spaf\Library\Code\Xml\Document
+	 */
+	private $_document = null;
+	
+	/**
+	 * Instantiates a \XMLReader object
+	 * to read from.
+	 * 
+	 * @return void
+	 */
+	public function __construct() {
+		$this->_reader = new \XMLReader();
+	}
+	
+	/**
+	 * Set XML String to create the document
+	 * object from.
+	 * 
+	 * @param string The XML string you want to parse
 	 * @return boolean True
 	 */
-	public function setFile(\Spaf\Library\Directory\File $file) {
-		$this->_file = $file;
-
+	public function setXmlString($string) {
+		$this->_xmlString = (string) $string;
+		
 		return true;
 	}
-
+	
 	/**
-	 * Return well formed xml string
-	 *
-	 * @return string Well fromed XML as string
+	 * Get the \Spaf\Library\Code\Xml\Document
+	 * within its nodes, based on your input
+	 * XML String.
+	 * 
+	 * @return \Spaf\Library\Code\Xml\Document The Document object, based on your xml input
 	 */
-	public function toString() {
-		return 'xml';
+	public function getDocument() {
+		if ($this->_document === null) {
+			$this->_document = 'parse it';
+		}
+		return $this->_document;
 	}
 
 }
