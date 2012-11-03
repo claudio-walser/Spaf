@@ -55,7 +55,19 @@ class Document {
 		$this->_version = (string) $version;
 		$this->_encoding = (string) $encoding;
 	}
-
+	
+	public function getVersion() {
+		return $this->_version;
+	}
+	
+	public function getEncoding() {
+		return $this->_encoding;
+	}
+	
+	public function getRootNode() {
+		return $this->_rootNode;
+	}
+	
 	/**
 	 * Set root node
 	 *
@@ -67,7 +79,16 @@ class Document {
 
 		return true;
 	}
-
+	
+	public function toString($writer) {
+		$writer->startDocument($this->getVersion(), $this->getEncoding());
+		$this->getRootNode()->toString($writer);
+		$writer->endDocument();
+		
+		return true;
+		
+	}
+	
 }
 
 ?>

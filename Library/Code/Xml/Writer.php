@@ -65,13 +65,14 @@ class Writer {
 	 *
 	 * @return string XML String based on Document object
 	 */
-	public function write() {
+	public function toString() {
 		if ($this->_document === null) {
 			throw new Exception('Set a document before you try to write something.');
 		}
-		print_r($this->_document);
-
-		return 'write the content';
+		
+		$this->_document->toString($this->_writer);
+		
+		return $this->_writer->flush(false);
 	}
 
 	/**
@@ -80,7 +81,7 @@ class Writer {
 	 * @return string XML String based on Document object
 	 */
 	public function __toString() {
-		return $this->write();
+		return $this->toString();
 	}
 
 }

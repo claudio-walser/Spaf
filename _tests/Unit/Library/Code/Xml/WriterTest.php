@@ -50,8 +50,9 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 
 		$writer = new \Spaf\Library\Code\Xml\Writer();
 		$writer->setDocument($document);
-
-		//echo $writer;
+		
+		
+		echo $writer;
 
 		$this->assertTrue(true);
 	}

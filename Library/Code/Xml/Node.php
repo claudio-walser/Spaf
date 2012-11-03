@@ -47,7 +47,7 @@ class Node {
 	 *
 	 * @var array
 	 */
-	private $_attribtes = array();
+	private $_attributes = array();
 
 	/**
 	 * Child nodes as array
@@ -167,7 +167,44 @@ class Node {
 	public function remove() {
 		return $this->_parent->removeChild($this);
 	}
+	
+	public function getName() {
+		return $this->_name;
+	}
+	
+	public function getChildren() {
+		return $this->_children;
+	}
+	
+	public function getAttributes() {
+		return $this->_attributes;
+	}
+	
+	public function getValue() {
+		return $this->_value;
+	}
+	
+	public function toString($writer) {
+		$writer->startElement($this->getName());
+		
+		foreach ($this->getAttributes() as $key => $attribute) {
+			$writer->startAttribute($key);
+			$writer->text($attribute);
+			$writer->endAttribute();
+		}
+		
+		//echo 'start element ' . $this->getName() . "\n";
+		if (count($this->getChildren()) > 0) {
+			foreach ($this->getChildren() as $childNode) {
+				$childNode->toString($writer);
+			}
+		} else if ($this->getValue() !== null) {
+			$writer->text($this->getValue());
+		}
 
+		//echo 'end element ' . $this->getName() . "\n";
+		$writer->endElement();
+	}
 }
 
 ?>
