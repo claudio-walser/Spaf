@@ -62,11 +62,12 @@ class Document {
 	 * @param \Spaf\Library\Code\Xml\Node
 	 * @return boolean True
 	 */
-	public function setRootNode(\Spaf\Library\Code\Xml\Node $noe) {
+	public function setRootNode(\Spaf\Library\Code\Xml\Node $node) {
 		$this->_rootNode = $node;
 
 		return true;
 	}
+
 }
 
 ?>

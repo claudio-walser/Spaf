@@ -66,6 +66,11 @@ class Writer {
 	 * @return string XML String based on Document object
 	 */
 	public function write() {
+		if ($this->_document === null) {
+			throw new Exception('Set a document before you try to write something.');
+		}
+		print_r($this->_document);
+
 		return 'write the content';
 	}
 

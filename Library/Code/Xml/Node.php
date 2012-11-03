@@ -36,11 +36,11 @@ class Node {
 	private $_name = 'node';
 
 	/**
-	 * Content of this node,
+	 * Value of this node,
 	 * its set to null as soon as
 	 * you add a child node.
 	 */
-	private $_content = null;
+	private $_value = null;
 
 	/**
 	 * Node Attributes as key/value array
@@ -71,6 +71,18 @@ class Node {
 	 */
 	public function __construct($name = 'node') {
 		$this->_name = (string) $name;
+	}
+
+	/**
+	 * Set a value for this node
+	 *
+	 * @param string Value for this node
+	 * @return boolean True
+	 */
+	public function setValue($value) {
+		$this->_value = (string) $value;
+
+		return true;
 	}
 
 	/**
@@ -125,10 +137,10 @@ class Node {
 	 * @param \Spaf\Library\Code\Xml\Node
 	 * @return boolean True
 	 */
-	public function addChild(\Spaf\Library\Code\Xml\Node $noe) {
-		$this->_content = null;
+	public function addChild(\Spaf\Library\Code\Xml\Node $node) {
+		$this->_value = null;
 
-		$node->setParent($this);
+		$node->setParentNode($this);
 		array_push($this->_children, $node);
 
 		return true;
