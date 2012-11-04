@@ -15,11 +15,19 @@ namespace Spaf\Library\Code\Xml;
  *
  * Represents a XML node
  *
+ * @todo This class is awefully big, see how to optimize, maybe traits maybe extensions as Cdata extends Node and Trait for Attributes, not quite sure yet, think about it
  * @author Claudio Walser
  * @package Spaf\Library\Code\Xml
  * @namespace Spaf\Library\Code\Xml
  */
 class Node {
+
+	/**
+	 * Trait to write Objects to a XML String
+	 *
+	 * @var \Spaf\Library\Code\Xml\Node\Writer
+	 */
+	use Node\Writer;
 
 	/**
 	 * Contains cdata
@@ -79,7 +87,19 @@ class Node {
 	 */
 	private $_indentString = "\t";
 
+	/**
+	 * Parent document object for this node.
+	 *
+	 * @var \Spaf\Library\Code\Xml\Document
+	 */
 	private $_document = null;
+
+	/**
+	 * True if this is the root node.
+	 * Note, any valid XHTML or XML Document can only contain one root node.
+	 *
+	 * @var boolean
+	 */
 	private $_isRoot = false;
 
 	/**
@@ -92,6 +112,12 @@ class Node {
 		$this->_name = (string) $name;
 	}
 
+	/**
+	 * Set a document object
+	 *
+	 * @param \Spaf\Library\Code\Xml\Document The document you want to set as parent
+	 * @return boolean True
+	 */
 	public function setDocument(\Spaf\Library\Code\Xml\Document $document) {
 		$this->_document = $document;
 		foreach ($this->getChildren() as $childNode) {
@@ -100,10 +126,24 @@ class Node {
 		return true;
 	}
 
+	/**
+	 * Get the current document object
+	 *
+	 * @return \Spaf\Library\Code\Xml\Document The current Document object
+	 */
 	public function getDocument() {
 		return $this->_document;
 	}
 
+	/**
+	 * Get and Set for isRoot in one.
+	 * Get the value if you dont pass anything to this function.
+	 * Change it by passing a boolean.
+	 *
+	 * @todo Hm, i think this is buggy
+	 * @todo Put this in normal getter and setter that 1. everybody can understand it, 2. i can normaly document it
+	 * @this Is crap right now
+	 */
 	public function isRoot($boolean = null) {
 		if ($boolean === null) {
 			$boolean = $this->_isRoot;
@@ -111,6 +151,7 @@ class Node {
 
 		$this->_isRoot = (bool) $boolean;
 
+		// @buggy Probably buggy, isnt it? What the hell did i thought, at 4 o clock in the morning :-P
 		if (count($this->getChildren() !== 0)) {
 			$this->_isRoot = false;
 		}
@@ -261,72 +302,42 @@ class Node {
 		return $this->_parent->removeChild($this);
 	}
 
+	/**
+	 * Get current name of this node
+	 *
+	 * @return string Name of this node
+	 */
 	public function getName() {
 		return $this->_name;
 	}
 
+	/**
+	 * Get children of this node
+	 *
+	 * @return array Array with children Node objects in it
+	 */
 	public function getChildren() {
 		return $this->_children;
 	}
 
+	/**
+	 * Get attributes of this node
+	 *
+	 * @return array Simple Key=>Value array with all attributes of this node
+	 */
 	public function getAttributes() {
 		return $this->_attributes;
 	}
 
+	/**
+	 * Get current value of this node
+	 *
+	 * @return string Node Value
+	 */
 	public function getValue() {
 		return $this->_value;
 	}
 
-	public function toString() {
-		$flushSelf = false;
-		$writer = $this->_document->getWriter();
-
-		// if no document set yet, means you want to render the node by itself
-		if ($writer === null) {
-			$writer = new \XMLWriter();
-			$writer->openMemory();
-			$flushSelf = true;
-		}
-
-		// \XMLWriter adds a newline for doctype but nothing else
-		if ($this->_isRoot === false) {
-			$writer->text("\n");
-		}
-
-		$writer->text(str_repeat($this->_indentString, $this->_indent));
-		$writer->startElement($this->getName());
-
-		foreach ($this->getAttributes() as $key => $attribute) {
-			$writer->startAttribute($key);
-			$writer->text($attribute);
-			$writer->endAttribute();
-		}
-		//echo 'start element ' . $this->getName() . "\n";
-		if (count($this->getChildren()) > 0) {
-			foreach ($this->getChildren() as $childNode) {
-				$childNode->toString($writer);
-			}
-		} else if ($this->getValue() !== null) {
-			$writer->text("\n");
-			$writer->text(str_repeat($this->_indentString, $this->_indent + 1));
-			$writer->text($this->getValue());
-		}
-
-		//echo 'end element ' . $this->getName() . "\n";
-		$writer->text("\n");
-		$writer->text(str_repeat($this->_indentString, $this->_indent));
-		$writer->endElement();
-
-		if ($flushSelf === true) {
-			return $writer->flush();
-		}
-
-		return true;
-	}
-
-	public function __toString() {
-		return $this->toString();
-	}
 }
 
 ?>

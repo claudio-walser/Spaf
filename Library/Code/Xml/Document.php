@@ -10,7 +10,6 @@
  */
 namespace Spaf\Library\Code\Xml;
 
-
 /**
  * \Spaf\Library\Code\Xml\Document
  *
@@ -21,6 +20,20 @@ namespace Spaf\Library\Code\Xml;
  * @namespace Spaf\Library\Code\Xml
  */
 class Document {
+
+	/**
+	 * Trait for create Object from XML String
+	 *
+	 * @var \Spaf\Library\Code\Xml\Document\Reader
+	 */
+	use Document\Reader;
+
+	/**
+	 * Trait to write Objects to a XML String
+	 *
+	 * @var \Spaf\Library\Code\Xml\Document\Writer
+	 */
+	use Document\Writer;
 
 	/**
 	 * XML Version
@@ -42,8 +55,6 @@ class Document {
 	 * @var \Spaf\Library\Code\Xml\Node
 	 */
 	private $_rootNode = null;
-
-	private $_writer = null;
 
 	/**
 	 * Instantiates a \XMLWriter object
@@ -82,95 +93,6 @@ class Document {
 		$this->_rootNode->isRoot(true);
 
 		return true;
-	}
-
-	public function getWriter() {
-		return $this->_writer;
-	}
-
-	public function fromString($xml) {
-		$reader = new \XMLReader();
-		$reader->xml($xml);
-
-		// build it from tokens
-		$lastNode = null;
-		$nodesByLevel = array();
-		$currentLevel = 0;
-
-		while($reader->read()) {
-			// OPEN NODE
-			if ($reader->nodeType === \XMLReader::ELEMENT) {
-				if ($lastNode !== null) {
-					$currentLevel++;
-				}
-
-				$node = new Node($reader->name);
-				$node->setValue($reader->value);
-
-				$lastNode = $node;
-				$nodesByLevel[$currentLevel] = $node;
-
-				if ($currentLevel === 0) {
-					$this->setRootNode($node);
-				} else {
-					$parentNode = $nodesByLevel[$currentLevel - 1];
-					$parentNode->addChild($node);
-				}
-
-				// fetch attributes
-				$attributeCount = $reader->attributeCount;
-				if ($attributeCount > 0) {
-					// move to the first attribute
-					$reader->moveToFirstAttribute();
-
-					$node->addAttribute($reader->name, $reader->value);
-
-					// enumerate all attributes
-					while ($reader->moveToNextAttribute()) {
-						$node->addAttribute($reader->name, $reader->value);
-					}
-				}
-			}
-
-
-			// TEXT
-			if ($reader->nodeType === \XMLReader::TEXT) {
-				if ($lastNode !== null) {
-					$lastNode->setValue(trim($reader->value));
-				}
-			}
-
-
-			// CLOSE NODE
-			if ($reader->nodeType === \XMLReader::END_ELEMENT) {
-				if ($lastNode !== null) {
-					if ($currentLevel > 0) {
-						$currentLevel--;
-					}
-				}
-			}
-		}
-
-		return true;
-	}
-
-	public function toString() {
-		// initialize XMLWriter
-		$this->_writer = new \XMLWriter();
-		$this->_writer->openMemory();
-
-		// write doc tag
-		$this->_writer->startDocument($this->getVersion(), $this->getEncoding());
-
-		// write root node
-		$this->getRootNode()->toString();
-
-		// close document
-		$this->_writer->endDocument();
-
-		// @todo Cache result and return flush(false) here. Then implement a function to really flush the cached XML on any relevant node or doc operation
-		return $this->_writer->flush();
-
 	}
 
 	public function __toString() {
