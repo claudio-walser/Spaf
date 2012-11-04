@@ -93,10 +93,62 @@ class Document {
 		$reader->xml($xml);
 
 		// build it from tokens
+		$lastNode = null;
+		$nodesByLevel = array();
+		$currentLevel = 0;
+
 		while($reader->read()) {
-			echo $reader->name . "\n";
-			echo $reader->nodeType . "\n";
-			echo $reader->value . "\n";
+			// OPEN NODE
+			if ($reader->nodeType === \XMLReader::ELEMENT) {
+				if ($lastNode !== null) {
+					$currentLevel++;
+				}
+
+				$node = new Node($reader->name);
+				$node->setValue($reader->value);
+
+				$lastNode = $node;
+				$nodesByLevel[$currentLevel] = $node;
+
+				if ($currentLevel === 0) {
+					$this->setRootNode($node);
+				} else {
+					$parentNode = $nodesByLevel[$currentLevel - 1];
+					$parentNode->addChild($node);
+				}
+
+				// fetch attributes
+				$attributeCount = $reader->attributeCount;
+				if ($attributeCount > 0) {
+					// move to the first attribute
+					$reader->moveToFirstAttribute();
+
+					$node->addAttribute($reader->name, $reader->value);
+
+					// enumerate all attributes
+					while ($reader->moveToNextAttribute()) {
+						$node->addAttribute($reader->name, $reader->value);
+					}
+				}
+			}
+
+
+			// TEXT
+			if ($reader->nodeType === \XMLReader::TEXT) {
+				if ($lastNode !== null) {
+					$lastNode->setValue(trim($reader->value));
+				}
+			}
+
+
+			// CLOSE NODE
+			if ($reader->nodeType === \XMLReader::END_ELEMENT) {
+				if ($lastNode !== null) {
+					if ($currentLevel > 0) {
+						$currentLevel--;
+					}
+				}
+			}
 		}
 
 		return true;
