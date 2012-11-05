@@ -58,7 +58,7 @@ trait Writer {
 		$this->_writer->endDocument();
 
 		// @todo Cache result and return flush(false) here. Then implement a function to really flush the cached XML on any relevant node or doc operation
-		return $this->_writer->flush();
+		return trim($this->_writer->flush());
 
 	}
 

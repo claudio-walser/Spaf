@@ -32,8 +32,7 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 			cache02
 		</slave_server>
 	</memcache>
-</config>
-';
+</config>';
 
 	/**
 	 * Setup

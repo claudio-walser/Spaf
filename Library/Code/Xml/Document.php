@@ -69,15 +69,30 @@ class Document {
 		$this->_encoding = (string) $encoding;
 	}
 
+	/**
+	 * Get current XML Version
+	 *
+	 * @return string Current XML Version
+	 */
 	public function getVersion() {
 		return $this->_version;
 	}
 
+	/**
+	 * Get current encoding
+	 *
+	 * @return string Current encoding
+	 */
 	public function getEncoding() {
 		return $this->_encoding;
 	}
 
-	public function getRootNode() {
+	/**
+	 * Get current root node
+	 *
+	 * @return string Current root node
+	 */
+   	public function getRootNode() {
 		return $this->_rootNode;
 	}
 
@@ -95,9 +110,6 @@ class Document {
 		return true;
 	}
 
-	public function __toString() {
-		return $this->toString();
-	}
 }
 
 ?>

@@ -30,34 +30,18 @@ class Xml extends Abstraction {
 	 * @return array Nested array of the whole config
 	 */
 	public function read() {
-		$xml_string = $this->_sourceFile->getContent();
-		$parser = xml_parser_create();
-		xml_parse_into_struct($parser, $xml_string, $values);
-		xml_parser_free($parser);
-
-		$section_name = '';
 		$array = array();
-		foreach ($values as $element) {
-			switch ($element['tag']) {
 
-				case 'SECTION':
-					if ($element['type'] == 'open') {
-						$section_name = $element['attributes']['NAME'];
-					}
-					break;
+		$xml_string = $this->_sourceFile->getContent();
+		$document = new \Spaf\Library\Code\Xml\Document();
+		$document->fromString($xml_string);
+		$rootNode = $document->getRootNode();
 
-				case 'PARA':
-					$array[$section_name][$element['attributes']['NAME']] = empty($element['value']) ? 'empty' : $element['value'];
-					break;
-
-				default:
-					break;
-
-			}
-		}
-
-		if (!is_array($array) || empty($array)) {
-			$array = array();
+		foreach ($rootNode->getChildren() as $child) {
+			$array[$child->getName()] = array();
+            foreach ($child->getChildren() as $subchild) {
+                $array[$child->getName()][$subchild->getName()] = $subchild->getValue();
+            }
 		}
 
 		return array('data' => $array);
@@ -72,27 +56,26 @@ class Xml extends Abstraction {
 	public function save(Array $assoc_array, $filename = null) {
 		parent::save($assoc_array, $filename);
 		$assoc_array = $assoc_array['data'];
-		$file_content  = '<?xml version=\'1.0\'?>' . "\n";
-		$file_content .= '<config>' . "\n\n";
+
+		$document = new \Spaf\Library\Code\Xml\Document();
+
+		$rootNode = new \Spaf\Library\Code\Xml\Node('config');
+		$document->setRootNode($rootNode);
+
 		foreach ($assoc_array as $section => $section_array) {
-			$file_content .= '	<section name="' . $section . '">' . "\n";
+			$sectionNode = new \Spaf\Library\Code\Xml\Node($section);
+			$rootNode->addChild($sectionNode);
+
 			if (is_array($section_array)) {
 				foreach ($section_array as $key => $value) {
-					if ($value === false) {
-						$value = 'false';
-					} else if ($value === true){
-						$value = 'true';
-					} else if ($value === null){
-						$value = 'null';
-					}
-					$file_content .= '		<para name="' . $key . '">' . $value . '</para>' . "\n";
+					$childNode = new \Spaf\Library\Code\Xml\Node($key);
+					$childNode->setValue($value);
+					$sectionNode->addChild($childNode);
 				}
-				$file_content .= '	</section>' . "\n\n";
 			}
 		}
-		$file_content .= '</config>';
 
-		$this->_sourceFile->setContent($file_content);
+		$this->_sourceFile->setContent($document->toString());
 
 		return $this->_sourceFile->write($filename);
 	}

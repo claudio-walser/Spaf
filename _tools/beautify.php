@@ -49,7 +49,7 @@ final class Beautify {
 		// instantiate manager
 		$beautifier = new \Spaf\Library\Code\Php\Beautifier();
 		$directory = new \Spaf\Library\Directory\Directory('../');
-		$files = $directory->getChildren('*.php', 'file', true);
+		$files = $directory->getChildren('*.php,*.xml', 'file', true);
 
 		$beautifier->setFiles($files);
 		$beautifier->beautify();

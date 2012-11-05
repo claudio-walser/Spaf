@@ -73,7 +73,7 @@ trait Writer {
 		$writer->endElement();
 
 		if ($flushSelf === true) {
-			return $writer->flush();
+			return trim($writer->flush());
 		}
 
 		return true;
