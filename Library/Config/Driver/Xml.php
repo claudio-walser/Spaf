@@ -39,9 +39,9 @@ class Xml extends Abstraction {
 
 		foreach ($rootNode->getChildren() as $child) {
 			$array[$child->getName()] = array();
-            foreach ($child->getChildren() as $subchild) {
-                $array[$child->getName()][$subchild->getName()] = $subchild->getValue();
-            }
+			foreach ($child->getChildren() as $subchild) {
+				$array[$child->getName()][$subchild->getName()] = $subchild->getValue();
+			}
 		}
 
 		return array('data' => $array);

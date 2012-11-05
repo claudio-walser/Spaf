@@ -40,6 +40,7 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
+
 	}
 
 	public function testDocument() {
@@ -59,9 +60,6 @@ class WriterTest extends \Spaf\_tests\Unit\TestCase {
 		$slaveServer = new \Spaf\Library\Code\Xml\Node('slave_server');
 		$slaveServer->setValue('cache02');
 		$memcache->addChild($slaveServer);
-
-
-		//echo $slaveServer;
 
 		$this->assertEquals(
 			$this->_expectedContentXml,

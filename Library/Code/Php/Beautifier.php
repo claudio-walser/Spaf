@@ -86,7 +86,7 @@ class Beautifier {
 		$this->_removeTrailingSpaces($file);
 		$this->_fixStartingBackslash($file);
 		$this->_fixDocumentationCreateTag($file);
-		//$this->_fixNewLines($file);
+		$this->_fixNewLines($file);
 		return true;
 	}
 
