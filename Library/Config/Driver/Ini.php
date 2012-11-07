@@ -34,13 +34,17 @@ class Ini extends Abstraction {
 			throw new Exception('Set a source file before read');
 		}
 
-		$array['data'] = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), 1);
-
+		$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
+		
 		if (!is_array($array) || empty($array)) {
-			$array['data'] = array();
+			$array = array();
+		} else {
+			foreach ($array as $key => $value) {
+				$array[$key] = $this->_readValue($value);
+			}
 		}
 
-		return $array;
+		return array('data' => $array);
 	}
 
 	/**
@@ -58,13 +62,7 @@ class Ini extends Abstraction {
 			if (is_array($section_array)) {
 				$file_content .= '[' . $section . ']' . "\n";
 				foreach ($section_array as $key => $value) {
-					if ($value === false) {
-						$value = 'false';
-					} else if ($value === true){
-						$value = 'true';
-					} else if ($value === null){
-						$value = 'null';
-					}
+					$value = $this->_writeValue($value);
 					$file_content .= $key . ' = ' . $value . "\n";
 				}
 			}

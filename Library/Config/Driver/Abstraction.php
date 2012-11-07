@@ -29,7 +29,20 @@ abstract class Abstraction {
 	 * @var \Spaf\Library\Directory\File
 	 */
 	protected $_sourceFile = null;
-
+	
+	/**
+	 * Value map to convert some php special values. 
+	 * The value its meant as the real value, its key is written to the config files.
+	 * For some strange reason, its completly not working with the 'null' key, the value is recognized but i got problems with the key...
+	 * 
+	 * @var array
+	 */
+	protected $_valueMap = array(
+		'true' => true,
+		'false' => false,
+		'null', null
+	);
+	
 	/**
 	 * Set the source file.
 	 *
@@ -71,6 +84,34 @@ abstract class Abstraction {
 		}
 
 		return true;
+	}
+	
+	protected function _readValue($value) {
+		foreach ($this->_valueMap as $key => $val) {
+			if ($value === $key || $value === strtoupper($key)) {
+				return $val;
+			}
+		}
+			
+		return $value;
+	}
+	
+	protected function _writeValue($value) {
+		// since it seems php array functions has problems with such values, lets do by our own
+		foreach ($this->_valueMap as $key => $val) {
+			if ($val === $value || $val === strtolower($value)) {
+				// not quite sure why, $key its returning int(1) here???, this small hack works as expected
+				// stuff like that did not happen in a strong typed language :-P
+				if ($value === null) {
+					return 'null';
+					echo 'wtf';
+					var_dump($key);
+				}
+				return $key;
+			}
+		}
+		
+		return $value;
 	}
 
 }

@@ -1,8 +1,6 @@
 Framework
 _________
 
-- Build Library/Code/Xml and its tests of course
-- Fix Library/Config/Driver/Xml to a useful format, therefore use Library/Code/Xml Reader and Writer
 - Fix Library/Cache
 - Make Library/Code/Php/Beatufier able to read configs like psa-standards (which i dont completly like btw :-P)
 - Integrate my Orm and make it a namespaced php5.3 beauty ;-)
@@ -13,6 +11,7 @@ Unit-Tests
 __________
 
 - test Core/Response and Core/Request
+- more usefull tests for Code/Xml
 - test Library/Log
 - test Library/Cache
 - test Library/Code/Php/Beatufier
