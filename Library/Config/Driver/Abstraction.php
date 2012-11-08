@@ -87,6 +87,12 @@ abstract class Abstraction {
 	}
 	
 	protected function _readValue($value) {
+		// handle null special, cause its not working with the valueMap
+		if ($value === 'null') {
+            return null;
+        }
+        
+        // everything else from the value map
 		foreach ($this->_valueMap as $key => $val) {
 			if ($value === $key || $value === strtoupper($key)) {
 				return $val;
@@ -97,16 +103,15 @@ abstract class Abstraction {
 	}
 	
 	protected function _writeValue($value) {
+		// not quite sure why, $key its returning int(1) here???, this small hack works as expected
+        // stuff like that did not happen in a strong typed language :-P
+        if ($value === null) {
+            return 'null';
+        }    
+            
 		// since it seems php array functions has problems with such values, lets do by our own
 		foreach ($this->_valueMap as $key => $val) {
 			if ($val === $value || $val === strtolower($value)) {
-				// not quite sure why, $key its returning int(1) here???, this small hack works as expected
-				// stuff like that did not happen in a strong typed language :-P
-				if ($value === null) {
-					return 'null';
-					echo 'wtf';
-					var_dump($key);
-				}
 				return $key;
 			}
 		}

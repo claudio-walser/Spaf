@@ -135,7 +135,10 @@ class Manager {
 		$this->_checkIsRad();
 
 		$array = array();
-
+        if (!is_array($this->_storedData)) {
+            var_dump($this->_storedData);
+            die();
+        }
 		foreach ($this->_storedData as $key => $section) {
 			$array[$key] = $section->toArray();
 		}

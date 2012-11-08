@@ -34,7 +34,43 @@ class Ini extends Abstraction {
 			throw new Exception('Set a source file before read');
 		}
 
-		$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
+        $lines = $this->_sourceFile->getLines();
+        
+        $array = array();
+        $currentName = null;
+        //$tmpArray = array();
+        foreach ($lines as $line) {
+            if ($currentName !== null && !isset($array[$currentName])) {
+                $array[$currentName] = array();
+            }
+            $line = trim($line);
+            
+            if (empty($line)) {
+                continue;
+            }
+            
+            if (substr($line, 0, 1) === '[' && substr($line, -1) === ']') {
+                $currentName = substr($line, 1 , -1);
+            }
+            
+            if (strpos($line, '=')) {
+                $parts = explode('=', $line);
+                $key = trim(array_shift($parts));
+                $value =  trim(implode('=', $parts));
+                $array[$currentName][$key] = $this->_parseValue($value);
+                //fill value
+            }
+            
+        }
+        
+        // fix special values
+        foreach ($array as $key => $value) {
+            foreach ($value as $_key => $_value) {
+                $array[$key][$_key] = $this->_readValue($_value);
+            }
+        }
+    
+		/*$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
 		
 		if (!is_array($array) || empty($array)) {
 			$array = array();
@@ -42,7 +78,7 @@ class Ini extends Abstraction {
 			foreach ($array as $key => $value) {
 				$array[$key] = $this->_readValue($value);
 			}
-		}
+		}*/
 
 		return array('data' => $array);
 	}
@@ -74,7 +110,25 @@ class Ini extends Abstraction {
 		$this->_sourceFile->setContent($file_content);
 		return $this->_sourceFile->write($filename);
 	}
-
+    
+    protected function _parseValue($value) {
+        if (substr($value, 0, 1) === '"' && substr($value, -1) === '"' || substr($value, 0, 1) === "'" && substr($value, -1) === "'") {
+            $doubleQuotes = false;
+            if (substr($value, 0, 1) === '"') {
+                $doubleQuotes = true;
+            }
+            $value = substr($value, 1 , -1);
+            
+            if ($doubleQuotes === true) {
+                $value = str_replace('\"', '"', $value);
+            } else {
+                $value = str_replace("\'", "'", $value);
+            }
+            
+        }
+        return $value;
+    }
+    
 }
 
 ?>
