@@ -31,10 +31,10 @@ class Json extends Abstraction {
 	protected function _read(\Spaf\Library\Directory\File $file) {
 		$content = $file->getContent();
 		$object = json_decode($content);
-		
+
 
 		$array = array();
-		// Associative array is always an object in javascript object notation		
+		// Associative array is always an object in javascript object notation
 		if (is_object($object) && !empty($object)) {
 			foreach ($object as $key => $value) {
 				foreach ($value as $_key => $_value) {
@@ -47,7 +47,7 @@ class Json extends Abstraction {
 
 	/**
 	 * _write for json configuration files.
-	 * 
+	 *
 	 * @param array Two dimensional array to write
 	 * @param \Spaf\Library\Directory\File Source file
 	 * @return boolean  Either true or false in case of an error

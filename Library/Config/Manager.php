@@ -116,11 +116,11 @@ class Manager {
 		if ($this->_driver === null) {
 			throw new Exception('Initialize a driver first');
 		}
-		
+
 		if ($this->_storedData === null) {
 			$this->_storedData = array();
 		}
-		
+
 		$data = $this->_driver->read();
 		foreach ($data as $key => $data) {
 			$this->_storedData[$key] = new Section($data);
@@ -138,10 +138,10 @@ class Manager {
 		$this->_checkIsRead();
 
 		$array = array();
-        if (!is_array($this->_storedData)) {
-            var_dump($this->_storedData);
-            die();
-        }
+		if (!is_array($this->_storedData)) {
+			var_dump($this->_storedData);
+			die();
+		}
 		foreach ($this->_storedData as $key => $section) {
 			$array[$key] = $section->toArray();
 		}

@@ -23,7 +23,7 @@ namespace Spaf\Library\Config\Driver;
  * @namespace Spaf\Library\Config\Driver
  */
 class Php extends Abstraction {
-	
+
 	protected $_unconvertableRead = true;
 	protected $_unconvertableWrite = true;
 
@@ -35,7 +35,7 @@ class Php extends Abstraction {
 	 */
 	protected function _read(\Spaf\Library\Directory\File $file) {
 		$config =  array();
-		
+
 		require($this->_sourceFile->getPath() . $this->_sourceFile->getName());
 
 		return $config;
@@ -43,7 +43,7 @@ class Php extends Abstraction {
 
 	/**
 	 * _write for php configuration files.
-	 * 
+	 *
 	 * @param array Two dimensional array to write
 	 * @param \Spaf\Library\Directory\File Source file
 	 * @return boolean  Either true or false in case of an error
@@ -73,15 +73,15 @@ class Php extends Abstraction {
 		$fileContent .= '?>';
 
 		$file->setContent($fileContent);
-		return $file->write();		
-		
+		return $file->write();
+
 	}
-	
+
 	private function _escapeSingleQuotes($value) {
 		$value = str_replace("'", "\'", $value);
 		return $value;
 	}
-	
+
 	/*
 	private $_toEscape = array(
 		'\\'
@@ -156,8 +156,8 @@ class Php extends Abstraction {
 		return $this->_sourceFile->write($filename);
 	}
 	*/
-	
-	
+
+
 }
 
 ?>

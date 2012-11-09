@@ -48,7 +48,7 @@ class Xml extends Abstraction {
 
 	/**
 	 * _write for php configuration files.
-	 * 
+	 *
 	 * @param array Two dimensional array to write
 	 * @param \Spaf\Library\Directory\File Source file
 	 * @return boolean  Either true or false in case of an error

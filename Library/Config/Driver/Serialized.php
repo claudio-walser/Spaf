@@ -34,13 +34,13 @@ class Serialized extends Abstraction {
 		if (!is_array($array) || empty($array)) {
 			$array = array();
 		}
-		
+
 		return $array;
 	}
 
 	/**
 	 * _write for serialized configuration files.
-	 * 
+	 *
 	 * @param array Two dimensional array to write
 	 * @param \Spaf\Library\Directory\File Source file
 	 * @return boolean  Either true or false in case of an error

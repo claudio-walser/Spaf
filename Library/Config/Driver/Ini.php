@@ -33,16 +33,16 @@ class Ini extends Abstraction {
 		$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
 		*/
 		$array = $this->_parse($file);
-        	
-        // fix special values
-        $array = $this->_handleTypes($array, 'read');
-            
+
+		// fix special values
+		$array = $this->_handleTypes($array, 'read');
+
 		return $array;
 	}
 
 	/**
 	 * _write for initializing configuration files.
-	 * 
+	 *
 	 * @param array Two dimensional array to write
 	 * @param \Spaf\Library\Directory\File Source file
 	 * @return boolean  Either true or false in case of an error
@@ -63,104 +63,104 @@ class Ini extends Abstraction {
 			$fileContent .= "\n";
 		}
 		$fileContent = rtrim($fileContent);
-		
+
 		//echo "hier kommt die maus \n";
-		
+
 		//echo $fileContent;
 		//die();
-		
-		
+
+
 		$file->setContent($fileContent);
 		return $file->write();
 	}
-    
+
 	public function _escapeDoubleQuotes($value) {
 		// only care about double quotes
 		if (strpos($value, '"')) {
 			$value = '"' . str_replace('"', '\"', $value) . '"';
 		}
-				
+
 		return $value;
 	}
-	
+
 	/**
 	 * Parse the ini file
 	 * [values] are section names
-	 * key = value are its key value pairs. 
+	 * key = value are its key value pairs.
 	 * Comments are ignored yet and not written at all if you call
 	 * $this->save(), take care of this, its a todo for the future if its worth to implement
-	 * 
+	 *
 	 * @return array Parsed array with two levels, as you get it from www.php.net/parse_ini_file
 	 */
 	protected function _parse(\Spaf\Library\Directory\File $file) {
 		$lines = $file->getLines();
-		
+
 		// initialize values to work with in the loop
 		$array = array();
-        $currentSection = null;
-        foreach ($lines as $line) {
-            // create current section array if first section found
-            if ($currentSection !== null && !isset($array[$currentSection])) {
-                $array[$currentSection] = array();
-            }
-			
+		$currentSection = null;
+		foreach ($lines as $line) {
+			// create current section array if first section found
+			if ($currentSection !== null && !isset($array[$currentSection])) {
+				$array[$currentSection] = array();
+			}
+
 			// trim spaces
-            $line = trim($line);
-            
+			$line = trim($line);
+
 			// skip comments and empty lines (comments will follow)
-            if (empty($line) || $line{0} === ';') {
-                continue;
-            }
-            
+			if (empty($line) || $line{0} === ';') {
+				continue;
+			}
+
 			// opens a new section
-            if (substr($line, 0, 1) === '[' && substr($line, -1) === ']') {
-                $currentSection = substr($line, 1 , -1);
-            }
-            
+			if (substr($line, 0, 1) === '[' && substr($line, -1) === ']') {
+				$currentSection = substr($line, 1 , -1);
+			}
+
 			// skip any value before a section is found, maybe i will create kind of a GLOBAL namespace for such values in all formats
 			if (!isset($array[$currentSection])) {
 				continue;
 			}
-			
+
 			// read values
-            if (strpos($line, '=')) {
-                $parts = explode('=', $line);
-                $key = trim(array_shift($parts));
-                $value =  trim(implode('=', $parts));
-                //fill value in current section
-                $array[$currentSection][$key] = $this->_parseValue($value);
-            }
-            
-        }	
-			
+			if (strpos($line, '=')) {
+				$parts = explode('=', $line);
+				$key = trim(array_shift($parts));
+				$value =  trim(implode('=', $parts));
+				//fill value in current section
+				$array[$currentSection][$key] = $this->_parseValue($value);
+			}
+
+		}
+
 		return $array;
 	}
-	
+
 	/**
 	 * Parse a single value could be a bit tricky
 	 * cause of some escaped values.
-	 * 
+	 *
 	 * @param string Raw value
 	 * @return string Parsed value
 	 */
-    protected function _parseValue($value) {
-        if (substr($value, 0, 1) === '"' && substr($value, -1) === '"' || substr($value, 0, 1) === "'" && substr($value, -1) === "'") {
-            $doubleQuotes = false;
-            if (substr($value, 0, 1) === '"') {
-                $doubleQuotes = true;
-            }
-            $value = substr($value, 1 , -1);
-            
-            if ($doubleQuotes === true) {
-                $value = str_replace('\"', '"', $value);
-            } else {
-                $value = str_replace("\'", "'", $value);
-            }
-            
-        }
-        return $value;
-    }
-    
+	protected function _parseValue($value) {
+		if (substr($value, 0, 1) === '"' && substr($value, -1) === '"' || substr($value, 0, 1) === "'" && substr($value, -1) === "'") {
+			$doubleQuotes = false;
+			if (substr($value, 0, 1) === '"') {
+				$doubleQuotes = true;
+			}
+			$value = substr($value, 1 , -1);
+
+			if ($doubleQuotes === true) {
+				$value = str_replace('\"', '"', $value);
+			} else {
+				$value = str_replace("\'", "'", $value);
+			}
+
+		}
+		return $value;
+	}
+
 }
 
 ?>
