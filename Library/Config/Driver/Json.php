@@ -25,37 +25,37 @@ class Json extends Abstraction {
 	/**
 	 * Read the current given json file.
 	 *
-	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
-	 * @access public
-	 * @return array Nested array of the whole config
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return array Two dimensional config Array
 	 */
-	public function read() {
-		if ($this->_sourceFile === null) {
-			throw new Exception('Set a source file before read');
-		}
+	protected function _read(\Spaf\Library\Directory\File $file) {
+		$content = $file->getContent();
+		$object = json_decode($content);
+		
 
-
-		$content = $this->_sourceFile->getContent();
-		$array['data'] = json_decode($content);
-		if (!is_array($array) || empty($array)) {
-			$array['data'] = null;
+		$array = array();
+		// Associative array is always an object in javascript object notation		
+		if (is_object($object) && !empty($object)) {
+			foreach ($object as $key => $value) {
+				foreach ($value as $_key => $_value) {
+					$array[$key][$_key] = $_value;
+				}
+			}
 		}
 		return $array;
 	}
 
 	/**
-	 * Write the config back to the json file currently set.
-	 *
-	 * @param array Nested array with complete config to write
-	 * @param string Where to save the file, default to null to take the current one
-	 * @return bool True if writing the file was successfull
+	 * _write for json configuration files.
+	 * 
+	 * @param array Two dimensional array to write
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean  Either true or false in case of an error
 	 */
-	public function save(Array $assoc_array, $filename = null) {
-		parent::save($assoc_array, $filename);
-		$assoc_array = $assoc_array['data'];
-		$file_content = json_encode($assoc_array);
-		$this->_sourceFile->setContent($file_content);
-		return $this->_sourceFile->write($filename);
+	protected function _write($array, \Spaf\Library\Directory\File $file) {
+		$fileContent = json_encode($array);
+		$file->setContent($fileContent);
+		return $file->write();
 	}
 
 }

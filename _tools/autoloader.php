@@ -31,7 +31,7 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	 */
 	public function __construct() {
 		// phpunit procedural autoload functions
-		require_once('C:/Programme/xampp/php/pear/PHPUnit/Autoload.php');
+		require_once('C:/Program Files/xampp/php/pear/PHPUnit/Autoload.php');
 
 		parent::__construct();
 	}
@@ -67,7 +67,7 @@ final class Autoloader Extends \Spaf\Core\Autoloader {
 	 * @return boolean
 	 */
 	public function PHPUnit($name) {
-		$file = 'C:/Programme/xampp/php/pear/' . $this->_getFilename($name, '_');
+		$file = 'C:/Program Files/xampp/php/pear/' . $this->_getFilename($name, '_');
 
 		$this->debug($file . "<br />\n");
 

@@ -23,7 +23,66 @@ namespace Spaf\Library\Config\Driver;
  * @namespace Spaf\Library\Config\Driver
  */
 class Php extends Abstraction {
+	
+	protected $_unconvertableRead = true;
+	protected $_unconvertableWrite = true;
 
+	/**
+	 * Read the current given php file.
+	 *
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return array Two dimensional config Array
+	 */
+	protected function _read(\Spaf\Library\Directory\File $file) {
+		$config =  array();
+		
+		require($this->_sourceFile->getPath() . $this->_sourceFile->getName());
+
+		return $config;
+	}
+
+	/**
+	 * _write for php configuration files.
+	 * 
+	 * @param array Two dimensional array to write
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean  Either true or false in case of an error
+	 */
+	protected function _write($array, \Spaf\Library\Directory\File $file) {
+		$fileContent = '<?php' . "\n\n";
+		foreach ($array as $sectionName => $sectionArray) {
+			if (is_array($sectionArray)) {
+				foreach ($sectionArray as $key => $value) {
+					// write different types
+					if ($value === true) {
+						$fileContent .= '$config[\'' . $sectionName . '\'][\'' . $key . '\'] = true;' . "\n";
+					} else if ($value === false) {
+						$fileContent .= '$config[\'' . $sectionName . '\'][\'' . $key . '\'] = false;' . "\n";
+					} else if ($value === null) {
+						$fileContent .= '$config[\'' . $sectionName . '\'][\'' . $key . '\'] = null;' . "\n";
+					} else if (is_numeric($value)) {
+						$fileContent .= '$config[\'' . $sectionName . '\'][\'' . $key . '\'] = ' . $value . ';' . "\n";
+					} else {
+						$value = $this->_escapeSingleQuotes($value);
+						$fileContent .= '$config[\'' . $sectionName . '\'][\'' . $key . '\'] = \'' . $value . '\';' . "\n";
+					}
+				}
+			}
+			$fileContent .= "\n";
+		}
+		$fileContent .= '?>';
+
+		$file->setContent($fileContent);
+		return $file->write();		
+		
+	}
+	
+	private function _escapeSingleQuotes($value) {
+		$value = str_replace("'", "\'", $value);
+		return $value;
+	}
+	
+	/*
 	private $_toEscape = array(
 		'\\'
 
@@ -37,7 +96,7 @@ class Php extends Abstraction {
 	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
 	 * @access public
 	 * @return array Nested array of the whole config
-	 */
+	 * /
 	public function read() {
 		if ($this->_sourceFile === null) {
 			throw new Exception('Set a source file before read');
@@ -64,7 +123,7 @@ class Php extends Abstraction {
 	 * @param array Nested array with complete config to write
 	 * @param string Where to save the file, default to null to take the current one
 	 * @return bool True if writing the file was successfull
-	 */
+	 * /
 	public function save(Array $assoc_array, $filename = null) {
 		parent::save($assoc_array, $filename);
 		$assoc_array = $assoc_array['data'];
@@ -96,7 +155,9 @@ class Php extends Abstraction {
 		$this->_sourceFile->setContent($file_content);
 		return $this->_sourceFile->write($filename);
 	}
-
+	*/
+	
+	
 }
 
 ?>

@@ -1,1 +1,1 @@
-{"memcache":{"master_server":"cache01","slave_server":"cache02"}}
+{"memcache":{"master_server":"cache01","slave_server":"cache02"},"types":{"boolean":"true","null":"null","string":"some content with = equals and \"double qoutes\"","integer":5,"signed":-1,"float":7.1,"anotherString":"'true'"}}

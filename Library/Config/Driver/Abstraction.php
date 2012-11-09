@@ -22,7 +22,10 @@ namespace Spaf\Library\Config\Driver;
  * @namespace Spaf\Library\Config\Driver
  */
 abstract class Abstraction {
-
+	
+	protected $_unconvertableRead = false;
+	protected $_unconvertableWrite = false;
+	
 	/**
 	 * Source file object
 	 *
@@ -44,6 +47,23 @@ abstract class Abstraction {
 	);
 	
 	/**
+	 * _read has to be implemented in any driver.
+	 *
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return array Config Array
+	 */
+	abstract protected function _read(\Spaf\Library\Directory\File $file);
+	
+	/**
+	 * _write has to be implemented by any driver.
+	 * 
+	 * @param array Two dimensional array to write
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean  Either true or false in case of an error
+	 */
+	abstract protected function _write($array, \Spaf\Library\Directory\File $file);
+
+	/**
 	 * Set the source file.
 	 *
 	 * @param \Spaf\Library\Directory\File Source file
@@ -54,39 +74,49 @@ abstract class Abstraction {
 
 		return true;
 	}
-
-	/**
-	 * Read has to be implemented in any driver.
-	 *
-	 * @return array Config Array
-	 */
-	abstract public function read();
-
-	/**
-	 * Read has to be implemented in any driver.
-	 *
-	 * @param array Config Array
-	 * @param string Filename to save the file, null to save to the current file object
-	 * @return boolean True if saving the file was successful
-	 */
-	public function save(array $array, $filename = null) {
-		if ($this->_sourceFile === null && $filename === null) {
-			throw new Exception('Set a source file or give a filename to save the data.');
-		}
-
+	
+	final public function read() {
+		// check source file
 		if ($this->_sourceFile === null) {
-			$dirManager = new \Spaf\Library\Directory\Manager();
-			if (!$dirManager->fileExists($filename)) {
-				$dirManager->createFile($filename);
-			}
-
-			$this->_sourceFile = new \Spaf\Library\Directory\File($filename);
+			throw new Exception('no source file set to read from');
 		}
-
-		return true;
+		
+		// read from driver
+		$array = $this->_read($this->_sourceFile);
+		
+		// handle types
+		$array = $this->_handleTypes($array, 'read');
+		
+		return $array;
 	}
 	
-	protected function _readValue($value) {
+	final public function write($array) {
+		// check source file
+		if ($this->_sourceFile === null) {
+			throw new Exception('no source file set to write into');
+		}
+		
+		// handle types
+		$array = $this->_handleTypes($array, 'write');
+		
+		// write with driver
+		$success = $this->_write($array, $this->_sourceFile);
+		
+		return $success;
+	}
+	
+	/**
+	 * Read a single value, means in first case,
+	 * type cast to integer|float|string|boolean|null
+	 * 
+	 * @param string Raw value
+	 * @return mixed Type casted value
+	 */
+	private function _readValue($value) {
+		if ($this->_unconvertableRead !== false) {
+			return $value;
+		}
+		
 		// handle null special, cause its not working with the valueMap
 		if ($value === 'null') {
             return null;
@@ -98,11 +128,29 @@ abstract class Abstraction {
 				return $val;
 			}
 		}
+		
+		// type cast float and integer
+		if (is_numeric($value)) {
+			if (strpos($value, '.')) {
+				$value = (float) $value;
+			} else {
+				$value = (int) $value;
+			}
+		}
 			
 		return $value;
 	}
 	
-	protected function _writeValue($value) {
+	/**
+	 * Convert different types to its writable value
+	 * 
+	 * @param mixed Typed value
+	 * @param string Its writable value
+	 */
+	private function _writeValue($value) {
+		if ($this->_unconvertableWrite !== false) {
+			return $value;
+		}
 		// not quite sure why, $key its returning int(1) here???, this small hack works as expected
         // stuff like that did not happen in a strong typed language :-P
         if ($value === null) {
@@ -118,7 +166,22 @@ abstract class Abstraction {
 		
 		return $value;
 	}
-
+	
+	protected function _handleTypes(array $array, $type = 'read') {
+		foreach ($array as $key => $value) {
+			if (!is_array($value)) {
+				throw new Exception('Config input isnt a two dimensional array');
+			}
+			
+			foreach ($value as $_key => $_value) {
+				$array[$key][$_key] = $type === 'read' ? $this->_readValue($_value) : $this->_writeValue($_value);
+			}
+			
+		}
+		
+		return $array;
+	}
+	
 }
 
 ?>

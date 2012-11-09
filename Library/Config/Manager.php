@@ -16,7 +16,6 @@ namespace Spaf\Library\Config;
  * Unified interface for different types of config files.
  * Currently supported are: ini, xml, json, php (simple array) and a simple serialized format
  *
- * @TODO That storedData is an array with a key data might confuse on the first look. This is to handle comments as well in near future
  * @author Claudio Walser
  * @package Spaf\Library\Config
  * @namespace Spaf\Library\Config
@@ -90,7 +89,7 @@ class Manager {
 				break;
 
 			default:
-				$this->_driver = new $this->_default();
+				$this->_driver = new $this->_default;
 				break;
 		}
 
@@ -117,9 +116,13 @@ class Manager {
 		if ($this->_driver === null) {
 			throw new Exception('Initialize a driver first');
 		}
-
+		
+		if ($this->_storedData === null) {
+			$this->_storedData = array();
+		}
+		
 		$data = $this->_driver->read();
-		foreach ($data['data'] as $key => $data) {
+		foreach ($data as $key => $data) {
 			$this->_storedData[$key] = new Section($data);
 		}
 
@@ -132,7 +135,7 @@ class Manager {
 	 * @return array Array with the whole current config
 	 */
 	public function toArray() {
-		$this->_checkIsRad();
+		$this->_checkIsRead();
 
 		$array = array();
         if (!is_array($this->_storedData)) {
@@ -147,6 +150,15 @@ class Manager {
 	}
 
 	/**
+	 * Write the config file back to its source
+	 *
+	 * @return boolean True if writing was successful
+	 */
+	public function write() {
+		return $this->_driver->write($this->toArray());
+	}
+
+	/**
 	 * Magic getter for just fetch by property
 	 *
 	 * Get a section of the config.
@@ -157,7 +169,7 @@ class Manager {
 	 * @return \Spaf\Library\Config\Section The section you asked for
 	 */
 	public function __get($name) {
-		$this->_checkIsRad();
+		$this->_checkIsRead();
 
 		if (!isset($this->_storedData[$name])) {
 			$this->_storedData[$name] = new Section(array());
@@ -167,22 +179,12 @@ class Manager {
 	}
 
 	/**
-	 * Write the config file back to its source
-	 *
-	 * @param string Where to save the file, default to null to take the current one
-	 * @return boolean True if writing was successful
-	 */
-	public function save($filename = null) {
-		return $this->_driver->save(array('data' => $this->toArray()), $filename);
-	}
-
-	/**
 	 * Checks if the store is already rad from the underlaying
 	 * driver, if not we just read it now
 	 *
 	 * @return boolean
 	 */
-	private function _checkIsRad() {
+	private function _checkIsRead() {
 		if ($this->_storedData === null) {
 			$this->read();
 		}

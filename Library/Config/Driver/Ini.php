@@ -25,92 +25,124 @@ class Ini extends Abstraction {
 	/**
 	 * Read the current given ini file.
 	 *
-	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
-	 * @access public
-	 * @return array Nested array of the whole config
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return array Two dimensional config Array
 	 */
-	public function read() {
-		if ($this->_sourceFile === null) {
-			throw new Exception('Set a source file before read');
-		}
+	protected function _read(\Spaf\Library\Directory\File $file) {
+		/* dont like it cause true is rad as 1 and stuff like that, and null is an empty string, no matter what you try to do...
+		$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
+		*/
+		$array = $this->_parse($file);
+        	
+        // fix special values
+        $array = $this->_handleTypes($array, 'read');
+            
+		return $array;
+	}
 
-        $lines = $this->_sourceFile->getLines();
-        
-        $array = array();
-        $currentName = null;
-        //$tmpArray = array();
+	/**
+	 * _write for initializing configuration files.
+	 * 
+	 * @param array Two dimensional array to write
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean  Either true or false in case of an error
+	 */
+	protected function _write($array, \Spaf\Library\Directory\File $file) {
+		$fileContent = '';
+		foreach ($array as $sectionName => $sectionArray) {
+			if (is_array($sectionArray)) {
+				$fileContent .= '[' . $sectionName . ']' . "\n";
+				foreach ($sectionArray as $key => $value) {
+					// @TODO take care of special values in ini files, not just everything is valid
+					// and since i am unescaping in read, i should escape in write maybe :-p
+					//$value = $this->_writeValue($value);
+					$value = $this->_escapeDoubleQuotes($value);
+					$fileContent .= $key . ' = ' . $value . "\n";
+				}
+			}
+			$fileContent .= "\n";
+		}
+		$fileContent = rtrim($fileContent);
+		
+		//echo "hier kommt die maus \n";
+		
+		//echo $fileContent;
+		//die();
+		
+		
+		$file->setContent($fileContent);
+		return $file->write();
+	}
+    
+	public function _escapeDoubleQuotes($value) {
+		// only care about double quotes
+		if (strpos($value, '"')) {
+			$value = '"' . str_replace('"', '\"', $value) . '"';
+		}
+				
+		return $value;
+	}
+	
+	/**
+	 * Parse the ini file
+	 * [values] are section names
+	 * key = value are its key value pairs. 
+	 * Comments are ignored yet and not written at all if you call
+	 * $this->save(), take care of this, its a todo for the future if its worth to implement
+	 * 
+	 * @return array Parsed array with two levels, as you get it from www.php.net/parse_ini_file
+	 */
+	protected function _parse(\Spaf\Library\Directory\File $file) {
+		$lines = $file->getLines();
+		
+		// initialize values to work with in the loop
+		$array = array();
+        $currentSection = null;
         foreach ($lines as $line) {
-            if ($currentName !== null && !isset($array[$currentName])) {
-                $array[$currentName] = array();
+            // create current section array if first section found
+            if ($currentSection !== null && !isset($array[$currentSection])) {
+                $array[$currentSection] = array();
             }
+			
+			// trim spaces
             $line = trim($line);
             
-            if (empty($line)) {
+			// skip comments and empty lines (comments will follow)
+            if (empty($line) || $line{0} === ';') {
                 continue;
             }
             
+			// opens a new section
             if (substr($line, 0, 1) === '[' && substr($line, -1) === ']') {
-                $currentName = substr($line, 1 , -1);
+                $currentSection = substr($line, 1 , -1);
             }
             
+			// skip any value before a section is found, maybe i will create kind of a GLOBAL namespace for such values in all formats
+			if (!isset($array[$currentSection])) {
+				continue;
+			}
+			
+			// read values
             if (strpos($line, '=')) {
                 $parts = explode('=', $line);
                 $key = trim(array_shift($parts));
                 $value =  trim(implode('=', $parts));
-                $array[$currentName][$key] = $this->_parseValue($value);
-                //fill value
+                //fill value in current section
+                $array[$currentSection][$key] = $this->_parseValue($value);
             }
             
-        }
-        
-        // fix special values
-        foreach ($array as $key => $value) {
-            foreach ($value as $_key => $_value) {
-                $array[$key][$_key] = $this->_readValue($_value);
-            }
-        }
-    
-		/*$array = parse_ini_file($this->_sourceFile->getPath() . $this->_sourceFile->getName(), INI_SCANNER_RAW);
-		
-		if (!is_array($array) || empty($array)) {
-			$array = array();
-		} else {
-			foreach ($array as $key => $value) {
-				$array[$key] = $this->_readValue($value);
-			}
-		}*/
-
-		return array('data' => $array);
+        }	
+			
+		return $array;
 	}
-
+	
 	/**
-	 * Write the config back to the ini file currently set.
-	 *
-	 * @param array Nested array with complete config to write
-	 * @param string Where to save the file, default to null to take the current one
-	 * @return bool True if writing the file was successfull
+	 * Parse a single value could be a bit tricky
+	 * cause of some escaped values.
+	 * 
+	 * @param string Raw value
+	 * @return string Parsed value
 	 */
-	public function save(Array $assoc_array, $filename = null) {
-		parent::save($assoc_array, $filename);
-		$assoc_array = $assoc_array['data'];
-		$file_content = '';
-		foreach ($assoc_array as $section => $section_array) {
-			if (is_array($section_array)) {
-				$file_content .= '[' . $section . ']' . "\n";
-				foreach ($section_array as $key => $value) {
-					$value = $this->_writeValue($value);
-					$file_content .= $key . ' = ' . $value . "\n";
-				}
-			}
-			$file_content .= "\n";
-		}
-
-		$file_content = rtrim($file_content);
-
-		$this->_sourceFile->setContent($file_content);
-		return $this->_sourceFile->write($filename);
-	}
-    
     protected function _parseValue($value) {
         if (substr($value, 0, 1) === '"' && substr($value, -1) === '"' || substr($value, 0, 1) === "'" && substr($value, -1) === "'") {
             $doubleQuotes = false;

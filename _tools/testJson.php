@@ -8,30 +8,31 @@ class Test {
         require_once('autoloader.php');
         $loader = new Autoloader();
         
-        $filePath = '../_tests/Data/Config/config.ini';
+        $filePath = '../_tests/Data/Config/config.json';
         $file = new \Spaf\Library\Directory\File($filePath);
         
+		
+		
         $config = new \Spaf\Library\Config\Manager();
-        $config->registerDriver('ini');
+        $config->registerDriver('json');
         $config->setSourceFile($file);
         //$config->types->null = 'null';
 		
         /* * /
 		// read for conversion
         $config->read();
-        $filePath = '../_tests/Data/Config/config.xml';
+        $filePath = '../_tests/Data/Config/config.json';
         $file = new \Spaf\Library\Directory\File($filePath);
 		
-        $config->registerDriver('xml');
+        $config->registerDriver('json');
         $config->setSourceFile($file);
-        $config->save();
+        $config->write();
 		
 		
 		/* */
 		
         echo '<pre>';
         $config->write();
-		
         print_r($config->toArray());
         var_dump($config->toArray());
         //var_dump($newConfig->toArray());

@@ -23,16 +23,15 @@ namespace Spaf\Library\Config\Driver;
 class Xml extends Abstraction {
 
 	/**
-	 * Read the current given xml file.
+	 * Read the current given php file.
 	 *
-	 * @throws \Spaf\Library\Config\Driver\Exception Throws an exception if no source file is set yet
-	 * @access public
-	 * @return array Nested array of the whole config
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return array Two dimensional config Array
 	 */
-	public function read() {
+	protected function _read(\Spaf\Library\Directory\File $file) {
 		$array = array();
 
-		$xml_string = $this->_sourceFile->getContent();
+		$xml_string = $file->getContent();
 		$document = new \Spaf\Library\Code\Xml\Document();
 		$document->fromString($xml_string);
 		$rootNode = $document->getRootNode();
@@ -44,30 +43,28 @@ class Xml extends Abstraction {
 			}
 		}
 
-		return array('data' => $array);
+		return $array;
 	}
 
 	/**
-	 * Write the config back to the xml file currently set.
-	 *
-	 * @param array Nested array with complete config to write
-	 * @return bool True if writing the file was successfull
+	 * _write for php configuration files.
+	 * 
+	 * @param array Two dimensional array to write
+	 * @param \Spaf\Library\Directory\File Source file
+	 * @return boolean  Either true or false in case of an error
 	 */
-	public function save(Array $assoc_array, $filename = null) {
-		parent::save($assoc_array, $filename);
-		$assoc_array = $assoc_array['data'];
-
+	protected function _write($array, \Spaf\Library\Directory\File $file) {
 		$document = new \Spaf\Library\Code\Xml\Document();
 
 		$rootNode = new \Spaf\Library\Code\Xml\Node('config');
 		$document->setRootNode($rootNode);
 
-		foreach ($assoc_array as $section => $section_array) {
-			$sectionNode = new \Spaf\Library\Code\Xml\Node($section);
+		foreach ($array as $sectionName => $sectionArray) {
+			$sectionNode = new \Spaf\Library\Code\Xml\Node($sectionName);
 			$rootNode->addChild($sectionNode);
 
-			if (is_array($section_array)) {
-				foreach ($section_array as $key => $value) {
+			if (is_array($sectionArray)) {
+				foreach ($sectionArray as $key => $value) {
 					$childNode = new \Spaf\Library\Code\Xml\Node($key);
 					$childNode->setValue($value);
 					$sectionNode->addChild($childNode);
@@ -75,9 +72,9 @@ class Xml extends Abstraction {
 			}
 		}
 
-		$this->_sourceFile->setContent($document->toString());
+		$file->setContent($document->toString());
 
-		return $this->_sourceFile->write($filename);
+		return $file->write();
 	}
 
 }

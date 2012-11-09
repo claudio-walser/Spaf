@@ -9,4 +9,24 @@
 			cache02
 		</slave_server>
 	</memcache>
+	<types>
+		<boolean>
+			true
+		</boolean>
+		<null>
+			null
+		</null>
+		<string>
+			some content with = equals and &quot;double qoutes&quot;
+		</string>
+		<integer>
+			5
+		</integer>
+		<signed>
+			-1
+		</signed>
+		<float>
+			7.1
+		</float>
+	</types>
 </config>
