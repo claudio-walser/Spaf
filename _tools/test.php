@@ -83,7 +83,7 @@ final class Test {
 
 			if (!class_exists($test['class'])) {
 				echo $test['class'] . ' doesent extist';
-				die('aus die maus');
+                unset($tests[$key]);
 			}
 		}
 
