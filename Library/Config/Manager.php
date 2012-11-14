@@ -139,8 +139,7 @@ class Manager {
 
 		$array = array();
 		if (!is_array($this->_storedData)) {
-			var_dump($this->_storedData);
-			die();
+			throw new Exception('data isnt an array: ' . var_dump($this->_storedData));
 		}
 		foreach ($this->_storedData as $key => $section) {
 			$array[$key] = $section->toArray();

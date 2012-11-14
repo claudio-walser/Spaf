@@ -83,7 +83,7 @@ final class Test {
 
 			if (!class_exists($test['class'])) {
 				echo $test['class'] . ' doesent extist';
-                unset($tests[$key]);
+				unset($tests[$key]);
 			}
 		}
 

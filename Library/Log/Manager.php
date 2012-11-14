@@ -21,70 +21,31 @@ namespace Spaf\Library\Log;
  * @package Spaf\Library\Log
  * @namespace Spaf\Library\Log
  */
-abstract class Manager {
+class Manager {
 
-	/**
-	 * Default log type. Possible values are
-	 * file | db
-	 *
-	 * @var string
-	 */
-	private static $_defaultLogType = 'file';
+	const INFO = 'info';
+	const ERROR = 'error';
+	const WARNING = 'warning';
+	const CRITICAL = 'critical';
 
-	/**
-	 * All allowed log types. No DB Driver yet
-	 */
-	private static $_allowedLogTypes = array('file'/*, 'db'*/);
+	private $_writers = array();
 
-	/**
-	 * Factory instances
-	 *
-	 * @var array Array with Spaf\Library\Log\Driver\Abstraction Objects
-	 */
-	private static $_instances = array();
+	public function addWriter(\Spaf\Library\Log\Writer\Abstraction $writer) {
+		array_push($this->_writers, $writer);
 
-	/**
-	 * Get all allowed log types
-	 * you can pass to the factory method.
-	 *
-	 * @return array All log types
-	 */
-	public static function getAllowedTypes() {
-		return self::$_allowedLogTypes;
+		return true;
 	}
 
-	/**
-	 * Factory method itself is creating exactly one instance
-	 * per type. That means you cannot have two
-	 * different instances of the same type.
-	 * I'll see if this really is usefull, if not,
-	 * i have to pimp this a bit.
-	 *
-	 * @param string Logtype, to see possible values, call Spaf\Library\Log\Manager::getAllowedTypes()
-	 * @return Spaf\Library\Loc\Driver\Abstraction Object of the asked logtype or file logger as default
-	 */
-	public static function factory($logType = 'file') {
-		// always lower case
-		$logType = strtolower($logType);
-		// check if allowed type
-		if (!in_array($logType, self::$_allowedLogTypes)) {
-			$logType = self::$_defaultLogType;
+	public function log($type, $message) {
+		foreach ($this->_writers as $writer) {
+			$writer->log($type, $message);
 		}
+	}
 
-		// check and if needed, create instance
-		if (!isset(self::$_instances[$logType]) || !self::$_instances[$logType] instanceof \Spaf\Library\Log\Abstraction) {
-			switch ($logType) {
-				/*case 'apc':
-					self::$_instances[$logType] = new Driver\Database();
-					break;*/
-				default:
-					self::$_instances[$logType] = new Driver\File();
-					break;
-			}
+	public function flush() {
+		foreach ($this->_writers as $writer) {
+			$writer->flush();
 		}
-
-		// return instance
-		return self::$_instances[$logType];
 	}
 
 }

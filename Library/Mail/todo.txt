@@ -1,0 +1,28 @@
+-Lesebestätigung
+-Prioritäten
+
+Quellcode für beide Todos:
+  /**
+    * @param mixed $to Ein Empfänger als String oder mehrere Empfänger als Array (Array = BCC Mode)
+    * @param string $from Absender Email-Adresse
+    * @param string $subject Email Betreff
+    * @param string $utf8Html HTML Inhalt UTF8-kodiert
+    * @param integer $priority Die Email-Priorität(1-5; 1= sehr wichtig / 5 = unwichtig)
+    * @param boolean $checkReadMail Fordert eine Lesebestätigung an
+    * @param boolean $checkGetMail Fordert eine Empfangsbestätigung an
+    * @access public
+    * @return boolean
+   */
+  function sendImportant($to, $from, $subject, $utf8Html, $priority= 3, $checkReadMail= true, $checkGetMail= true)
+  {
+    $mailHeader= '';
+    $priorities= array (1 => '1 (Highest)', 2 => '2 (High)', 3 => '3 (Normal)', 4 => '4 (Low)', 5 => '5 (Lowest)');
+    
+    if($priority != 3 && isset($priorities[$priority]))
+      $mailHeader.= 'X-Priority: ' . $priorities[$priority] . CLRF; 
+    
+    if($checkReadMail) $mailHeader.= 'X-Confirm-Reading-To: ' . $from . CLRF;
+    if($checkGetMail) $mailHeader.= 'Disposition-Notification-To: ' . $from . CLRF;
+    
+    return miniMail::send($to, $from, $subject, $utf8Html, $mailHeader);
+  }
