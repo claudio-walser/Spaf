@@ -44,7 +44,7 @@ class ReadTest extends \Spaf\_tests\Unit\TestCase {
 	}
 
 	public function testDocument() {
-		// created normall
+		// created normally
 		$document = new \Spaf\Library\Code\Xml\Document();
 		$rootNode = new \Spaf\Library\Code\Xml\Node('config');
 		$rootNode->addAttribute('foo', 'bar');

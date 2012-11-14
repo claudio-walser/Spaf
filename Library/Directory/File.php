@@ -229,7 +229,7 @@ class File extends Abstraction {
 
 		$this->_manager->createDirectory($path);
 
-		if (!file_put_contents($file, $this->_content)) {
+		if (file_put_contents($file, $this->_content) === false) {
 			throw new Exception('Could not write file: ' . $file);
 		}
 

@@ -35,6 +35,11 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 	 */
 	private $_writer = null;
 
+	/**
+	 * File instance for log writer
+	 *
+	 * @var \Spaf\Library\Directory\File
+	 */
 	private $_file = null;
 
 	/**
@@ -53,6 +58,11 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 		$this->_logger->addWriter($this->_writer);
 	}
 
+	/**
+	 * Test log file is empty initially
+	 *
+	 * @return void
+	 */
 	public function testEmptyFile() {
 		$this->assertEquals(
 			array(),
@@ -60,14 +70,112 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 		);
 	}
 
+	/**
+	 * Test log info message
+	 *
+	 * @return void
+	 */
 	public function testLogInfo() {
-		$this->_logger->log(\Spaf\Library\Log\Manager::INFO, 'This is one test log');
+		$this->_logger->info('This is an info log');
 
 		$this->assertEquals(
 			array(
-				'info	This is one test log'
+				\Spaf\Library\Log\Manager::INFO . "\t" . 'This is an info log'
 			),
 			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Test log error message
+	 *
+	 * @return void
+	 */
+	public function testLogError() {
+		$this->_logger->error('This is an error log');
+
+		$this->assertEquals(
+			array(
+				\Spaf\Library\Log\Manager::ERROR . "\t" . 'This is an error log'
+			),
+			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Test log warning message
+	 *
+	 * @return void
+	 */
+	public function testLogWarning() {
+		$this->_logger->warning('This is a warning log');
+
+		$this->assertEquals(
+			array(
+				\Spaf\Library\Log\Manager::WARNING . "\t" . 'This is a warning log'
+			),
+			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Test log critical message
+	 *
+	 * @return void
+	 */
+	public function testLogCritical() {
+		$this->_logger->critical('This is a critical log');
+
+		$this->assertEquals(
+			array(
+				\Spaf\Library\Log\Manager::CRITICAL . "\t" . 'This is a critical log'
+			),
+			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Test log some multiple whitespaces and newlines
+	 *
+	 * @return void
+	 */
+	public function testLogWhitespaces() {
+		$this->_logger->info('This is a log with new lines
+															  and a lot of white spaces');
+
+		$this->assertEquals(
+			array(
+				\Spaf\Library\Log\Manager::INFO . "\t" . 'This is a log with new lines and a lot of white spaces'
+			),
+			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Test a non pre defined log type as well
+	 *
+	 * @return void
+	 */
+	public function testWeirdType() {
+		$this->_logger->weird('A weird log entry');
+
+		$this->assertEquals(
+			array(
+				'weird' . "\t" . 'A weird log entry'
+			),
+			$this->_file->getLines()
+		);
+	}
+
+	/**
+	 * Assert getting writers source file is still the same instance
+	 *
+	 * @return void
+	 */
+	public function testGetSourceFile() {
+		$this->assertEquals(
+			$this->_file,
+			$this->_writer->getSourceFile()
 		);
 	}
 
@@ -79,8 +187,7 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 	 */
 	public function tearDown() {
 		// empty the log file
-		$this->_logger->flush();
-
+		$this->_logger->clear();
 
 		unset($this->_logger);
 		unset($this->_writer);

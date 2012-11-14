@@ -32,7 +32,12 @@ abstract class Abstraction {
 	 */
 	abstract public function log($type, $message);
 
-	abstract public function flush();
+	/**
+	 * Clear the current store
+	 *
+	 * @return boolean True if successfully cleared
+	 */
+	abstract public function clear();
 
 }
 

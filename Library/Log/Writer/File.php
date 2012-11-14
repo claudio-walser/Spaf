@@ -15,6 +15,7 @@ namespace Spaf\Library\Log\Writer;
  *
  * Concrete driver class to write logs into a textfile.
  *
+ * @todo Improve to provide different file types as XML, PLAIN, HTML or JSON (dont have more ideas yet :p)
  * @author Claudio Walser
  * @package Spaf\Library\Log\Writer
  * @namespace Spaf\Library\Log\Writer
@@ -41,28 +42,49 @@ class File extends Abstraction {
 	}
 
 	/**
-	 * Notify method of each log driver
+	 * Get the current source file
 	 *
-	 * @todo Most simple solution now, improve that
-	 * @param string String to write into the file
-	 * @return boolean True if save the file was successfull
+	 * @return \Spaf\Library\Directory\File Source file
+	 */
+	public function getSourceFile() {
+		return $this->_sourceFile;
+	}
+
+	/**
+	 * Log method for text file logger
+	 *
+	 * @param string Error type to handle this message
+	 * @param string Message to log
+	 * @return boolean True if notification was successful
 	 */
 	public function log($type, $message) {
 		if ($this->_sourceFile === null) {
 			throw new Exception('Set a source file before read');
 		}
 
+		// replace tabs with a space, since tab is the delimiter sign
+		// between type and message in this simple text format
+		// newlines as well since one line means one entry
+		$message = preg_replace('/\s+/msi', ' ', $message);
+
 		$content = $this->_sourceFile->getContent();
+		// newline if not empty content
 		$content = !empty($content) ? $content . "\n" : '';
+		// add new log entry
 		$content .= $type . "\t" . $message;
 
 		$this->_sourceFile->setContent($content);
-		$this->_sourceFile->write();
+		return $this->_sourceFile->write();
 	}
 
-	public function flush() {
+	/**
+	 * Empty the log file
+	 *
+	 * @return boolean True if successfully cleared
+	 */
+	public function clear() {
 		$this->_sourceFile->setContent('');
-		$this->_sourceFile->write();
+		return $this->_sourceFile->write();
 	}
 
 }

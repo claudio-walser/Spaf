@@ -251,7 +251,9 @@ class TestManager {
 	 */
 	private function _fetchArguments() {
 		// fet cli arguments
-		$arguments = $_SERVER['argv'];
+		$arguments = isset($_SERVER['argv']) ? $_SERVER['argv'] : array();
+
+
 
 		// remove first element cause its the script-name itself
 		array_shift($arguments);

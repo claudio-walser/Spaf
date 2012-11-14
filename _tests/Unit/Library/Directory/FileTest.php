@@ -192,7 +192,7 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 	}
 
 	/**
-	 * Test setWrite
+	 * Test write
 	 *
 	 * @return void
 	 */
@@ -241,6 +241,8 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 		// check if its really gone
 		$this->setExpectedException('\\Spaf\\Library\\Directory\\Exception');
 		$file = new \Spaf\Library\Directory\File($this->_testPath . $this->_copyName);
+
+		unset($file);
 	}
 
 	/**
@@ -254,6 +256,36 @@ class FileTest extends \Spaf\_tests\Unit\TestCase {
 		$file = new \Spaf\Library\Directory\File('notExistent.tmp');
 
 		unset($file);
+	}
+
+	/**
+	 * Try to write an empty file, was failing before because of
+	 * loose type checks. Therefor i implemented this test to check it
+	 * in future.
+	 *
+	 * @return void
+	 */
+	public function testWriteEmptyFile() {
+		// create a new file and write empty content to it
+		$empty = new \Spaf\Library\Directory\File($this->_file->getPath() . 'empty.txt', true);
+		$empty->setContent('');
+		$empty->write();
+
+		// create new file instance to be sure for the test
+		$checkFile = new \Spaf\Library\Directory\File($this->_file->getPath() . 'empty.txt');
+
+		// assert empty content
+		$this->assertEquals(
+			'',
+			$checkFile->getContent()
+		);
+
+		// delete empty file
+		$empty->delete();
+
+		// clean up
+		unset($empty);
+		unset($checkFile);
 	}
 
 	/**
