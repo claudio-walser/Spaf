@@ -22,79 +22,80 @@ namespace Spaf\Library\Mail;
  */
 class Manager {
 
-	private $_standardDriver = 'sendmail';
-	private $_driver = null;
+	private $_standardTransport = null;
+	private $_transport = null;
 
 	function __construct() {
-		$this->registerDriver();
+		$this->_standardTransport = new Transport\Sendmail();
+        $this->_transport = $this->_standardTransport;
 	}
 
-	public function setDriver(Transport\Abstraction $driver) {
-		$this->_driver = $driver;
+	public function setTransport(Transport\Abstraction $transport) {
+		$this->_transport = $transport;
 
 		return true;
 	}
 
 	public function setBodyText($text) {
-		$this->_driver->setBodyText($text);
+		$this->_transport->setBodyText($text);
 
 		return true;
 	}
 
 	public function setBodyHtml($html) {
-		$this->_driver->setBodyHtml($html);
+		$this->_transport->setBodyHtml($html);
 
 		return true;
 	}
 
 	public function setFrom($from) {
-		$this->_driver->setFrom($from);
+		$this->_transport->setFrom($from);
 
 		return true;
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->_driver->setReplyTo($reply_to);
+		$this->_transport->setReplyTo($reply_to);
 
 		return true;
 	}
 
 	public function addTo($to) {
-		$this->_driver->addTo($to);
+		$this->_transport->addTo($to);
 
 		return true;
 	}
 
 	public function setCharset($charset) {
-		$this->_driver->setCharset($charset);
+		$this->_transport->setCharset($charset);
 
 		return true;
 	}
 
 	public function addInlineImage($image) {
-		return $this->_driver->addInlineImage($image);
+		return $this->_transport->addInlineImage($image);
 	}
 
 	public function addAttachment($attachment) {
-		$this->_driver->addAttachment($attachment);
+		$this->_transport->addAttachment($attachment);
 
 		return true;
 	}
 
 	public function setSubject($subject) {
-		$this->_driver->setSubject($subject);
+		$this->_transport->setSubject($subject);
 
 		return true;
 	}
 
 	public function sendMail() {
-		$this->_driver->sendMail();
+		$this->_transport->sendMail();
 
 		return true;
 	}
 
 	public function debug() {
-		return $this->_driver->debug();
+		return $this->_transport->debug();
 	}
 
 }
