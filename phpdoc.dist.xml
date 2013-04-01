@@ -20,9 +20,9 @@
 		-->		
 	</transformations>
 	<files>
-		<directory>.</directory>
-		<ignore>_tests/Data/</ignore>
-		<!--<ignore>_tests/*</ignore>
+		<directory>./src/</directory>
+		<!--<ignore>tests/Data/</ignore>
+		<ignore>_tests/*</ignore>
 		<ignore>_tools/*</ignore>-->
 	</files>
 </phpdoc>
