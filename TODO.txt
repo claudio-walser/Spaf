@@ -1,6 +1,10 @@
 Framework
 _________
 
+- provide dependency script
+	- check for php 5.4 (5.3.8 at least, need Traits)
+	- check ini_get('precision') === 16 (damn floating bug)
+- load vendor stuff by composer
 - Fix Library/Cache
 - Make Library/Code/Php/Beatufier able to read configs like psa-standards (which i dont completly like btw :-P)
 - Integrate my Orm and make it a namespaced php5.3 beauty ;-)
