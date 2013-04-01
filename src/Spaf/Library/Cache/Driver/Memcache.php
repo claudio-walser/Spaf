@@ -97,11 +97,10 @@ class Memcache extends Abstraction {
 
 		$compress = is_bool($value) || is_int($value) || is_float($value) ? false : MEMCACHE_COMPRESSED;
 
-		// memcache needs a timestamp, so add time to life to current time()
-		//$ttl = time() + $ttl;
-		$return = $this->_memcache->set($key, $value, $ttl, $compress);
-
-		var_dump($ttl);
+		// memcache needs a timestamp if ttl bigger than 30days, so add time to life to current time()
+		// see param expire on http://php.net/manual/en/memcache.add.php
+		$ttl = $ttl >= 2592000 ? time() + $ttl : $ttl;
+		$return = $this->_memcache->add($key, $value, $compress, $ttl);
 
 		if ($return === false) {
 			throw new Exception('Value with key ' . $key . ' already exists.');
@@ -155,8 +154,7 @@ class Memcache extends Abstraction {
 	 *
 	 * @return boolean True
 	 */
-
-	public function clear() {
+	public function flush() {
 		return $this->_memcache->flush();
 	}
 

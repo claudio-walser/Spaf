@@ -32,8 +32,8 @@ final class Test {
 	 * @var array
 	 */
 	private $_notTestableYet = array(
-		'\Spaf\tests\Unit\Library\Cache\Driver\ApcTest',
-		'\Spaf\tests\Unit\Library\Cache\Driver\MemcacheTest'
+		'\Spaf\tests\Unit\Library\Cache\Driver\ApcTest'//,
+		//'\Spaf\tests\Unit\Library\Cache\Driver\MemcacheTest'
 	);
 
 	/**

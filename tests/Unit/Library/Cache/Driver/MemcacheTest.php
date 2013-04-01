@@ -43,6 +43,13 @@ class MemcacheTest extends \Spaf\tests\Unit\TestCase {
 	private $_value = 'TestContent';
 
 	/**
+	 * Key for executing this tests
+	 *
+	 * @var string Key for this tests
+	 */
+	private $_objectKey = 'Spaf\\tests\\Unit\\Library\\Cache\Driver\\MemcacheTestObject';
+
+	/**
 	 * Test to store an object from \stdClass
 	 *
 	 * @var \stdClass Object to test the store
@@ -50,11 +57,25 @@ class MemcacheTest extends \Spaf\tests\Unit\TestCase {
 	private $_object = null;
 
 	/**
-	 * Lifetime 5 seconds is enough anyway
+	 * Lifetime 1 second is enough for tests anyway
 	 *
 	 * @var integer Lifetime in seconds
 	 */
-	private $_lifetime = 5;
+	private $_lifetime = 1;
+
+	/**
+	 * Memcache host one
+	 *
+	 * @var string cache hostname
+	 */
+	private $_host = 'cache01';
+
+	/**
+	 * Memcache host two
+	 *
+	 * @var string cache hostname
+	 */
+	private $_secondHost = 'cache02';
 
 	/**
 	 * Setup
@@ -63,28 +84,142 @@ class MemcacheTest extends \Spaf\tests\Unit\TestCase {
 	 */
 	protected function setUp() {
 		$this->_memcache = \Spaf\Library\Cache\Manager::factory('memcache');
-		$this->_memcache->connect('cache01');
+		$this->_memcache->connect($this->_host);
+
+		$this->_object = new \stdClass();
+		$this->_object->name = $this->_value;
 	}
 
 	/**
-	 * Test adding a value
+	 * Test adding a string
 	 *
 	 * @return void
 	 */
-	public function testAaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggghhhhhhhhhhhhhhhhhhhhh() {
-		$enoughIsEnough = 'I just ran out of power, guessing and debbugging why this stupid memcache is ignoring my fucking lifetime';
-
-		$fuckingTrue = false;
-		if (isset($enoughIsEnough)) {
-			$fuckingTrue = true;
-		}
-		$this->assertTrue($fuckingTrue);
-
-		// check if key does not exists yet
-		/*$current = $this->_memcache->get($this->_key);
-
-		$this->assertFalse(
+	public function testAddString() {
+		// assert nothing stored yet
+		$this->assertNull(
 			$this->_memcache->get($this->_key)
+		);
+
+		// assert exists equals false
+		$this->assertFalse(
+			$this->_memcache->exists($this->_key)
+		);
+
+		// assert write to the store is true
+		$this->assertTrue(
+			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
+		);
+
+		// assert exists equals true
+		$this->assertTrue(
+			$this->_memcache->exists($this->_key)
+		);
+
+		// test value and memcache value has to be the same
+		$this->assertEquals(
+			$this->_value,
+			$this->_memcache->get($this->_key)
+		);
+
+		// wait for lifetime plus ten microseconds
+		usleep($this->_lifetime * 1000000 + 10);
+		// assert its purged now
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+	}
+
+	/**
+	 * Test adding an object
+	 *
+	 * @return void
+	 */
+	public function testAddObject() {
+		// assert nothing stored yet
+		$this->assertNull(
+			$this->_memcache->get($this->_objectKey)
+		);
+
+		// assert exists equals false
+		$this->assertFalse(
+			$this->_memcache->exists($this->_objectKey)
+		);
+
+		// assert write to the store is true
+		$this->assertTrue(
+			$this->_memcache->add($this->_objectKey, $this->_object, $this->_lifetime)
+		);
+
+		// assert exists equals true
+		$this->assertTrue(
+			$this->_memcache->exists($this->_objectKey)
+		);
+
+		// test value and memcache value has to be the same
+		$this->assertEquals(
+			$this->_object,
+			$this->_memcache->get($this->_objectKey)
+		);
+
+		// wait for lifetime plus ten microseconds
+		usleep($this->_lifetime * 1000000 + 10);
+		// assert its purged now
+		$this->assertNull(
+			$this->_memcache->get($this->_objectKey)
+		);
+	}
+
+	/**
+	 * Test delete a value
+	 *
+	 * @return void
+	 */
+	public function testDelete() {
+		// assert nothing stored yet
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+
+		// assert delete is false yet
+		$this->assertFalse(
+			$this->_memcache->delete($this->_key)
+		);
+
+		// assert write to the store is true
+		$this->assertTrue(
+			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
+		);
+
+		// test value and memcache value has to be the same
+		$this->assertEquals(
+			$this->_value,
+			$this->_memcache->get($this->_key)
+		);
+
+		// assert delete is true
+		$this->assertTrue(
+			$this->_memcache->delete($this->_key)
+		);
+
+		// assert nothing stored after delete
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+	}
+
+	/**
+	 * Test clear all
+	 *
+	 * @return void
+	 */
+	public function testClear() {
+		// assert nothing stored yet
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+		$this->assertNull(
+			$this->_memcache->get($this->_objectKey)
 		);
 
 
@@ -92,19 +227,69 @@ class MemcacheTest extends \Spaf\tests\Unit\TestCase {
 		$this->assertTrue(
 			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
 		);
+		$this->assertTrue(
+			$this->_memcache->add($this->_objectKey, $this->_object, $this->_lifetime)
+		);
 
+
+		// test value and memcache value has to be the same
+		$this->assertEquals(
+			$this->_value,
+			$this->_memcache->get($this->_key)
+		);
+		$this->assertEquals(
+			$this->_object,
+			$this->_memcache->get($this->_objectKey)
+		);
+
+
+		// assert delete is true
+		$this->assertTrue(
+			$this->_memcache->flush($this->_key)
+		);
+
+
+		// assert nothing stored after delete
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+		$this->assertNull(
+			$this->_memcache->get($this->_objectKey)
+		);
+	}
+
+	/**
+	 * Test clear all
+	 *
+	 * @return void
+	 */
+	public function testAddServer() {
+
+		// assert true adding the second server to the first memcache instance
+		$this->assertTrue(
+			$this->_memcache->addServer($this->_secondHost)
+		);
+	}
+
+	/**
+	 * Test overwrite something to early
+	 *
+	 * @return void
+	 */
+	public function testOverwriteToEarly() {
+		// assert nothing stored yet
+		$this->assertNull(
+			$this->_memcache->get($this->_key)
+		);
+
+		// assert write to the store is true
+		$this->assertTrue(
+			$this->_memcache->add($this->_key, $this->_value, $this->_lifetime)
+		);
+
+		// assert exception to be expect
+		$this->setExpectedException('\\Spaf\\Library\\Cache\\Driver\\Exception');
 		$this->_memcache->add($this->_key, $this->_value, $this->_lifetime);
-		echo $this->_memcache->get($this->_key);
-		$this->_memcache->delete($this->_key);
-		die();*/
-
-		/*
-		echo $this->_memcache->get($this->_key);
-		die();
-		/*$this->assertTrue(
-			$this->_memcache->get($this->_key) === $this->_value
-		);*/
-
 	}
 
 	/**
