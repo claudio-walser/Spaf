@@ -1,0 +1,23 @@
+<?php
+/**
+ * $Id$
+ * Database query exception class
+ *
+ * @created 	Fri Jul 30 05:25:27 CET 2010
+ * @author 		Claudio Walser
+ * @reviewer 	TODO
+ * @package		\Cwa\Library\Orm\Runtime
+ * @namespace	\Cwa\Library\Orm\Runtime\Query
+ */
+namespace Cwa\Library\Orm\Runtime\Query;
+
+/**
+ * Cwa\Library\Orm\Runtime\Query\Exception
+ *
+ * The query exception class.
+ *
+ * @author 		Claudio Walser
+ */
+class Exception extends \Exception {}
+
+?>

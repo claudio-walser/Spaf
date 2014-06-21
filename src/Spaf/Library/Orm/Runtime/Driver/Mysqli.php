@@ -1,0 +1,155 @@
+<?php
+/**
+ * $Id$
+ * Concrete MySQLi driver class
+ *
+ * @created 	Fri Jul 30 05:35:27 CET 2010
+ * @author 		Claudio Walser
+ * @reviewer 	TODO
+ * @package		\Spaf\Library\Orm\Runtime
+ * @namespace	\Spaf\Library\Orm\Runtime\Driver
+ */
+namespace Spaf\Library\Orm\Runtime\Driver;
+
+
+/**
+ * Spaf\Library\Orm\Runtime\Driver\Mysqli
+ *
+ * The concrete driver for the mysqli extension.
+ * This driver class handles queries over the mysqli 
+ * extension.
+ *
+ * @author 		Claudio Walser
+ */
+class Mysqli extends Sql {
+
+    /**
+     * Do a connection
+	 * This method connect to a given database server
+	 * with the native mysqli extension.
+     *
+	 * @param	array		Data Source Name
+	 * @return boolean
+     */
+	public function connect($dsn) {
+		// do connection
+		$this->_connection = new \MySQLi($dsn['hostname'], $dsn['username'], $dsn['password'], $dsn['database'], $dsn['port']);
+
+		if ($this->_connection === false) {
+			throw new Exception('MySQL FatalError: can\'t connect to ' . $dsn['hostname'] . ', login failed!');
+		}
+		return true;
+	}
+
+    /**
+     * Escape a value
+	 * This method escape a value in order to sending it
+	 * to the database server.
+     *
+	 * @param	string		Value to escape
+	 * @return	string		Escaped string, ready for an insert
+     */
+	public function escapeValue($value) {
+		return $this->_connection->real_escape_string($value);
+	}
+
+    /**
+     * Get the connection
+	 * This method returns the connection object.
+     *
+	 * @return	Mysql		The mysqli object
+     */
+	public function getConnection() {
+		return $this->_connection;
+	}
+
+    /**
+     * Execute a query
+	 * This method executes a given query
+	 * and stores it's result.
+     *
+	 * @param	string		Query to execute
+	 * @return	boolean
+     */
+	public function executeQuery($query) {
+		$this->_result = $this->_connection->query($query);
+		if ($this->_connection->error) {
+			$this->_result = null;
+			throw new Exception('MySQL FatalError: ' . $this->_connection->error . "\nQuery was: " . $query . "\n" . '!');
+		}
+		return true;
+	}
+
+    /**
+     * Get the result set
+	 * This method returns the results set 
+	 * from the last executed query.
+     *
+	 * @return	array		Result set of the last query
+     */
+	public function getResultArray() {
+		$result = array();
+		while($row = $this->_result->fetch_assoc()) {
+			array_push($result, $row);
+		}
+		if (empty($result)) {
+			$result = null;
+		}
+		return $result;
+	}
+
+    /**
+     * Return a limit statement
+	 * This method returns a limit statement.
+	 * Use always this method, because
+	 * on different dbms, limit statements
+	 * are also different.
+     *
+	 * @param	int		How many records to limit
+	 * @param	int		Optional: Where to start
+	 * @return	string	The limit condition
+     */
+	public static function getLimit($limit, $offset = null) {
+		return $offset === null ? ' LIMIT ' . $limit : ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+	}
+
+    /**
+     * Return the last auto increment value
+	 * This method returns the last insert id.
+	 * Use always this method, because
+	 * on different dbms, limit statements
+	 * are also different.
+     *
+	 * @return	int		The last insert id
+     */
+	public function getAutoIncrementValue() {
+		return $this->_connection->insert_id;
+	}
+	
+	
+
+
+
+
+	// NOT IMPLEMENTED NOW
+	/**
+	 * @see		DbDriver::begin
+	 */
+	public function begin() {
+		// start transaction
+	}
+	/**
+	 * @see		DbDriver::commit
+	 */
+	public function commit() {
+		// commit transaction
+	}
+	/**
+	 * @see		DbDriver::rollback
+	 */
+	public function rollback() {
+		// rollback transaction
+	}
+}
+
+?>

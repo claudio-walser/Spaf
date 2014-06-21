@@ -1,0 +1,299 @@
+<?php
+/**
+ * $Id$
+ * Database Generator - xml parser class
+ *
+ * @created 	Mon Aug 23 19:13:57 CET 2010
+ * @author 		Claudio Walser
+ * @reviewer 	TODO
+ * @package		\Cwa\Library\Database\Generator
+ * @namespace	\Cwa\Library\Database\Generator\Parser
+ */
+namespace Cwa\Library\Orm\Generator\Parser;
+
+/**
+ * Cwa\Library\Orm\Generator\Parser\Xml
+ *
+ * This is a concrete xml parser class.
+ * 
+ *
+ * @author 		Claudio Walser
+ * @todo		Methods like createColumn($xmlCol) and cloneColumn(UdaColumn $col) can save a lot of code
+ */
+class Xml extends AbstractParser {
+
+	/**
+	 * Stores the SimpleXml object
+	 * @var			SimpleXml
+	 */
+	private $_xml = null;
+
+
+	/**
+	 * Loads the xml file into a SimpleXml object
+	 *
+	 * This method gets a file object and stores
+	 * the resulting SimpleXml object in a class property.
+	 *
+	 * @param		\Cwa\Library\Directory\File			The source XML as file object
+	 * @return		boolean
+	 */
+	protected function _loadFile(\Cwa\Library\Directory\File $xmlFile) {
+		$this->_xml = simplexml_load_string($xmlFile->getContent());
+		return true;
+	}
+
+	/**
+	 * Get all Table objects and the config object
+	 *
+	 * This is the only method you have to call after instantiate a object of this class.
+	 * Internally it calls self::_readLazyObjects and self::_completeForeign to generate
+	 * the UdaTable objects on the basis of you xml sheme.
+	 *
+	 * @return		array			An array with the config object and all table objects
+	 * @return		boolean
+	 */
+	public function getObjects() {
+		$this->_readConfigObject();
+		$this->_readLazyObjects();
+		$this->_completeForeign();
+
+		return array('config' => $this->_config, 'tables' => $this->_tables);
+	}
+
+	/**
+	 * Creates the Config object and all Table objects as defined in your xml sheme
+	 *
+	 * This method walks throug your xml sheme and creates Table/Config objects of all definded tables.
+	 * Since you haven't to declare n:m tables really, the tables aren't generated complete after this call.
+	 *
+	 * @return		boolean
+	 */
+	private function _readConfigObject() {
+		$this->_config = new \Cwa\Library\Orm\Generator\Object\Config();
+		$this->_config->setSqlDriver($this->_xml->dataSourceName->sqlDriver);
+		$this->_config->setHost($this->_xml->dataSourceName->host[0]);
+		$this->_config->setPort($this->_xml->dataSourceName->port ? $this->_xml->dataSourceName->port : 3306);
+		$this->_config->setUser($this->_xml->dataSourceName->user);
+		$this->_config->setPass($this->_xml->dataSourceName->password);
+		$this->_config->setName($this->_xml->dataSourceName->name);
+		return true;
+	}
+
+	/**
+	 * Creates the Config object and all Table objects as defined in your xml sheme
+	 *
+	 * This method walks throug your xml sheme and creates Table/Config objects of all definded tables.
+	 * Since you haven't to declare n:m tables really, the tables aren't generated complete after this call.
+	 *
+	 * @return		boolean
+	 */
+	private function _readLazyObjects() {
+		foreach ($this->_xml->table as $t) {
+			$attr = $t->attributes();
+			$tablename = $attr->name;
+			$table = new \Cwa\Library\Orm\Generator\Object\Table($attr->name, $attr->description);
+
+			foreach ($t->column as $c) {
+				$attr = $c->attributes();
+				$column = new \Cwa\Library\Orm\Generator\Object\Column($attr->name);
+				$column->setAsPrimaryKey($attr->primaryKey);
+				$column->setAutoincrement($attr->autoincrement);
+				$column->setDescription($attr->description);
+				$column->setType($attr->type);
+				$column->setSize($attr->size);
+				$column->setDefault($attr->default);
+				$table->addColumn($column);
+			}
+
+			$this->_tables[$table->getName()] = $table;
+		}
+		return true;
+	}
+
+	/**
+	 * Completes all foreign tables
+	 *
+	 * This method completes all foreign tables.
+	 * 1:1 or 1:n relations will be defined in a object oriented style
+	 * and n:m tables will be generated completly too.
+	 * Throws a exception if any, in xml defined table won't exists at this moment.
+	 * This should not happen basicly.
+	 *
+	 * @return		boolean
+	 */
+	private function _completeForeign() {
+		foreach ($this->_xml->table as $t) {
+			$table = isset($this->_tables[(string) $t->attributes()->name]) ? $this->_tables[(string) $t->attributes()->name] : null;
+
+			if ($table === null) {
+				throw new Exception('Error: Table ' . $t->attributes()->name . ' not found!');
+			}
+
+			foreach ($this->_getForeignColumns($table) as $col) {
+				$table->addColumn($col);
+			}
+		}
+
+		$this->_getForeignTables();
+		return true;
+	}
+
+	/**
+	 * Completes all tables with 1:n or 1:1 relations
+	 *
+	 * This method gets all 1:1 or 1:n relation-columns of a table.
+	 * In this process, a new column named fk_fkTableName_fkPrimaryKey will be created autmaticly.
+	 * All founded 1:1 or 1:n relations will be returned as a array of UdaColumn objects.
+	 *
+	 * @param		\Cwa\Library\Orm\Generator\Object\Table			A Table object
+	 * @return		array											Array of the foreignColumns from this table
+	 */
+	private function _getForeignColumns(\Cwa\Library\Orm\Generator\Object\Table $table) {
+		$cols = array();
+		foreach ($this->_xml->table as $t) {
+			foreach ($t->dependency as $_dep) {
+				$attr = $_dep->attributes();
+
+				// hole 1:n Beziehungs Spalten
+				if ((string) $attr->table === (string) $table->getName() && ((string) $attr->relation === '1:n' || (string) $attr->relation === '1:1')) {
+					$_foreignColumns = $this->_tables[(string) $t->attributes()->name]->getPkColumns();
+					$c = array();
+					foreach ($_foreignColumns as $co) {
+						array_push($c, clone $co);
+					}
+					$foreignColumns = $c;
+					foreach ($foreignColumns as $key => $c) {
+						$c->setName('fk_' . (string) $t->attributes()->name . '_' . $c->getName());
+						$c->setAsPrimaryKey(false);
+						$c->setAsForeignKey(true);
+						$c->setForeignTable($this->_tables[(string) $t->attributes()->name]);
+						$c->setForeignColumn($_foreignColumns[$key]);
+						$c->setRelation($attr->relation);
+						$c->setEvent($attr->event);
+						$c->setAction($attr->action);
+						$c->setAutoIncrement(false);
+						$c->setDescription('Foreign key to ' . $t->attributes()->name);
+					}
+
+					$cols = array_merge($cols, $foreignColumns);
+				}
+			}
+		}
+
+		return $cols;
+	}
+
+	/**
+	 * Completes all the internal array with the n:m tables
+	 *
+	 * This method gets all n:m relations and generate their custom tables.
+	 * Also in the extra defined columns of any n:m relation will be generated in this method.
+	 *
+	 * @return		boolean
+	 */
+	private function _getForeignTables() {
+		foreach ($this->_xml->table as $t) {
+			foreach ($t->dependency as $_dep) {
+				$attr = $_dep->attributes();
+
+				// get n:m relation informations
+				if ((string) $attr->relation === 'n:m') {
+					$table = new \Cwa\Library\Orm\Generator\Object\Table($t->attributes()->name . 'To' . ucfirst($attr->table), 'autogenerated dependency table');
+					$table->setAsRelationTable(true);
+					$tFrom = $this->_tables[(string) $t->attributes()->name];
+					$tTo = $this->_tables[(string) $attr->table];
+
+					$praefixFrom = $tFrom->getName() === $tTo->getName() ? 'p_' : '';
+
+					// additional columns of this n:m relation
+					if (count($_dep->column) > 1) {
+						$cols = array();
+						for ($i = 0; $i < count($_dep->column); $i++) {
+							$cols[$i] = $_dep->column[$i];
+						}
+					} else {
+						$cols = $_dep->column;
+
+					}
+
+					if (is_array($cols)) {
+						foreach($cols as $col) {
+
+							$attr = $col->attributes();
+							$column = new \Cwa\Library\Orm\Generator\Object\Column($attr->name);
+							$column->setAsPrimaryKey($attr->primaryKey);
+							$column->setAutoincrement($attr->autoincrement);
+							$column->setDescription($attr->description);
+							$column->setType($attr->type);
+							$column->setSize($attr->size);
+							$column->setDefault($attr->default);
+
+							$table->addColumn($column);
+						}
+					} else if (is_object($cols) && !empty($cols)) {
+						$attr = $cols->attributes();
+						$column = new \Cwa\Library\Orm\Generator\Object\Column($attr->name);
+						$column->setAsPrimaryKey($attr->primaryKey);
+						$column->setAutoincrement($attr->autoincrement);
+						$column->setDescription($attr->description);
+						$column->setType($attr->type);
+						$column->setSize($attr->size);
+						$column->setDefault($attr->default);
+
+						$table->addColumn($column);
+					}
+
+					// foreign columns der From Tabelle
+					$_foreignColumns = $tFrom->getPkColumns();
+					$c = array();
+					foreach ($_foreignColumns as $co) {
+						array_push($c, clone $co);
+					}
+					$foreignColumns = $c;
+
+					foreach ($foreignColumns as $key => $c) {
+						$c->setName($praefixFrom . 'fk_' . $tFrom->getName() . '_' . $c->getName());
+						$c->setAsPrimaryKey(true);
+						$c->setAsForeignKey(true);
+						$c->setForeignTable($tFrom);
+						$c->setForeignColumn($_foreignColumns[$key]);
+						$c->setAutoIncrement(false);
+						$c->setDescription('Foreign key to ' . $tFrom->getName());
+
+						$table->addColumn($c);
+					}
+
+					// foreign columns of the «to» table
+					$_foreignColumns = $tTo->getPkColumns();
+					$c = array();
+					foreach ($_foreignColumns as $co) {
+						array_push($c, clone $co);
+					}
+					$foreignColumns = $c;
+
+					foreach ($foreignColumns as $key => $c) {
+						$c->setName('fk_' . $tTo->getName() . '_' . $c->getName());
+						$c->setAsPrimaryKey(true);
+						$c->setAsForeignKey(true);
+						$c->setForeignTable($tTo);
+						$c->setForeignColumn($_foreignColumns[$key]);
+						$c->setAutoIncrement(false);
+						$c->setDescription('Foreign key to ' . $tTo->getName());
+
+						$table->addColumn($c);
+					}
+
+					// add foreign tables to the intern tables array
+					$this->_tables[$table->getName()] = $table;
+				}
+			}
+		}
+		return true;
+	}
+
+}
+
+
+
+?>
