@@ -93,7 +93,7 @@ class Registry {
 	public function set($name, $object, $persistent = false) {
 		// throws an exeption if you try to set anything but an object
 		if (!is_object($object)) {
-			throw new Exception(get_class($this) . ': You can only store php objects');
+			throw new Exception(get_class($this) . ': You can only store php objects. Type ' . gettype($object) . ' given for key ' . $name . '.');
 		}
 
 		// not just type cast, everything but true is meant to false
