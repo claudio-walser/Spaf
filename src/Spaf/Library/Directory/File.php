@@ -39,6 +39,13 @@ class File extends Abstraction {
 	private $_name = null;
 
 	/**
+	 * The file ending
+	 *
+	 * @var string
+	 */
+	private $_ending = null;
+
+	/**
 	 * The file path without name.
 	 *
 	 * @var string
@@ -103,6 +110,10 @@ class File extends Abstraction {
 
 		$this->_name = $parts['name'];
 		$this->_path = $parts['path'];
+
+		// extract file ending
+		$parts = explode('.', $this->_name);
+		$this->_ending = array_pop($parts);
 	}
 
 	/**
@@ -113,6 +124,16 @@ class File extends Abstraction {
 	 */
 	public function getName() {
 		return $this->_name;
+	}
+
+	/**
+	 * Get file ending.
+	 * Returns the file ending.
+	 *
+	 * @return string Ending of the file
+	 */
+	public function getEnding() {
+		return $this->_ending;
 	}
 
 	/**
