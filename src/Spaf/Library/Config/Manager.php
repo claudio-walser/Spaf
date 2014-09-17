@@ -51,6 +51,21 @@ class Manager {
 	private $_storedData = null;
 
 	/**
+	 * Creates a config object for ya
+	 *
+	 * @param mixed String with the driver type or driver object itself
+	 * @return boolean True
+	 */
+	public static function factory($file) {
+		$file = new \Spaf\Library\Directory\File($file);
+		$config = new \Spaf\Library\Config\Manager();
+		$config->registerDriver(strtolower($file->getEnding()));
+		$config->setSourceFile($file);
+
+		return $config;
+	}
+
+	/**
 	 * Register one of the driver type.
 	 * Currently supported is ini, xml, json, php (simple array) and serialized||srz (a simple serialized format)
 	 *
