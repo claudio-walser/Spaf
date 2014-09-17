@@ -145,6 +145,7 @@ class Application {
 	 */
 	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
 		$this->_request = $request;
+		$this->_request->set('request', $this->_request, true);
 
 		return true;
 	}
@@ -166,6 +167,7 @@ class Application {
 	 */
 	public function setResponse(\Spaf\Core\Response\Abstraction $response) {
 		$this->_response = $response;
+		$this->_request->set('response', $this->_response, true);
 
 		return true;
 	}
@@ -187,6 +189,7 @@ class Application {
 	 */
 	public function setDefaultController($controller) {
 		$this->_defaultController = (string) $controller;
+		$this->_dispatcher->setDefaultController($this->_defaultController);
 
 		return true;
 	}
@@ -208,6 +211,7 @@ class Application {
 	 */
 	public function setNotFoundController($controller) {
 		$this->_notFoundController = (string) $controller;
+		$this->_dispatcher->setNotFoundController($this->_notFoundController);
 
 		return true;
 	}
@@ -229,6 +233,7 @@ class Application {
 	 */
 	public function setDefaultAction($action) {
 		$this->_defaultAction = (string) $action;
+		$this->_dispatcher->setDefaultAction($this->_defaultAction);
 
 		return true;
 	}
@@ -249,21 +254,6 @@ class Application {
 	 * @return mixed Returns the controllers method individual return
 	 */
 	public function run() {
-		// setup registry params
-		$this->_registry->set('request', $this->_request, true);
-		$this->_registry->set('response', $this->_response, true);
-
-		// setup dispatcher
-		if ($this->_notFoundController !== null) {
-			$this->_dispatcher->setNotFoundController($this->_notFoundController);
-		}
-		if ($this->_defaultController !== null) {
-			$this->_dispatcher->setDefaultController($this->_defaultController);
-		}
-		if ($this->_defaultAction !== null) {
-			$this->_dispatcher->setDefaultAction($this->_defaultAction);
-		}
-
 		// forwards the dispatchers return, which is in fact the return value of a specific controller method
 		return $this->_dispatcher->dispatch($this->_registry);
 	}
