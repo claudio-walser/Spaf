@@ -31,11 +31,13 @@ class Autoloader {
 	private $_debug = true;
 
 	/**
-	 * Methods which are no autoloader
+	 * Paths to lookup for php classes, additional to include_path in php.ini
 	 *
 	 * @var array
 	 */
-	private $_noLoaderMethods = array('__construct', 'setDebug', '_getFilename', '_register');
+	protected $_lookupPaths = array(
+		'./'
+	);
 
 	/**
 	 * Pass the given debug param and register
@@ -95,20 +97,32 @@ class Autoloader {
 		return $file;
 	}
 
+	private function _loadClasses($name) {
+		$fileName = $this->_getFilename($name);
+		foreach ($this->_lookupPaths as $path) {
+			$file = $path . $fileName;
+			if (is_file($file) && is_readable($file)) {
+				// do debug message if needed
+				$this->debug('<strong>' . date('Y-m-d H:i:s') . '</strong> -- File ' . $file . ' successfully loaded' . "<br />\n");
+				// require the file
+				require_once($file);
+				
+				return true;
+			}
+		}
+		$this->debug('<strong>' . date('Y-m-d H:i:s') . '</strong> -- Class ' . $fileName . ' not found; autoload lookup paths: ' . print_r($this->_lookupPaths, true) . ' include_path:' . get_include_path() . "<br />\n");
+		
+		return false;
+	}
+
 	/**
 	 * Register all autoloader methods with Standard-PHP-Library
 	 *
 	 * @return		boolean
 	 */
 	private function _register() {
-		$reflection = new \ReflectionClass($this);
-		foreach ($reflection->getMethods() as $method) {
-			$name = $method->name;
-			if (!in_array($name, $this->_noLoaderMethods)) {
-				// register the method
-				spl_autoload_register(array($this, $name));
-			}
-		}
+		spl_autoload_register(array($this, '_loadClasses'));
+
 
 		return true;
 	}
