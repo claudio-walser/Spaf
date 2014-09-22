@@ -29,7 +29,7 @@ class Application {
 	 *
 	 * @var \Spaf\Core\Registry
 	 */
-	private $_registry = null;
+	protected $_registry = null;
 
 
 	/**
@@ -37,42 +37,42 @@ class Application {
 	 *
 	 * @var \Spaf\Core\Dispatcher
 	 */
-	private $_dispatcher = null;
+	protected $_dispatcher = null;
 
 	/**
 	 * Request Object
 	 *
 	 * @var \Spaf\Core\Request\Abstraction
 	 */
-	private $_request = null;
+	protected $_request = null;
 
 	/**
 	 * Response Object
 	 *
 	 * @var \Spaf\Core\Response\Abstraction
 	 */
-	private $_response = null;
+	protected $_response = null;
 
 	/**
 	 * Name of the not-found controller action
 	 *
 	 * @var string
 	 */
-	private $_notFoundController = null;
+	protected $_notFoundController = null;
 
 	/**
 	 * Name of the default controller
 	 *
 	 * @var string
 	 */
-	private $_defaultController = null;
+	protected $_defaultController = null;
 
 	/**
 	 * Name of the default controller action
 	 *
 	 * @var string
 	 */
-	private $_defaultAction = null;
+	protected $_defaultAction = null;
 
 	/**
 	 * Constructor
@@ -84,8 +84,8 @@ class Application {
 		$this->_dispatcher = new Dispatcher();
 		$this->setRegistry(Registry::getInstance());
 
-		$this->_request = $this->_registry->get('request'. null);
-		$this->_response = $this->_registry->get('response'. null);;
+		/*$this->_request = $this->_registry->get('request'. null);
+		$this->_response = $this->_registry->get('response'. null);*/
 	}
 
 	/**
@@ -143,10 +143,11 @@ class Application {
 	 * @param \Spaf\Core\Request\Abstraction The request object
 	 * @return boolean true
 	 */
-	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
+	public function setRequest(\Spaf\Core\Request\Abstraction $request, $updateDispatcher = true) {
 		$this->_request = $request;
-		$this->_request->set('request', $this->_request, true);
-
+		if ($updateDispatcher === true) {
+			$this->_dispatcher->setRequest($this->_request);
+		}
 		return true;
 	}
 
@@ -165,10 +166,11 @@ class Application {
 	 * @param \Spaf\Core\Response\Abstraction The response object
 	 * @return boolean true
 	 */
-	public function setResponse(\Spaf\Core\Response\Abstraction $response) {
+	public function setResponse(\Spaf\Core\Response\Abstraction $response, $updateDispatcher = true) {
 		$this->_response = $response;
-		$this->_request->set('response', $this->_response, true);
-
+		if ($updateDispatcher === true) {
+			$this->_dispatcher->setResponse($this->_response);
+		}
 		return true;
 	}
 

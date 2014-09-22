@@ -23,6 +23,8 @@ namespace Spaf\Core\Controller;
  */
 abstract class Abstraction {
 
+	protected $_dispatcher = null;
+
 	/**
 	 * The Registry Object.
 	 *
@@ -59,6 +61,10 @@ abstract class Abstraction {
 	protected $_session = null;
 
 	/**
+	 *
+	 */
+	protected $_application = null;
+	/**
 	 * Creates a controller object and
 	 * set the default properties in this class.
 	 * Some of them are coming from the registry.
@@ -68,12 +74,13 @@ abstract class Abstraction {
 	 *
 	 * @param \Spaf\Core\Registry Pass a registry object by injection
 	 */
-	public function __construct(\Spaf\Core\Registry $registry) {
-		$this->_registry = $registry;
+	public function __construct(\Spaf\Core\Dispatcher $dispatcher) {
+		$this->_dispatcher = $dispatcher;
+		$this->_registry = \Spaf\Core\Registry::getInstance();
 
 		// throws exceptions if request or response object is not set yet
-		$this->_request = $this->_registry->get('request', true);
-		$this->_response = $this->_registry->get('response', true);
+		$this->_request = $this->_dispatcher->getRequest();
+		$this->_response = $this->_dispatcher->getResponse();
 
 		// call the init method
 		$this->init();
@@ -97,6 +104,35 @@ abstract class Abstraction {
 	 */
 	public function init() {}
 
+	protected function controller($controller, $action, $params) {
+		if ($this->_application === null) {
+			$this->_createPhpApplication();
+		}
+
+
+		// set controller and action
+		$this->_application->getRequest()->set('controller', $controller);
+		$this->_application->getRequest()->set('action', $action);
+		// set specific controller params
+		if (is_array($params)) {
+			foreach($params as $key => $value) {
+				$this->_application->getRequest()->set($key, $value);
+			}
+		}
+		// execute and get controllers return
+		return $this->_application->run();
+	}
+
+	protected function _createPhpApplication() {
+		// request and response objects
+		$request = new \Spaf\Core\Request\Php();
+		$response = new \Spaf\Core\Response\Php();
+		
+		// instantiate business tier with a php request and response
+		$this->_application = new \Spaf\Core\Application();
+		$this->_application->setRequest($request);
+		$this->_application->setResponse($response);
+	}
 }
 
 ?>

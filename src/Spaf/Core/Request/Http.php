@@ -23,6 +23,12 @@ namespace Spaf\Core\Request;
  */
 class Http extends Abstraction {
 
+
+	public function __construct() {
+		$this->_params = $_REQUEST;
+		$this->_files = $_FILES;
+	}
+
 	/**
 	 * Just return the whole request array.
 	 * File uploads are included as well.
@@ -41,7 +47,7 @@ class Http extends Abstraction {
 	 * @return string Value of the given key or the default value if nothing found
 	 */
 	public function getParam($name, $default = null) {
-		return isset($_REQUEST[$name]) ? $this->_dispatchParam($_REQUEST[$name]) : $default;
+		return isset($this->_params[$name]) ? $this->_dispatchParam($this->_params[$name]) : $default;
 	}
 
 	/**
@@ -81,11 +87,11 @@ class Http extends Abstraction {
 	 * @return array Array with upload information from $_FILES
 	 */
 	public function getUpload($name) {
-		if (isset($_FILES[$name]) && $this->_utf8Decode === true) {
-			$_FILES[$name]['name'] = utf8_decode($_FILES[$name]['name']);
+		if (isset($this->_files[$name]) && $this->_utf8Decode === true) {
+			$this->_files[$name]['name'] = utf8_decode($this->_files[$name]['name']);
 		}
 
-		return isset($_FILES[$name]) ? $_FILES[$name] : null;
+		return isset($this->_files[$name]) ? $this->_files[$name] : null;
 	}
 
 	/**
@@ -113,10 +119,13 @@ class Http extends Abstraction {
 	 * @return boolean true
 	 */
 	public function reset() {
-		$_GET = array();
+		$this->_params = array();
+		$this->_files = array();
+
+		/*$_GET = array();
 		$_POST = array();
 		$_REQUEST = array();
-		$_FILES = array();
+		$_FILES = array();*/
 
 		return true;
 	}
@@ -127,7 +136,7 @@ class Http extends Abstraction {
 	 * @return array The $_REQUEST Array
 	 */
 	private function _getAllRequestVariables() {
-		return isset($_REQUEST) ? $this->_dispatchParam($_REQUEST) : array();
+		return isset($this->_params) ? $this->_dispatchParam($this->_params) : array();
 	}
 
 	/**
@@ -137,8 +146,8 @@ class Http extends Abstraction {
 	 */
 	private function _getAllUploads() {
 		$files = array();
-		if (!isset($_FILES) && is_array($_FILES)) {
-			foreach ($_FILES as $key => $file ) {
+		if (!isset($this->_files) && is_array($this->_files)) {
+			foreach ($this->_files as $key => $file ) {
 				$files[$key] = $this->getUpload($key);
 			}
 		}

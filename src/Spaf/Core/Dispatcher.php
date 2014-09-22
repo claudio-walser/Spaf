@@ -30,6 +30,10 @@ class Dispatcher {
 	 */
 	protected $_registry = null;
 
+	protected $_request = null;
+	protected $_response = null;
+
+
 	/**
 	 * The requested controller Object.
 	 *
@@ -160,6 +164,26 @@ class Dispatcher {
 		return $this->_defaultAction;
 	}
 
+	public function setResponse(\Spaf\Core\Response\Abstraction $response) {
+	   $this->_response = $response;
+
+	   return true;
+	}
+
+	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
+	   $this->_request = $request;
+
+	   return true;
+	}
+
+	public function getRequest() {
+		return $this->_request;
+	}
+
+	public function getResponse() {
+		return $this->_response;
+	}
+
 	/**
 	 * Execute the dispatcher based on the given request
 	 * parameters. This method is handling not found fallbacks as well.
@@ -170,24 +194,24 @@ class Dispatcher {
 	 */
 	public function dispatch() {
 		// get registry/request object, throws an exception if none is set yet.
-		$request = $this->_registry->get('request', true);
+		//$request = $this->_registry->get('request', true);
 
 		// get controller
-		$this->_controller = $request->getParam('controller', $this->_defaultController);
+		$this->_controller = $this->_request->getParam('controller', $this->_defaultController);
 
 
 		// if unknown controller
 		if (!class_exists($this->_controller)) {
-			$controller = new $this->_notFoundController($this->_registry);
+			$controller = new $this->_notFoundController($this);
 			return $controller->view();
 		}
 
 
 		// instantiate controller
-		$controller = new $this->_controller($this->_registry);
+		$controller = new $this->_controller($this);
 
 		// get action
-		$this->_action = $request->getParam('action', $this->_defaultAction);
+		$this->_action = $this->_request->getParam('action', $this->_defaultAction);
 		// check first and set defaultAction as action
 		if (!method_exists($controller, $this->_action)) {
 			$this->_action = $this->_defaultAction;
@@ -196,7 +220,7 @@ class Dispatcher {
 		// check if method still does not exist
 		if (!method_exists($controller, $this->_action)) {
 			// instantiate the default controller
-			$controller = new $this->_notFoundController($this->_registry);
+			$controller = new $this->_notFoundController($this);
 			return $controller->{$this->_defaultAction}($this->_controller, $this->_defaultAction);
 		}
 

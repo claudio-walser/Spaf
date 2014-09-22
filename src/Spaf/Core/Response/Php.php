@@ -56,11 +56,14 @@ class Php extends Abstraction {
 		$out = array();
 		// set success on true per default
 		$out['success'] = $success !== null ? $success : true;
-
-		// return success false if any other than a array or something is coming
-		foreach ($this->_false as $false) {
-			if ($false === $param) {
-				$out['success'] = false;
+		if ($success !== null) {
+			$out['success'] = $success;
+		} else {
+			// return success false if any other than a array or something is coming
+			foreach ($this->_false as $false) {
+				if ($false === $param) {
+					$out['success'] = false;
+				}
 			}
 		}
 		// if success not equals false

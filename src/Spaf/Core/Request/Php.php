@@ -35,7 +35,7 @@ class Php extends Http {
 	 * @return boolean true
 	 */
 	public function setParam($name, $value) {
-		$_REQUEST[$name] = $value;
+		$this->_params[$name] = $value;
 
 		return true;
 	}

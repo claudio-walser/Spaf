@@ -23,6 +23,9 @@ namespace Spaf\Core\Request;
  */
 abstract class Abstraction {
 
+	protected $_params = array();
+	protected $_files = array();
+
 	/**
 	 * Either this class should utf8 decode incoming values or not
 	 *
