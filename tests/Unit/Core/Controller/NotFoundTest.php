@@ -57,7 +57,7 @@ class NotFoundTest extends \Spaf\tests\Unit\TestCase {
 		$this->_dispatcher->setRequest($request);
 		$this->_dispatcher->setResponse($response);
 		
-		$this->_controller = new \Spaf\Core\Controller\Index($this->_dispatcher);
+		$this->_controller = new \Spaf\Core\Controller\NotFound($this->_dispatcher);
 
 		unset($request);
 		unset($response);		
