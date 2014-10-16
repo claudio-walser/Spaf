@@ -51,12 +51,13 @@ class IndexTest extends \Spaf\tests\Unit\TestCase {
 		$this->_registry = \Spaf\tests\Mock\Core\Registry::getInstance();
 		$request = new \Spaf\Core\Request\Http();
 		$response = new \Spaf\Core\Response\Php();
-		$this->_registry->set('request', $request, true);
-		$this->_registry->set('response', $response, true);
 		// get normal registry first
 		$this->_dispatcher = new \Spaf\Core\Dispatcher();
 		$this->_dispatcher->setRegistry($this->_registry);
 
+		$this->_dispatcher->setRequest($request);
+		$this->_dispatcher->setResponse($response);
+		
 		$this->_controller = new \Spaf\Core\Controller\Index($this->_dispatcher);
 
 		unset($request);

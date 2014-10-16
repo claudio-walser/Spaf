@@ -177,10 +177,12 @@ class Dispatcher {
 	}
 
 	public function getRequest() {
+		// maybe try to fetch it from registry if null?
 		return $this->_request;
 	}
 
 	public function getResponse() {
+		// maybe try to fetch it from registry if null?
 		return $this->_response;
 	}
 
