@@ -29,6 +29,13 @@ class IndexTest extends \Spaf\tests\Unit\TestCase {
 	private $_controller = null;
 
 	/**
+	 * Current dispatcher instance
+	 *
+	 * @var \Spaf\Core\Dispatcher
+	 */
+	private $_dispatcher = null;
+
+	/**
 	 * Mocked registry to pass
 	 *
 	 * @var \Spaf\tests\Mock\Core\Registry
@@ -47,7 +54,10 @@ class IndexTest extends \Spaf\tests\Unit\TestCase {
 		$this->_registry->set('request', $request, true);
 		$this->_registry->set('response', $response, true);
 		// get normal registry first
-		$this->_controller = new \Spaf\Core\Controller\Index($this->_registry);
+		$this->_dispatcher = new \Spaf\Core\Dispatcher();
+		$this->_dispatcher->setRegistry($this->_registry);
+
+		$this->_controller = new \Spaf\Core\Controller\Index($this->_dispatcher);
 
 		unset($request);
 		unset($response);
