@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Library/Config/Driver/Abstraction.php
+ * Spaf/Library/Config/Driver/AbstractDriver.php
  * @created Sat Sep 09 09:33:02 CET 2006
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Library\Config\Driver;
 
 /**
- * \Spaf\Library\Config\Driver\Abstraction
+ * \Spaf\Library\Config\Driver\AbstractDriver
  *
  * This is the abstract basic
  * driver class. Any concrete config driver
@@ -21,7 +21,7 @@ namespace Spaf\Library\Config\Driver;
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
-abstract class Abstraction {
+abstract class AbstractDriver {
 
 	protected $_unconvertableRead = false;
 	protected $_unconvertableWrite = false;

@@ -19,7 +19,7 @@ namespace Spaf\Library\Cache\Driver;
  * @package Spaf\Library\Cache\Driver
  * @namespace Spaf\Library\Cache\Driver
  */
-class Memcache extends Abstraction {
+class Memcache extends AbstractDriver {
 
 	/**
 	 * Array with all passed server informations.

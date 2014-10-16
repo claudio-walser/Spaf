@@ -22,7 +22,7 @@ namespace Spaf\Library\Directory;
  * @package Spaf\Library\Directory
  * @namespace Spaf\Library\Directory
  */
-class File extends Abstraction {
+class File extends AbstractDirectory {
 
 	/**
 	 * Allow spaces in the end of any line?

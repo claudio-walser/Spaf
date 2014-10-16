@@ -22,7 +22,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class String extends Abstraction {
+class String extends AbstractValidator {
 
 	/**
 	 * Validate function itself

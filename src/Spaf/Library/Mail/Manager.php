@@ -30,7 +30,7 @@ class Manager {
 		$this->_transport = $this->_standardTransport;
 	}
 
-	public function setTransport(Transport\Abstraction $transport) {
+	public function setTransport(Transport\AbstractTransport $transport) {
 		$this->_transport = $transport;
 
 		return true;

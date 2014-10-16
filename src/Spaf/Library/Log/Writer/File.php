@@ -20,7 +20,7 @@ namespace Spaf\Library\Log\Writer;
  * @package Spaf\Library\Log\Writer
  * @namespace Spaf\Library\Log\Writer
  */
-class File extends Abstraction {
+class File extends AbstractWriter {
 
 	/**
 	 * Source file object

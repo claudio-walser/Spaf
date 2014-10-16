@@ -19,7 +19,7 @@ namespace Spaf\Core\Controller;
  * @package Spaf\Core\Controller
  * @namespace Spaf\Core\Controller
  */
-class Index extends Abstraction {
+class Index extends AbstractController {
 
 	/**
 	 * Default controllers view method

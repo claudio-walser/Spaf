@@ -63,10 +63,10 @@ class Manager {
 	/**
 	 * Add a writer to log for this instance
 	 *
-	 * @param \Spaf\Library\Log\Writer\Abstraction Writer class to log into
+	 * @param \Spaf\Library\Log\Writer\AbstractWriter class to log into
 	 * @return boolean True
 	 */
-	public function addWriter(\Spaf\Library\Log\Writer\Abstraction $writer) {
+	public function addWriter(\Spaf\Library\Log\Writer\AbstractWriter $writer) {
 		array_push($this->_writers, $writer);
 
 		return true;

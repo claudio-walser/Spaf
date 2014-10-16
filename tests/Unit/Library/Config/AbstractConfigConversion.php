@@ -19,7 +19,7 @@ namespace Spaf\tests\Unit\Library\Config;
  * @package Spaf\tests\Unit\Library\Config
  * @namespace Spaf\tests\Unit\Library\Config
  */
-abstract class Conversion extends \Spaf\tests\Unit\TestCase {
+abstract class AbstractConfigConversion extends \Spaf\tests\Unit\TestCase {
 
 	/**
 	 * Ini file object

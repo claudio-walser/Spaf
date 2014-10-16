@@ -3,7 +3,7 @@
 /**
  * $ID$
  *
- * Spaf/Library/Cache/Driver/Abstraction.php
+ * Spaf/Library/Cache/Driver/AbstractDriver.php
  * @created Wed Oct 10 20:58:52 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Library\Cache\Driver;
 
 /**
- * \Spaf\Library\Cache\Driver\Abstract
+ * \Spaf\Library\Cache\Driver\AbstractDriver
  *
  * Abstract Cache Driver Class.
  * Any concrete driver has to extend
@@ -21,7 +21,7 @@ namespace Spaf\Library\Cache\Driver;
  * @package Spaf\Library\Cache\Driver
  * @namespace Spaf\Library\Cache\Driver
  */
-abstract class Abstraction {
+abstract class AbstractDriver {
 
 	/**
 	 * Default cache lifetime in seconds.

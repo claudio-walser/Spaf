@@ -29,7 +29,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Arrays extends Abstraction {
+class Arrays extends AbstractValidator {
 
 	/**
 	 * Just overwrite it for doint type hinting

@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Core/Response\Abstraction.php
+ * Spaf/Core/Response\AbstractResponse.php
  * @created Tue Jun 10 16:20:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Core\Response;
 
 /**
- * \Spaf\Core\Response\Abstraction
+ * \Spaf\Core\Response\AbstractResponse
  *
  * Thats a base response class.
  * Any concrete response should extend this class.
@@ -21,7 +21,7 @@ namespace Spaf\Core\Response;
  * @namespace Spaf\Core\Response
  * @abstract
  */
-abstract class Abstraction {
+abstract class AbstractResponse {
 
 	/**
 	 * Either this class should utf8 encode outgoing values or not

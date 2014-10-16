@@ -13,7 +13,7 @@ namespace Spaf\Library\Validator;
 
 
 /**
- * \Spaf\Library\Validator\Abstraction
+ * \Spaf\Library\Validator\Email
  *
  * Email validation class
  *

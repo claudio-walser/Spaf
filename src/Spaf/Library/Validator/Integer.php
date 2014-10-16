@@ -13,7 +13,7 @@ namespace Spaf\Library\Validator;
 
 
 /**
- * \Spaf\Library\Validator\Abstraction
+ * \Spaf\Library\Validator\Integer
  *
  * Integer validation class
  *
@@ -22,7 +22,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Integer extends Abstraction {
+class Integer extends AbstractValidator {
 
 	/**
 	 * Simple check, if a value is numeric

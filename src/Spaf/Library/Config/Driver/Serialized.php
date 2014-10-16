@@ -20,7 +20,7 @@ namespace Spaf\Library\Config\Driver;
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
-class Serialized extends Abstraction {
+class Serialized extends AbstractDriver {
 
 	/**
 	 * Read the current given serialized file.

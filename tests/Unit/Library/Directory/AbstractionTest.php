@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/tests/Unit/Library/Directory/AbstractionTest.php
+ * Spaf/tests/Unit/Library/Directory/AbstractDirectoryTest.php
  * @created Wed Sep 26 19:26:27 CET 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,9 +11,9 @@
 namespace Spaf\tests\Unit\Library\Directory;
 
 /**
- * \Spaf\tests\Unit\Library\Directory\AbstractionTest
+ * \Spaf\tests\Unit\Library\Directory\AbstractDirectoryTest
  *
- * The AbstractionTest class tests any aspect of \Spaf\Library\Directory\Abstraction.
+ * The AbstractDirectoryTest class tests any aspect of \Spaf\Library\Directory\AbstractDirectory.
  * For this test its very important to have the file notRedable.php in a non readable mode.
  * If some stuff fails here, do sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
  * first and check again.
@@ -23,7 +23,7 @@ namespace Spaf\tests\Unit\Library\Directory;
  * @package Spaf\tests\Unit\Library\Directory
  * @namespace Spaf\tests\Unit\Library\Directory
  */
-class AbstractionTest extends \Spaf\tests\Unit\TestCase {
+class AbstractDirectoryTest extends \Spaf\tests\Unit\TestCase {
 
 	/**
 	 * Setup
@@ -44,13 +44,13 @@ class AbstractionTest extends \Spaf\tests\Unit\TestCase {
 		// check remove trailing slash
 		$this->assertEquals(
 			$withoutSlash,
-			\Spaf\Library\Directory\Abstraction::formPath($withSlash, false)
+			\Spaf\Library\Directory\AbstractDirectory::formPath($withSlash, false)
 		);
 
 		// check add trailing slash
 		$this->assertEquals(
 			$withSlash,
-			\Spaf\Library\Directory\Abstraction::formPath($withoutSlash, true)
+			\Spaf\Library\Directory\AbstractDirectory::formPath($withoutSlash, true)
 		);
 
 		unset($withSlash);

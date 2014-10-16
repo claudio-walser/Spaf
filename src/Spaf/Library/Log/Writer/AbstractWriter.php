@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Library/Log/v/Abstraction.php
+ * Spaf/Library/Log/Writer/AbstractWriter.php
  * @created Sat Sep 09 09:33:02 CET 2006
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Library\Log\Writer;
 
 /**
- * \Spaf\Library\Log\Writer\Abstraction
+ * \Spaf\Library\Log\Writer\AbstractWriter
  *
  * This is the abstract basic
  * writer class. Any concrete log writer
@@ -21,7 +21,7 @@ namespace Spaf\Library\Log\Writer;
  * @package Spaf\Library\Log\Writer
  * @namespace Spaf\Library\Log\Writer
  */
-abstract class Abstraction {
+abstract class AbstractWriter {
 
 	/**
 	 * Notify method of each log writer

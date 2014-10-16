@@ -22,7 +22,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Ip extends Abstraction {
+class Ip extends AbstractValidator {
 
 	/**
 	 * Allow wildcard * in validation as well

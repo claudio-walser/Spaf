@@ -19,7 +19,7 @@ namespace Spaf\tests\Unit\Library\Config;
  * @package Spaf\tests\Unit\Library\Config
  * @namespace Spaf\tests\Unit\Library\Config
  */
-class JsonConversionTest extends Conversion {
+class JsonConversionTest extends AbstractConfigConversion {
 
 	/**
 	 * Main driver type for the current implementation

@@ -13,7 +13,7 @@ namespace Spaf\Library\Validator;
 
 
 /**
- * \Spaf\Library\Validator\Abstraction
+ * \Spaf\Library\Validator\Url
  *
  * Url validation class
  *
@@ -22,7 +22,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Url extends Abstraction {
+class Url extends AbstractValidator {
 
 	/**
 	 * Top level domains, set some if you want to limit

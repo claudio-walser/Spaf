@@ -3,7 +3,7 @@
 /**
  * $ID$
  *
- * Spaf/Library/Validator/Abstraction.php
+ * Spaf/Library/Validator/AbstractValidator.php
  * @created Wed Oct 10 21:11:04 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -13,7 +13,7 @@ namespace Spaf\Library\Validator;
 
 
 /**
- * \Spaf\Library\Validator\Abstraction
+ * \Spaf\Library\Validator\AbstractValidator
  *
  * Abstract validation class, any concrete
  * validator has to extend this
@@ -26,7 +26,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-abstract class Abstraction {
+abstract class AbstractValidator {
 
 	/**
 	 * Value to validate

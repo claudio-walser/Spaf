@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Core/Request/Abstraction.php
+ * Spaf/Core/Request/AbstractRequest.php
  * @created Tue Jun 10 16:20:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Core\Request;
 
 /**
- * \Spaf\Core\Request\Abstraction
+ * \Spaf\Core\Request\AbstractRequest
  *
  * Thats a base request class.
  * Any concrete request should extend this class.
@@ -21,7 +21,7 @@ namespace Spaf\Core\Request;
  * @namespace Spaf\Core\Request
  * @abstract
  */
-abstract class Abstraction {
+abstract class AbstractRequest {
 
 	protected $_params = array();
 	protected $_files = array();

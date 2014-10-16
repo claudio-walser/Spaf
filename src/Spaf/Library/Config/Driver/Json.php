@@ -20,7 +20,7 @@ namespace Spaf\Library\Config\Driver;
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
-class Json extends Abstraction {
+class Json extends AbstractDriver {
 
 	/**
 	 * Read the current given json file.

@@ -25,7 +25,7 @@ class Manager {
 	/**
 	 * The driver object
 	 *
-	 * @var \Spaf\Library\Config\Driver\Abstraction
+	 * @var \Spaf\Library\Config\Driver\AbstractDriver
 	 */
 	private $_driver = null;
 
@@ -74,7 +74,7 @@ class Manager {
 	 */
 	public function registerDriver($driver) {
 		// if its a driver object
-		if ($driver instanceof \Spaf\Library\Config\Driver\Abstraction) {
+		if ($driver instanceof \Spaf\Library\Config\Driver\AbstractDriver) {
 			$this->_driver = $driver;
 
 			return true;

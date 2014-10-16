@@ -21,7 +21,7 @@ namespace Spaf\Core\Request;
  * @package Spaf\Core\Request
  * @namespace Spaf\Core\Request
  */
-class Http extends Abstraction {
+class Http extends AbstractRequest {
 
 
 	public function __construct() {

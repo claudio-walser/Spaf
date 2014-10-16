@@ -20,7 +20,7 @@ namespace Spaf\Library\Config\Driver;
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
-class Xml extends Abstraction {
+class Xml extends AbstractDriver {
 
 	/**
 	 * Read the current given php file.

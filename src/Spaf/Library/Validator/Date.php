@@ -23,7 +23,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class Date extends Abstraction {
+class Date extends AbstractValidator {
 
 	/**
 	 * Current format to validate

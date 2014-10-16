@@ -19,7 +19,7 @@ namespace Spaf\tests\Unit\Library\Config;
  * @package Spaf\tests\Unit\Library\Config
  * @namespace Spaf\tests\Unit\Library\Config
  */
-class IniConversionTest extends Conversion {
+class IniConversionTest extends AbstractConfigConversion {
 
 	/**
 	 * Main driver type for the current implementation

@@ -31,14 +31,14 @@ class ApplicationTest extends \Spaf\tests\Unit\TestCase {
 	/**
 	 * The normal request object
 	 *
-	 * @var \Spaf\Core\Request\Abstraction
+	 * @var \Spaf\Core\Request\AbstractRequest
 	 */
 	private $_request = null;
 
 	/**
 	 * The normal response object
 	 *
-	 * @var \Spaf\Core\Response\Abstraction
+	 * @var \Spaf\Core\Response\AbstractResponse
 	 */
 	private $_response = null;
 

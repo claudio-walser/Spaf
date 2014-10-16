@@ -42,14 +42,14 @@ class Application {
 	/**
 	 * Request Object
 	 *
-	 * @var \Spaf\Core\Request\Abstraction
+	 * @var \Spaf\Core\Request\AbstractRequest
 	 */
 	protected $_request = null;
 
 	/**
 	 * Response Object
 	 *
-	 * @var \Spaf\Core\Response\Abstraction
+	 * @var \Spaf\Core\Response\AbstractResponse
 	 */
 	protected $_response = null;
 
@@ -140,10 +140,10 @@ class Application {
 	/**
 	 * Public method to inject a request class
 	 *
-	 * @param \Spaf\Core\Request\Abstraction The request object
+	 * @param \Spaf\Core\Request\AbstractRequest The request object
 	 * @return boolean true
 	 */
-	public function setRequest(\Spaf\Core\Request\Abstraction $request, $updateDispatcher = true) {
+	public function setRequest(\Spaf\Core\Request\AbstractRequest $request, $updateDispatcher = true) {
 		$this->_request = $request;
 		if ($updateDispatcher === true) {
 			$this->_dispatcher->setRequest($this->_request);
@@ -154,7 +154,7 @@ class Application {
 	/**
 	 * Public method to get the Request object
 	 *
-	 * @return \Spaf\Core\Request\Abstraction
+	 * @return \Spaf\Core\Request\AbstractRequest
 	 */
 	public function getRequest() {
 		return $this->_request;
@@ -163,10 +163,10 @@ class Application {
 	/**
 	 * Public method to inject a response class
 	 *
-	 * @param \Spaf\Core\Response\Abstraction The response object
+	 * @param \Spaf\Core\Response\AbstractResponse The response object
 	 * @return boolean true
 	 */
-	public function setResponse(\Spaf\Core\Response\Abstraction $response, $updateDispatcher = true) {
+	public function setResponse(\Spaf\Core\Response\AbstractResponse $response, $updateDispatcher = true) {
 		$this->_response = $response;
 		if ($updateDispatcher === true) {
 			$this->_dispatcher->setResponse($this->_response);
@@ -177,7 +177,7 @@ class Application {
 	/**
 	 * Public method to get the Response object
 	 *
-	 * @return \Spaf\Core\Response\Abstraction
+	 * @return \Spaf\Core\Response\AbstractResponse
 	 */
 	public function getResponse() {
 		return $this->_response;

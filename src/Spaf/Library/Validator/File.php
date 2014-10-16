@@ -13,7 +13,7 @@ namespace Spaf\Library\Validator;
 
 
 /**
- * \Spaf\Library\Validator\Abstraction
+ * \Spaf\Library\Validator\File
  *
  * File validation class
  *
@@ -22,7 +22,7 @@ namespace Spaf\Library\Validator;
  * @namespace Spaf\Library\Validator
  */
 
-class File extends Abstraction {
+class File extends AbstractValidator {
 
 	/**
 	 * Maximal file size in bytes.

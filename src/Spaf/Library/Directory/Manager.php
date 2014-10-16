@@ -74,7 +74,7 @@ class Manager {
 	 * @return array Array of \Spaf\Library\Directory\Directory and \Spaf\Library\Directory\File objects
 	 */
 	 public function readContent($path, $pattern = '*', $onlyDir = false) {
-		$path = Abstraction::formPath($path);
+		$path = AbstractDirectory::formPath($path);
 		$GLOB = $onlyDir === true ? GLOB_ONLYDIR : GLOB_BRACE;
 		return $this->_createObjects(glob($path . $pattern, $GLOB));
 	}
@@ -101,7 +101,7 @@ class Manager {
 	 * @return boolean True or false if create failed
 	 */
 	public function createFile($file) {
-		$parts = Abstraction::getNameAndPath($file);
+		$parts = AbstractDirectory::getNameAndPath($file);
 
 		$file = $parts['name'];
 		$directory = $parts['path'];

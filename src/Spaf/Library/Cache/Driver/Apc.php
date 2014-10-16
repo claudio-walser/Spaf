@@ -19,7 +19,7 @@ namespace Spaf\Library\Cache\Driver;
  * @package Spaf\Library\Cache\Driver
  * @namespace Spaf\Library\Cache\Driver
  */
-class Apc extends Abstraction {
+class Apc extends AbstractDriver {
 
 	/**
 	 * Constructs the APC cache.

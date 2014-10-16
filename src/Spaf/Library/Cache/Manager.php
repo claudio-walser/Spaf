@@ -43,7 +43,7 @@ abstract class Manager {
 	/**
 	 * Factory instances
 	 *
-	 * @var array Array with Spaf\Library\Cache\Driver\Abstraction Objects
+	 * @var array Array with Spaf\Library\Cache\Driver\AbstractDriver Objects
 	 */
 	private static $_instances = array();
 
@@ -65,7 +65,7 @@ abstract class Manager {
 	 * i have to pimp this a bit.
 	 *
 	 * @param string Cachetype, to see possible values, call Spaf\Library\Cache\Manager::getAllowedTypes()
-	 * @return Spaf\Library\Cache\Driver\Abstraction Object of the asked cachetype or memcache object as default
+	 * @return Spaf\Library\Cache\Driver\AbstractDriver Object of the asked cachetype or memcache object as default
 	 */
 	public static function factory($cacheType = 'memcache') {
 		// always lower case
@@ -76,13 +76,15 @@ abstract class Manager {
 		}
 
 		// check and if needed, create instance
-		if (!isset(self::$_instances[$cacheType]) || !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Abstraction) {
+		if (!isset(self::$_instances[$cacheType])
+			|| !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Driver\AbstractDriver)
+		{
 			switch ($cacheType) {
 				case 'apc':
-					self::$_instances[$cacheType] = new Driver\Apc();
+					self::$_instances[$cacheType] = new \Spaf\Library\Cache\Driver\Apc();
 					break;
 				default:
-					self::$_instances[$cacheType] = new Driver\Memcache();
+					self::$_instances[$cacheType] = new \Spaf\Library\Cache\Driver\Memcache();
 					break;
 			}
 		}

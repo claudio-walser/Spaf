@@ -3,15 +3,15 @@
 /**
  * $Id$
  *
- * Spaf/Library/Directory/Abstraction.php
+ * Spaf/Library/Directory/AbstractDirectory.php
  * @created Tue Jun 08 05:21:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
  */
-namespace Spaf\Library\Directory;
+namespace Spaf\Library\Directory; // todo: rename into Filesystem
 
 /**
- * \Spaf\Library\Directory\Abstraction
+ * \Spaf\Library\Directory\AbstractDirectory
  *
  * The abstract directory/file class.
  * This abstract class handles some base stuff,
@@ -23,7 +23,7 @@ namespace Spaf\Library\Directory;
  * @package Spaf\Library\Directory
  * @namespace Spaf\Library\Directory
  */
-abstract class Abstraction {
+abstract class AbstractDirectory {
 
 	/**
 	 * Defines if a path has to be wellformed or not.

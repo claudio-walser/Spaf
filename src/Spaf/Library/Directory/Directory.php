@@ -22,7 +22,7 @@ namespace Spaf\Library\Directory;
  * @package Spaf\Library\Directory
  * @namespace Spaf\Library\Directory
  */
-class Directory extends Abstraction {
+class Directory extends AbstractDirectory {
 
 	/**
 	 * The directory name without paths.

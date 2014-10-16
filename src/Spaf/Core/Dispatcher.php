@@ -37,7 +37,7 @@ class Dispatcher {
 	/**
 	 * The requested controller Object.
 	 *
-	 * @var \Spaf\Core\Controller\Abstraction
+	 * @var \Spaf\Core\Controller\AbstractController
 	 */
 	protected $_controller = null;
 
@@ -164,13 +164,13 @@ class Dispatcher {
 		return $this->_defaultAction;
 	}
 
-	public function setResponse(\Spaf\Core\Response\Abstraction $response) {
+	public function setResponse(\Spaf\Core\Response\AbstractResponse $response) {
 	   $this->_response = $response;
 
 	   return true;
 	}
 
-	public function setRequest(\Spaf\Core\Request\Abstraction $request) {
+	public function setRequest(\Spaf\Core\Request\AbstractRequest $request) {
 	   $this->_request = $request;
 
 	   return true;
@@ -234,11 +234,11 @@ class Dispatcher {
 	 * Execute the given action on the given controller
 	 * and return its return values.
 	 *
-	 * @param \Spaf\Core\Controller\Abstraction Controller object
+	 * @param \Spaf\Core\Controller\AbstractController Controller object
 	 * @param string Action to call on this controller
 	 * @return mixed the controllers return value
 	 */
-	protected function _doDispatch(\Spaf\Core\Controller\Abstraction $controller, $action) {
+	protected function _doDispatch(\Spaf\Core\Controller\AbstractController $controller, $action) {
 		// forward the controllers return value
 		return $controller->{$action}();
 	}

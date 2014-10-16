@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Core/Controller/Abstraction.php
+ * Spaf/Core/Controller/AbstractController.php
  * @created Tue Jun 10 19:20:27 CET 2010
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Core\Controller;
 
 /**
- * \Spaf\Core\Controller\Abstraction
+ * \Spaf\Core\Controller\AbstractController
  *
  * Thats a base controller classe.
  * Any concrete controller should extend this class.
@@ -21,7 +21,7 @@ namespace Spaf\Core\Controller;
  * @namespace Spaf\Core\Controller
  * @abstract
  */
-abstract class Abstraction {
+abstract class AbstractController {
 
 	protected $_dispatcher = null;
 

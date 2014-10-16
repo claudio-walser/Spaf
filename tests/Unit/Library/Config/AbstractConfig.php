@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/tests/Unit/Library/Validator/Abstraction.php
+ * Spaf/tests/Unit/Library/Config/AbstractConfig.php
  * @created Wed Oct 10 21:11:04 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,16 +11,16 @@
 namespace Spaf\tests\Unit\Library\Config;
 
 /**
- * \Spaf\tests\Unit\Library\Config\Abstraction
+ * \Spaf\tests\Unit\Library\Config\AbstractConfig
  *
- * The Abstraction class is a base class for any further config test.
+ * The AbstractConfig class is a base class for any further config test.
  * But its not a test by itself
  *
  * @author Claudio Walser
  * @package Spaf\tests\Unit\Library\Config
  * @namespace Spaf\tests\Unit\Library\Config
  */
-abstract class Abstraction extends \Spaf\tests\Unit\TestCase {
+abstract class AbstractConfig extends \Spaf\tests\Unit\TestCase {
 
 	/**
 	 * Config instance

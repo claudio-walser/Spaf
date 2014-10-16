@@ -20,7 +20,7 @@ namespace Spaf\Library\Config\Driver;
  * @package Spaf\Library\Config\Driver
  * @namespace Spaf\Library\Config\Driver
  */
-class Ini extends Abstraction {
+class Ini extends AbstractDriver {
 
 	/**
 	 * Read the current given ini file.
