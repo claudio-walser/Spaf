@@ -62,7 +62,7 @@ class ApcTest extends \Spaf\tests\Unit\TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-		$this->_apc = \Spaf\Library\Cache\Manager::factory('apc');
+		$this->_apc = \Spaf\Library\Cache\Factory::getInstance('apc');
 		$this->_object = new \stdClass();
 	}
 

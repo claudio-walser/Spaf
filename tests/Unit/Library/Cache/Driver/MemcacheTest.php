@@ -83,7 +83,7 @@ class MemcacheTest extends \Spaf\tests\Unit\TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-		$this->_memcache = \Spaf\Library\Cache\Manager::factory('memcache');
+		$this->_memcache = \Spaf\Library\Cache\Factory::getInstance('memcache');
 		$this->_memcache->connect($this->_host);
 
 		$this->_object = new \stdClass();

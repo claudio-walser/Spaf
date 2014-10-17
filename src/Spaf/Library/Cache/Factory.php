@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Spaf/Library/Cache/Manager.php
+ * Spaf/Library/Cache/Factory.php
  * @created Wed Oct 03 11:02:06 +0200 2012
  * @author Claudio Walser
  * @reviewer TODO
@@ -11,7 +11,7 @@
 namespace Spaf\Library\Cache;
 
 /**
- * \Spaf\Library\Cache\Manager
+ * \Spaf\Library\Cache\Factory
  *
  * The cache manager class is simply
  * handling the cache instances itself
@@ -25,7 +25,7 @@ namespace Spaf\Library\Cache;
  * @package Spaf\Library\Cache
  * @namespace Spaf\Library\Cache
  */
-abstract class Manager {
+abstract class Factory {
 
 	/**
 	 * Default cache type. Possible values are
@@ -67,7 +67,7 @@ abstract class Manager {
 	 * @param string Cachetype, to see possible values, call Spaf\Library\Cache\Manager::getAllowedTypes()
 	 * @return Spaf\Library\Cache\Driver\AbstractDriver Object of the asked cachetype or memcache object as default
 	 */
-	public static function factory($cacheType = 'memcache') {
+	public static function getInstance($cacheType = 'memcache') {
 		// always lower case
 		$cacheType = strtolower($cacheType);
 		// check if allowed type
@@ -77,14 +77,14 @@ abstract class Manager {
 
 		// check and if needed, create instance
 		if (!isset(self::$_instances[$cacheType])
-			|| !self::$_instances[$cacheType] instanceof \Spaf\Library\Cache\Driver\AbstractDriver)
+			|| !self::$_instances[$cacheType] instanceof Driver\AbstractDriver)
 		{
 			switch ($cacheType) {
 				case 'apc':
-					self::$_instances[$cacheType] = new \Spaf\Library\Cache\Driver\Apc();
+					self::$_instances[$cacheType] = new Driver\Apc();
 					break;
 				default:
-					self::$_instances[$cacheType] = new \Spaf\Library\Cache\Driver\Memcache();
+					self::$_instances[$cacheType] = new Driver\Memcache();
 					break;
 			}
 		}
