@@ -29,18 +29,11 @@ class NotFoundTest extends \Spaf\tests\Unit\TestCase {
 	private $_controller = null;
 
 	/**
-	 * Current dispatcher instance
+	 * Current application instance
 	 *
-	 * @var \Spaf\Core\Dispatcher
+	 * @var \Spaf\Core\Application
 	 */
-	private $_dispatcher = null;
-
-	/**
-	 * Mocked registry to pass
-	 *
-	 * @var \Spaf\tests\Mock\Core\Registry
-	 */
-	private $_registry = null;
+	private $_application = null;
 
 	/**
 	 * Setup both, normal and mock registry objects
@@ -48,19 +41,9 @@ class NotFoundTest extends \Spaf\tests\Unit\TestCase {
 	 * @return void
 	 */
 	protected function setUp() {
-		$this->_registry = \Spaf\tests\Mock\Core\Registry::getInstance();
-		$request = new \Spaf\Core\Request\Http();
-		$response = new \Spaf\Core\Response\Php();
 		// get dispatcher
-		$this->_dispatcher = new \Spaf\Core\Dispatcher();
-
-		$this->_dispatcher->setRequest($request);
-		$this->_dispatcher->setResponse($response);
-		
-		$this->_controller = new \Spaf\Core\Controller\NotFound($this->_dispatcher);
-
-		unset($request);
-		unset($response);		
+		$this->_application = new \Spaf\Core\Application('php');
+		$this->_controller = new \Spaf\Core\Controller\NotFound($this->_application);		
 	}
 
 	/**
