@@ -11,6 +11,12 @@ Prerequisites
 PhpUnit of course
 On debian/ubuntu simply apt-get install phpunit
 
+PHP INI Settings
+----------------
+Make sure precesion and precision_serialize is set to max 16 in your php.ini. I used to use 14 which seems to handle floats right. 
+If wrong, config-tests where the format is converted from anything to serialized can fail because of a floating value in the test.
+Your tests will fail with something like "7.1 not equals 7.09999999996"
+
 Data setup for the tests
 ------------------------
 Usually everything is just there, except one file which should be none-readable for the user running the tests. So change into the folder you checked out Spaf and create an empty file under root.
