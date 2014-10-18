@@ -15,7 +15,7 @@ namespace Spaf\tests\Unit\Library\Directory;
  *
  * The AbstractDirectoryTest class tests any aspect of \Spaf\Library\Directory\AbstractDirectory.
  * For this test its very important to have the file notRedable.php in a non readable mode.
- * If some stuff fails here, do sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
+ * If some stuff fails here, do sudo chmod 0100 tests/Data/Directory/ToRead/notReadable
  * first and check again.
  *
  * @todo Test, or let me say, implement Mockable Classes for Directory and File

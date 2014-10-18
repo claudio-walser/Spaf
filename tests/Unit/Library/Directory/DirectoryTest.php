@@ -95,7 +95,7 @@ class DirectoryTest extends \Spaf\tests\Unit\TestCase {
 	 * @note	If you run the command line test.php Script as root, this test will
 	 * 			always fail cause root can read EVERYTHING
 	 * 			if it does fail without beeing logged in as root
-	 * 			chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
+	 * 			chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable
 	 *
 	 * @return void
 	 */

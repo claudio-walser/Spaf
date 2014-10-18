@@ -15,7 +15,7 @@ namespace Spaf\tests\Unit\Library\Directory;
  *
  * The ManagerTest class tests any aspect of \Spaf\Library\Directory\Manager.
  * For this test its very important to have the file notRedable.php in a non readable mode.
- * If some stuff fails here, do sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
+ * If some stuff fails here, do sudo chmod 0100 tests/Data/Directory/ToRead/notReadable
  * first and check again.
  *
  * @todo Test, or let me say, implement Mockable Classes for Directory and File
@@ -53,7 +53,7 @@ class ManagerTest extends \Spaf\tests\Unit\TestCase {
 	 * @note	If you run the command line test.php Script as root, this test will
 	 * 			always fail cause root can read EVERYTHING
 	 * 			if it does fail without beeing logged in as root
-	 * 			chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
+	 * 			chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable
 	 *
 	 * @return void
 	 */
@@ -241,7 +241,7 @@ class ManagerTest extends \Spaf\tests\Unit\TestCase {
 	 */
 	public function testFileIsReadable() {
 		$doesExist = $this->testsDataBasePath . 'Directory/ToRead/2.php';
-		$doesNotExist = $this->testsDataBasePath . 'Directory/ToRead/notReadable.php';
+		$doesNotExist = $this->testsDataBasePath . 'Directory/ToRead/notReadable';
 
 		$this->assertTrue(
 			$this->_manager->fileIsReadable($doesExist)
@@ -250,7 +250,7 @@ class ManagerTest extends \Spaf\tests\Unit\TestCase {
 		// @note If you run the command line test.php Script as root, this test will
 		//		 always fail cause root can read EVERYTHING
 		// if it does fail without beeing logged in as root
-		// chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable.php
+		// chmod the file: sudo chmod 0100 tests/Data/Directory/ToRead/notReadable
 		$this->assertFalse(
 			$this->_manager->fileIsReadable($doesNotExist)
 		);

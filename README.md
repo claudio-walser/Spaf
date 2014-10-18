@@ -13,11 +13,11 @@ On debian/ubuntu simply apt-get install phpunit
 
 Data setup for the tests
 ------------------------
-Usually everything is just there, except one file which should be none-readable for the user runnin the tests. So change into the folder you checked out Spaf and create an empty file under root.
+Usually everything is just there, except one file which should be none-readable for the user running the tests. So change into the folder you checked out Spaf and create an empty file under root.
 
     cd /var/www/Spaf
-    sudo touch tests/Data/Directory/ToRead/notReadable.php
-    sudo chmod 0700 tests/Data/Directory/ToRead/notReadable.php
+    sudo touch tests/Data/Directory/ToRead/notReadable
+    sudo chmod 0700 tests/Data/Directory/ToRead/notReadable
 Run tests
 ---------
 To run the unit tests now simply change into the folder you checked out the codebase and run test.php under the tools directory.
