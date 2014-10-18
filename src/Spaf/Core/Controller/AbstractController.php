@@ -23,7 +23,18 @@ namespace Spaf\Core\Controller;
  */
 abstract class AbstractController {
 
-	protected $_dispatcher = null;
+
+	/**
+	 * Caller Application object
+	 */
+	protected $_application = null;
+
+	/**
+	 * Another application object to run nested calls.
+	 *
+	 * @var \Spaf\Core\Registry
+	 */
+	protected $_backendApplication = null;
 
 	/**
 	 * The Registry Object.
@@ -60,10 +71,6 @@ abstract class AbstractController {
 	 */
 	protected $_session = null;
 
-	/**
-	 *
-	 */
-	protected $_application = null;
 	/**
 	 * Creates a controller object and
 	 * set the default properties in this class.
@@ -104,19 +111,18 @@ abstract class AbstractController {
 	 */
 	public function init() {}
 	
+	/**
+	 * todo: Test this method
+	 */
 	protected function controller($controller, $action, $params) {
-		if ($this->_application === null) {
-			$this->_createPhpApplication();
+		if ($this->_backendApplication === null) {
+			$this->_backendApplication = new \Spaf\Core\Application('php');
 		}
 
 		// execute and get controllers return
-		return $this->_application->run($controller, $action, $params);
+		return $this->_backendApplication->run($controller, $action, $params);
 	}
 
-	protected function _createPhpApplication() {		
-		// instantiate business tier with a php request and response
-		$this->_application = new \Spaf\Core\Application('php');
-	}
 }
 
 ?>
