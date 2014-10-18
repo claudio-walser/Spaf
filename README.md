@@ -18,6 +18,7 @@ Usually everything is just there, except one file which should be none-readable 
     cd /var/www/Spaf
     sudo touch tests/Data/Directory/ToRead/notReadable
     sudo chmod 0700 tests/Data/Directory/ToRead/notReadable
+
 Run tests
 ---------
 To run the unit tests now simply change into the folder you checked out the codebase and run test.php under the tools directory.
@@ -27,16 +28,14 @@ Example shell commands
     phpunit UnitTests
 
 
-
-
 Documentation
-==========
+=============
 
 Prerequisites
 -------------
-PhpDoc of course - see http://phpdoc.org/
-php5-xsl
-graphviz
+- PhpDoc of course - see http://phpdoc.org/
+- php5-xsl
+- graphviz
 
 Generate docs
 ---------
