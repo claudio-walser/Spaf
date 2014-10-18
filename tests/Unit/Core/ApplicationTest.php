@@ -64,11 +64,8 @@ class ApplicationTest extends \Spaf\tests\Unit\TestCase {
 		// default should be \Spaf\Core\Registry, check on that first
 		$origRegistry = \Spaf\Core\Registry::getInstance();
 
-		/**
-		 * No registry object set by default
-		 */
 		$this->assertEquals(
-			null,
+			$origRegistry,
 			$this->_application->getRegistry()
 		);
 
