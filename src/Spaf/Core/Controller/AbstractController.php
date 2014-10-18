@@ -74,13 +74,13 @@ abstract class AbstractController {
 	 *
 	 * @param \Spaf\Core\Registry Pass a registry object by injection
 	 */
-	public function __construct(\Spaf\Core\Dispatcher $dispatcher) {
-		$this->_dispatcher = $dispatcher;
-		$this->_registry = \Spaf\Core\Registry::getInstance();
+	public function __construct(\Spaf\Core\Application $application) {
+		$this->_application = $application;
+		$this->_registry = $this->_application->getRegistry();
 
 		// throws exceptions if request or response object is not set yet
-		$this->_request = $this->_dispatcher->getRequest();
-		$this->_response = $this->_dispatcher->getResponse();
+		$this->_request = $this->_application->getRequest();
+		$this->_response = $this->_application->getResponse();
 
 		// call the init method
 		$this->init();
@@ -104,34 +104,18 @@ abstract class AbstractController {
 	 */
 	public function init() {}
 
-	protected function controller($controller, $action, $params) {
+	protected function controller() {
 		if ($this->_application === null) {
 			$this->_createPhpApplication();
 		}
 
-
-		// set controller and action
-		$this->_application->getRequest()->set('controller', $controller);
-		$this->_application->getRequest()->set('action', $action);
-		// set specific controller params
-		if (is_array($params)) {
-			foreach($params as $key => $value) {
-				$this->_application->getRequest()->set($key, $value);
-			}
-		}
 		// execute and get controllers return
-		return $this->_application->run();
+		return $this->_application->run($controller, $action, $params);
 	}
 
-	protected function _createPhpApplication() {
-		// request and response objects
-		$request = new \Spaf\Core\Request\Php();
-		$response = new \Spaf\Core\Response\Php();
-		
+	protected function _createPhpApplication() {		
 		// instantiate business tier with a php request and response
-		$this->_application = new \Spaf\Core\Application();
-		$this->_application->setRequest($request);
-		$this->_application->setResponse($response);
+		$this->_application = new \Spaf\Core\Application('php');
 	}
 }
 

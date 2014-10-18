@@ -21,7 +21,7 @@ namespace Spaf\Core;
  * @package Spaf\Core
  * @namespace Spaf\Core
  */
-class Dispatcher {
+abstract class Dispatcher {
 
 	/**
 	 * The Registry Object.
