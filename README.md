@@ -27,6 +27,27 @@ Example shell commands
     phpunit UnitTests
 
 
+
+
+Documentation
+==========
+
+Prerequisites
+-------------
+PhpDoc of course - see http://phpdoc.org/
+php5-xsl
+graphviz
+
+Generate docs
+---------
+To generate the docs simply run phpdoc in the folder you checked out Spaf. The output is generated in ./docs then.
+Example shell commands
+
+    cd /var/www/Spaf/tests
+    phpdoc
+
+
+
 Something
 =========
 
