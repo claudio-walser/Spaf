@@ -78,14 +78,6 @@ class ApplicationTest extends \Spaf\tests\Unit\TestCase {
 			$this->_application->getRegistry()
 		);
 
-		// check dispatcher and application registry is the same
-		$dispatcher = $this->_application->getDispatcher();
-		$this->assertEquals(
-			$dispatcher->getRegistry(),
-			$this->_application->getRegistry()
-		);
-
-		unset($registry);
 	}
 
 	/**

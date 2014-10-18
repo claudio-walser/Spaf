@@ -33,9 +33,6 @@ class Application extends Dispatcher {
 
 	}
 
-	public function getDispatcher() {
-		return $this;
-	}
 }
 
 ?>
