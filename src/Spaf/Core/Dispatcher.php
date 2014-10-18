@@ -30,9 +30,19 @@ class Dispatcher {
 	 */
 	protected $_registry = null;
 
+	/**
+	 * Request Object
+	 *
+	 * @var \Spaf\Core\Request\AbstractRequest
+	 */
 	protected $_request = null;
-	protected $_response = null;
 
+	/**
+	 * Response Object
+	 *
+	 * @var \Spaf\Core\Response\AbstractResponse
+	 */
+	protected $_response = null;
 
 	/**
 	 * The requested controller Object.
@@ -194,10 +204,7 @@ class Dispatcher {
 	 *
 	 * @return mixed The controllers return values
 	 */
-	public function dispatch() {
-		// get registry/request object, throws an exception if none is set yet.
-		//$request = $this->_registry->get('request', true);
-
+	public function run() {
 		// get controller
 		$this->_controller = $this->_request->getParam('controller', $this->_defaultController);
 
@@ -207,7 +214,6 @@ class Dispatcher {
 			$controller = new $this->_notFoundController($this);
 			return $controller->view();
 		}
-
 
 		// instantiate controller
 		$controller = new $this->_controller($this);
