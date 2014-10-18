@@ -23,16 +23,6 @@ namespace Spaf\Core;
  */
 class Application extends Dispatcher {
 
-	/**
-	 * Constructor
-	 *
-	 * Set default registry
-	 */
-	public function __construct() {
-		$this->setRegistry(Registry::getInstance());
-
-	}
-
 }
 
 ?>
