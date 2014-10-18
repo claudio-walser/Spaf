@@ -6,15 +6,15 @@
  * @created 	Tue Jun 08 19:24:27 CET 2010
  * @author 		Claudio Walser
  * @reviewer 	TODO
- * @package		\Cwa\Library\Directory
- * @namespace	\Cwa\Library\Directory
+ * @package		\Spaf\Library\Directory
+ * @namespace	\Spaf\Library\Directory
  */
 
-namespace Cwa\Library\Orm\Generator;
+namespace Spaf\Library\Orm\Generator;
 
 
 /**
- * \Cwa\Library\Orm\Generator
+ * \Spaf\Library\Orm\Generator
  *
  * The generator class is the mian interface
  * to connect. Internally it decides which
@@ -27,7 +27,7 @@ class Generator {
 	/**
 	 * The xml source file.
 	 *
-	 * @var		\Cwa\Library\Directory\File
+	 * @var		\Spaf\Library\Directory\File
 	 */
 	private $_xmlFile = null;
 
@@ -98,10 +98,10 @@ class Generator {
 	 * Sets a File object as xml source
 	 *
 	 * @author		Claudio Walser
-	 * @param		\Cwa\Library\Directory\File			The XML source file
+	 * @param		\Spaf\Library\Directory\File			The XML source file
 	 * @return		boolean
 	 */
-	public function setXmlFile(\Cwa\Library\Directory\File $xmlFile) {
+	public function setXmlFile(\Spaf\Library\Directory\File $xmlFile) {
 		$this->_xmlFile = $xmlFile;
 		return true;
 	}
@@ -111,7 +111,7 @@ class Generator {
 	 * Gets the xml source File object
 	 *
 	 * @author		Claudio Walser
-	 * @return		\Cwa\Library\Directory\File
+	 * @return		\Spaf\Library\Directory\File
 	 */
 	public function getXmlFile() {
 		return $this->_xmlFile;

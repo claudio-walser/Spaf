@@ -1,6 +1,6 @@
 <?php
 
-namespace Cwa\Library\Orm\Generator\Model;
+namespace Spaf\Library\Orm\Generator\Model;
 
 /**
  * UdaModelGenerator.php :: Factory for model generator

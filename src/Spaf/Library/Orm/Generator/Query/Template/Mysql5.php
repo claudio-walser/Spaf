@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Query\Template;
+namespace Spaf\Library\Orm\Generator\Query\Template;
 
 /**
  * UdaMysql5Template.php :: Final class for mysql5 template

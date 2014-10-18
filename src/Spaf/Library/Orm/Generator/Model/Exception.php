@@ -1,6 +1,6 @@
 <?php
 
-namespace Cwa\Library\Orm\Generator\Model;
+namespace Spaf\Library\Orm\Generator\Model;
 
 /**
  * Exception.php :: Exceptionhandling for UdaModelGenerator classes

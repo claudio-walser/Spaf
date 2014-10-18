@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Model\Record;
+namespace Spaf\Library\Orm\Generator\Model\Record;
 /**
  * UdaModelGeneratorPhp5Record.php :: Generates the php5 record model
  *
@@ -11,7 +11,7 @@ namespace Cwa\Library\Orm\Generator\Model\Record;
  * @copyright	Copyright (c) 2008 - 2009 Claudio Walser, UWD GmbH
  * @author		Claudio Walser
  */
-class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
+class Php6 extends \Spaf\Library\Orm\Generator\Model\Php6 {
 
 	/**
 	 * generateRecordFile
@@ -22,11 +22,11 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * Internally it calls needed methods to generate start, getter and setter and
 	 * foreign method parts.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		public
 	 */
-	public function generateRecordFile(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	public function generateRecordFile(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$string = "<?php\n";
 
 		$string .= $this->_getRecordStart($table);
@@ -49,17 +49,17 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * Generates a the beginning of a record file
 	 *
-	 * This method generate the beginning code of a record model file addicted to one \Cwa\Library\Orm\Generator\Object\Table object
+	 * This method generate the beginning code of a record model file addicted to one \Spaf\Library\Orm\Generator\Object\Table object
 	 * wich is needed as only parameter to this function.
 	 * It writes the file directly to the targetPath, given in parent::__construct.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordStart.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getRecordStart(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getRecordStart(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$tplString = file_get_contents($this->_tplPath . 'recordStart.php');
 		$searches[0] = "{uc_tablename}";				$replaces[0] = ucfirst($table->getName());
 		$searches[1] = "{columns}";						$replaces[1] = $this->_getRecordColumnProperties($table);
@@ -78,12 +78,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * This method gets all database columns as class properties for the record file.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code with class properties of each column
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordStart
 	 */
-	private function _getRecordColumnProperties(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getRecordColumnProperties(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$columns = '';
 		foreach ($table->getColumns() as $column) {
 			$columns .= "\t" . '/**' . "\n";
@@ -105,12 +105,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This method get the code for switch case instruction to seperating real data
 	 * and just attributes. Attributes occur by selection data with a SELECT COUNT(*) AS attr query.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for switch case instruction for constructor
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordStart
 	 */
-	private function _getConstructDataSwitch(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getConstructDataSwitch(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$switch  = "\t\t\t\t" . 'switch($key) {' . "\n";
 
 		foreach ($table->getColumns() as $column) {
@@ -138,14 +138,14 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This method get the code of class properties of other tables
 	 * wich has a n:m relation to this table.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for properties of foreign tables
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordStart
 	 */
-	private function _getNmRelationProperties(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getNmRelationProperties(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$props = '';
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 		foreach  ($this->_meta as $t) {
 			// Wenn es sich bei der Tabelle um eine n:m Beziehungstabelle handelt
 			if ($t->isRelation()) {
@@ -209,12 +209,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * column of this table.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordGetterSetterMethods.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for get/set methods for all columns
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getSetterGetterMethods(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getSetterGetterMethods(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$tplString = file_get_contents($this->_tplPath . 'recordSetterGetterMethods.php');
 		$i = 1;
 		$string = '';
@@ -236,12 +236,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * Internally it calls methods for generating 1:1, 1:n and n:m methods.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for all foreign methods
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getForeignMethods(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getForeignMethods(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$manyToMany = $this->_getManyToManyMethods($table);
 		$oneToMany = $this->_getOneToManyMethods($table);
 		$oneToOne = $this->_getOneToOneMethods($table);
@@ -257,15 +257,15 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This mehtod generate the code for getting records wich has a n:m relation to this record.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordForeignMethods.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for n:m foreign methods
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getForeignMethods
 	 */
-	private function _getManyToManyMethods(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getManyToManyMethods(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$methods = '';
 		// hole alle n:m Tabellen die von dieser Tabelle aus auf andere zeigen
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 		foreach  ($this->_meta as $t) {
 			// Wenn es sich bei der Tabelle um eine n:m Beziehungstabelle handelt
 			if ($t->isRelation()) {
@@ -622,12 +622,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This mehtod generate the code for getting records wich has a 1:n relation to this record.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordForeignMethods.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for 1:n foreign methods
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getOneToManyMethods(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getOneToManyMethods(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$cols = array();
 		$methods = '';
 		$i = 0;
@@ -685,7 +685,7 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 
 		// hole alle 1:n foreign Keys die auf diese Tabelle zeigen
 		// also «getChilds» Methoden
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 		foreach ($this->_meta as $t) {
 			if ($t->isRelation()) {
 				break;
@@ -744,12 +744,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This mehtod generate the code for getting records wich has a 1:1 relation to this record.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordForeignMethods.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for 1:1 foreign methods
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getOneToOneMethods(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getOneToOneMethods(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$cols = array();
 		$methods = '';
 		$i = 0;
@@ -873,12 +873,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This contains the doSave, doDelete, _doInsert, _doUpdate, _saveChilds and _deleteChilds methods.
 	 * The source code to generate is from ./generatorTemplates/phpTemplates/php5/recordEnd.php
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the model from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the model from
 	 * @return		string						The php code for the file end of a record
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::generateRecordFile
 	 */
-	private function _getRecordEnd(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getRecordEnd(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$tplString = file_get_contents($this->_tplPath . 'recordEnd.php');
 		$searches[0] = "{tablename}";						$replaces[0] = $table->getName();
 		$searches[1] = "{pk_loop}";							$replaces[1] = $this->_getPkLoop($table);
@@ -909,13 +909,13 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * This mehtod generate a comma separated string of all columns for SELECT queries.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the column string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the column string from
 	 * @return		string						The php code for the column string
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 * @todo		looking for non auto increment systems
 	 */
-	private function _getColumnString(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getColumnString(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$colStr = '';
 		foreach ($table->getColumns() as $col) {
 			if ($col->isPk() && $col->getAutoIncrement()) {
@@ -937,13 +937,13 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * This mehtod generate a comma separated string of all columns values for INSERT queries.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the value string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the value string from
 	 * @return		string						The php code for the column value string
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 * @todo		looking for non auto increment systems
 	 */
-	private function _getValueString(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getValueString(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$valStr = '';
 		foreach ($table->getColumns() as $col) {
 			if ($col->isPk() && $col->getAutoIncrement()) {
@@ -965,12 +965,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 *
 	 * This mehtod generate a string of all columns and values for UPDATE queries.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the updateValue string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the updateValue string from
 	 * @return		string						The php code for the columns and values UPDATE string
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getUpdateValueString(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getUpdateValueString(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$valStr = '';
 		foreach ($table->getColumns() as $col) {
 			$valStr .= empty($valStr) ? ' ' : ',' . "\n\t\t\t\t\t";
@@ -989,14 +989,14 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * your relation definitions. Set up your relation with event onDelete
 	 * and action delete will perform this.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the deleteChild string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the deleteChild string from
 	 * @return		string						The php code for the delete child method
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getDeleteChilds(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getDeleteChilds(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$delStr = '';
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 
 		// n:m Stuff
 		foreach  ($this->_meta as $t) {
@@ -1051,7 +1051,7 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 			}
 		}
 
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 		foreach ($this->_meta as $t) {
 			if ($t->isRelation()) {
 				break;
@@ -1110,14 +1110,14 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * All neccessary parents will be deleted to. This is addicted to
 	 * your relation definitions. Just n:m relation records will be deleted too.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the deleteParent string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the deleteParent string from
 	 * @return		string						The php code for the delete parent method
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getDeleteParents(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getDeleteParents(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$delStr = '';
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 
 		// n:m Stuff
 		foreach  ($this->_meta as $t) {
@@ -1185,14 +1185,14 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This is important for save childs wich are added over record::addChild.
 	 * By calling doSave on a object, its new child relations will be saved too.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the saveChilds string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the saveChilds string from
 	 * @return		string						The php code for the saveChilds method
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getSaveChilds(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getSaveChilds(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$saveStr = '';
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 
 		// n:m Stuff
 		foreach  ($this->_meta as $t) {
@@ -1307,14 +1307,14 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This is important for save childs wich are added over record::addChild.
 	 * By calling doSave on a object, its changed child relations will be managed too.
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the overwriteChilds string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the overwriteChilds string from
 	 * @return		string						The php code for the overwriteChilds method
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getOverwriteChilds(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getOverwriteChilds(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$saveStr = '';
-		$inf = new \Cwa\Library\ThirdParty\Inflector();
+		$inf = new \Spaf\Library\ThirdParty\Inflector();
 
 		// n:m Stuff
 		foreach  ($this->_meta as $t) {
@@ -1410,12 +1410,12 @@ class Php6 extends \Cwa\Library\Orm\Generator\Model\Php6 {
 	 * This mehtod generate a string with the primary key to use it in WHERE id=3 queries.
 	 * This loop is important for tables with more than one columns defined as primary key
 	 *
-	 * @param		\Cwa\Library\Orm\Generator\Object\Table					The \Cwa\Library\Orm\Generator\Object\Table object wich you want generate the primary key string from
+	 * @param		\Spaf\Library\Orm\Generator\Object\Table					The \Spaf\Library\Orm\Generator\Object\Table object wich you want generate the primary key string from
 	 * @return		string						The php code for the primary key string
 	 * @access		private
 	 * @see			UdaModelGeneratorPhp5Record::_getRecordEnd
 	 */
-	private function _getPkLoop(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _getPkLoop(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$pk = '';
 		foreach ($table->getPkColumns() as $col) {
 			if ($pk === '') {

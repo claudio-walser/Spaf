@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Query\Template;
+namespace Spaf\Library\Orm\Generator\Query\Template;
 
 /**
  * UdaMysqlTemplate.php :: Abstract base class for mysql4 and mysql5 template

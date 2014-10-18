@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Query\Template;
+namespace Spaf\Library\Orm\Generator\Query\Template;
 
 /**
  * UdaSqlTemplate.php :: Abstract base class for any sql template

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cwa\Library\Orm\Generator\Model;
+namespace Spaf\Library\Orm\Generator\Model;
 
 /**
  * UdaModelGeneratorPhp5.php :: Generates the php5 model
@@ -82,8 +82,8 @@ class Php5 {
 	 */
 	public function generateModel() {
 		foreach ($this->_meta as $table) {
-			if (!$table instanceof \Cwa\Library\Orm\Generator\Object\Table) {
-				throw new Exception('Metadata isn\'t a array with \Cwa\Library\Orm\Generator\Object\Table objects!');
+			if (!$table instanceof \Spaf\Library\Orm\Generator\Object\Table) {
+				throw new Exception('Metadata isn\'t a array with \Spaf\Library\Orm\Generator\Object\Table objects!');
 			} 
 			// dont generate files from n:m tables
 			if ($table->isRelation()) {
@@ -113,7 +113,7 @@ class Php5 {
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		private
 	 */
-	private function _generateBaseFiles(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _generateBaseFiles(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$string = '<?php' . "\n";
 		$tplString = file_get_contents($this->_tplPath . 'base.php');
 		$selfColumns = '';
@@ -172,7 +172,7 @@ class Php5 {
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		private
 	 */
-	private function _generateQueryFiles(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _generateQueryFiles(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$string = "<?php\n";
 		$tplString = file_get_contents($this->_tplPath . 'query.php');
 		$searches[] = "{uc_tablename}";					$replaces[] = ucfirst($table->getName());
@@ -200,7 +200,7 @@ class Php5 {
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		private
 	 */
-	private function _generateActiveRecordFiles(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _generateActiveRecordFiles(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		// If file does not exists already
 		if (!is_file($this->_targetPath . ucfirst($table->getName()) . '.php')) {
 			// ' . self::ID . ', ' . self::NAME . '
@@ -235,7 +235,7 @@ class Php5 {
 	 * @return		bool						True if the file can be written, otherwise false
 	 * @access		private
 	 */
-	private function _generateRecordFiles(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _generateRecordFiles(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$rec = new Record\Php5($this->_meta, $this->_targetPath);
 		$rec->generateRecordFile($table);
 		return true;

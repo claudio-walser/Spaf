@@ -6,13 +6,13 @@
  * @created 	Mon Aug 23 19:13:57 CET 2010
  * @author 		Claudio Walser
  * @reviewer 	TODO
- * @package		\Cwa\Library\Database
- * @namespace	\Cwa\Library\Database
+ * @package		\Spaf\Library\Database
+ * @namespace	\Spaf\Library\Database
  */
-namespace Cwa\Library\Orm\Generator\Parser;
+namespace Spaf\Library\Orm\Generator\Parser;
 
 /**
- * Cwa\Library\Orm\Generator\Parser\AbstractParser
+ * Spaf\Library\Orm\Generator\Parser\AbstractParser
  *
  * This class is the abstract parser class.
  * Any concrete parser has to extend this class
@@ -33,7 +33,7 @@ abstract class AbstractParser {
 
 	/**
 	 * This array stores the Config object after parsing
-	 * @var			Cwa\Library\Orm\Generator\Object\Config
+	 * @var			Spaf\Library\Orm\Generator\Object\Config
 	 */
 	protected $_config = null;
 
@@ -45,13 +45,13 @@ abstract class AbstractParser {
 	 * This method expect a string with a valid path to a xml file as first parameter.
 	 * It throw a UdaShemeParserException if the xml file wouldn't exist or isn't readable.
 	 *
-	 * @param		\Cwa\Library\Directory\File		A valid path to a sheme.xml
+	 * @param		\Spaf\Library\Directory\File		A valid path to a sheme.xml
 	 */
-	public function __construct(\Cwa\Library\Directory\File $xmlFile) {
+	public function __construct(\Spaf\Library\Directory\File $xmlFile) {
 		$this->_loadFile($xmlFile);
 	}
 
-	abstract protected function _loadFile(\Cwa\Library\Directory\File $xmlFile);
+	abstract protected function _loadFile(\Spaf\Library\Directory\File $xmlFile);
 
 	/**
 	 * getObjects

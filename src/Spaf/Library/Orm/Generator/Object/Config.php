@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Object;
+namespace Spaf\Library\Orm\Generator\Object;
 /**
  * UdaTable.php :: Represents a db table
  *

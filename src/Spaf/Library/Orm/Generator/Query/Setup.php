@@ -1,6 +1,6 @@
 <?php
 
-namespace Cwa\Library\Orm\Generator\Query;
+namespace Spaf\Library\Orm\Generator\Query;
 
 /**
  * UdaSetupQueryGenerator.php :: Generates the setup query
@@ -109,7 +109,7 @@ class Setup {
 	 * @return		bool					Return true in any case
 	 * @access		private
 	 */
-	private function _generateTable(\Cwa\Library\Orm\Generator\Object\Table $table) {
+	private function _generateTable(\Spaf\Library\Orm\Generator\Object\Table $table) {
 		$this->_setupQuery .= str_replace('{tablename}', $table->getName(), $this->_sqlTemplateObject->getCreateTable());
 		
 		// foreach all columns
@@ -168,7 +168,7 @@ class Setup {
 	 * @return		bool					Return true in any case
 	 * @access		private
 	 */
-	private function _generateColumn(\Cwa\Library\Orm\Generator\Object\Column $col) {
+	private function _generateColumn(\Spaf\Library\Orm\Generator\Object\Column $col) {
 		$default = $col->getDefault();
 		$description = $col->getDescription();
 		$search[] = '{columnname}';				$replace[] = $col->getName();

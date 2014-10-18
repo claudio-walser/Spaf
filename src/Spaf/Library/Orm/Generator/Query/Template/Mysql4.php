@@ -1,5 +1,5 @@
 <?php
-namespace Cwa\Library\Orm\Generator\Query\Template;
+namespace Spaf\Library\Orm\Generator\Query\Template;
 
 /**
  * UdaMysql4Template.php :: Final class for mysql4template

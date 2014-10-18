@@ -64,7 +64,7 @@
 
 			self::$_dbh->executeQuery($query);
 		} catch (\{runtime_namespace}\Driver\Exception $e) {
-			// rollback transaction and throw \Cwa\Library\Database\Driver\
+			// rollback transaction and throw \Spaf\Library\Database\Driver\
 			self::$_dbh->rollback();
 			throw new \{runtime_namespace}\Driver\Exception($e->getMessage());
 		}
