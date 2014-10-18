@@ -87,10 +87,6 @@ class Http extends AbstractRequest {
 	 * @return array Array with upload information from $_FILES
 	 */
 	public function getUpload($name) {
-		if (isset($this->_files[$name]) && $this->_utf8Decode === true) {
-			$this->_files[$name]['name'] = utf8_decode($this->_files[$name]['name']);
-		}
-
 		return isset($this->_files[$name]) ? $this->_files[$name] : null;
 	}
 
@@ -157,7 +153,6 @@ class Http extends AbstractRequest {
 
 	/**
 	 * Dispath one value.
-	 * This method is using utf8_decode if you asked for it.
 	 *
 	 * @param string Dirty value
 	 * @return mixed Dispatched and clean value
@@ -177,10 +172,6 @@ class Http extends AbstractRequest {
 			// just handle it
 			$var = (string) $var;
 			$var = trim($var);
-			// utf8 decode if you asked for it
-			if ($this->_utf8Decode === true) {
-				$var = utf8_decode($var);
-			}
 		}
 
 		return $var;

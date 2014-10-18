@@ -24,14 +24,8 @@ namespace Spaf\Core\Request;
 abstract class AbstractRequest {
 
 	protected $_params = array();
+	
 	protected $_files = array();
-
-	/**
-	 * Either this class should utf8 decode incoming values or not
-	 *
-	 * @var boolean True if incoming values should be handled with utf8_decode
-	 */
-	protected $_utf8Decode = false;
 
 	/**
 	 * Abstract function getParams should be implemented by
@@ -75,27 +69,6 @@ abstract class AbstractRequest {
 	public function setParam($name, $value) {
 		// basicly it does nothing
 		return true;
-	}
-
-	/**
-	 * Set the internal value of utf8Decode.
-	 *
-	 * @param boolean True if you want to handle inputs with utf8_decode
-	 * @return boolean true
-	 */
-	public function setUtf8Decode($bool) {
-		$this->_utf8Decode = (bool) $bool;
-
-		return true;
-	}
-
-	/**
-	 * Get the internal value of utf8Decode.
-	 *
-	 * @return boolean The value of utf8Decode
-	 */
-	public function getUtf8Decode() {
-		return $this->_utf8Decode;
 	}
 
 }
