@@ -49,13 +49,13 @@ class Php extends AbstractResponse {
 	public function write($param, $count = null, $success = null, $pure = false) {
 		// if pure, just return
 		if ($pure === true) {
-			return $this->_encodeUtf8 === true ? $this->_utf8Encode($param) : $param;
+			return $param;
 		}
 
 		// init $out as array
 		$out = array();
 		// set success on true per default
-		$out['success'] = $success !== null ? $success : true;
+		$out['success'] = $success !== null ? (bool) $success : true;
 		if ($success !== null) {
 			$out['success'] = $success;
 		} else {
@@ -66,36 +66,15 @@ class Php extends AbstractResponse {
 				}
 			}
 		}
+
 		// if success not equals false
 		if ($out['success'] !== false || (isset($success) && $success !== null)) {
 			// put data in $out['data']
-			$out['data'] = $this->_encodeUtf8 === true ? $this->_utf8Encode($param) : $param;
+			$out['data'] = $param;
 			$out['count'] = $count === null ? count($out['data']) : $count;
 		}
 
 		return $out;
-	}
-
-	/**
-	 * Encodes a array or simple string to utf8 charset, other types are ignored.
-	 *
-	 * @param mixed The value you want to UTF8 encode
-	 * @return mixed UTF8 encoded value you passed as param
-	 */
-	private function _utf8Encode($param) {
-		if (!is_array($param)) {
-			if (is_string($param)) {
-				return utf8_encode($param);
-			} else {
-				return $param;
-			}
-		} else {
-			foreach ($param as $key => $value) {
-				$param[$key] = $this->_utf8Encode($value);
-			}
-		}
-
-		return $param;
 	}
 
 }

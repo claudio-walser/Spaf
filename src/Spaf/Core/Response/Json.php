@@ -49,7 +49,7 @@ class Json extends Php {
 	 * @return true
 	 */
 	public function write($param, $count = null, $success = null, $pure = false) {
-		echo json_encode(parent::write($param, $count, $success, $pure ));
+		return json_encode(parent::write($param, $count, $success, $pure));
 	}
 
 }

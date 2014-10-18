@@ -24,14 +24,6 @@ namespace Spaf\Core\Response;
 abstract class AbstractResponse {
 
 	/**
-	 * Either this class should utf8 encode outgoing values or not
-	 *
-	 * @var boolean True if outgoing values should be handled with utf8_encode
-	 */
-	protected $_encodeUtf8 = false;
-
-
-	/**
 	 * Abstract function write should be implemented by
 	 * any child class. Output or forward the controllers
 	 * return values. The return values of a controller is ALWAYS
