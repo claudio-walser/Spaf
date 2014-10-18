@@ -103,8 +103,8 @@ abstract class AbstractController {
 	 * Can be usefull to set something up, used in the whole controller.
 	 */
 	public function init() {}
-
-	protected function controller() {
+	
+	protected function controller($controller, $action, $params) {
 		if ($this->_application === null) {
 			$this->_createPhpApplication();
 		}
