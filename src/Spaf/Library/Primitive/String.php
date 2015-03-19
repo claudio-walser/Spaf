@@ -37,15 +37,25 @@ class String {
 	 * @param string String to set as content
 	 */
 	public function __construct($string = '') {
-		$this->_content = (string) $string;
+		$this->set($string);
 	}
 	
 	/**
-	 * Get current content, thanks to interceptor you can just echo the Object
+	 * Set current content
+	 *
+	 * @param string
+	 * @return boolean
+	 */
+	public function set($string) {
+		return $this->_content = (string) $string;
+	}
+
+	/**
+	 * Get current content
 	 *
 	 * @return string Content of the current object
 	 */
-	public function getContent() {
+	public function get() {
 		return $this->_content;
 	}
 
@@ -80,14 +90,13 @@ class String {
 		return true;
 	}
 
-
-	// interceptor methods
 	/**
 	 * Simply return the content
 	 *
 	 * @return string Content of the current object
 	 */
 	public function __toString() {
-		return $this->getContent();
+		return $this->get();
 	}
+
 }
