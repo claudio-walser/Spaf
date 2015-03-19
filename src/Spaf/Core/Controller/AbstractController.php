@@ -26,13 +26,15 @@ abstract class AbstractController {
 
 	/**
 	 * Caller Application object
+	 *
+	 * @var \Spaf\Core\Application
 	 */
 	protected $_application = null;
 
 	/**
 	 * Another application object to run nested calls.
 	 *
-	 * @var \Spaf\Core\Registry
+	 * @var \Spaf\Core\Application
 	 */
 	protected $_backendApplication = null;
 
@@ -56,13 +58,6 @@ abstract class AbstractController {
 	 * @var Spaf\Core\Response
 	 */
 	protected $_response = null;
-
-	/**
-	 * Config Object
-	 *
-	 * @var Spaf\Library\Config
-	 */
-	protected $_config = null;
 
 	/**
 	 * Session Object
