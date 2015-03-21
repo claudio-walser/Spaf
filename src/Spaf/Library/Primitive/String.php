@@ -31,22 +31,32 @@ class String {
 	private $_content = '';
 
 	/**
+	 * Whether its a compressed string or not
+	 *
+	 * @var bool
+	 */
+	private $_compressed = false;
+
+	/**
 	 * Construct a String Object by pass a string.
 	 * Note: anything you pass on this is casted to a string.
 	 *
 	 * @param string String to set as content
+	 * @param bool Whether its a compressed string or not 
 	 */
-	public function __construct($string = '') {
-		$this->set($string);
+	public function __construct($string = '', $compressed = false) {
+		$this->set($string, $compressed);
 	}
 	
 	/**
 	 * Set current content
 	 *
 	 * @param string
+	 * @param bool Whether its a compressed string or not 
 	 * @return boolean
 	 */
-	public function set($string) {
+	public function set($string, $compressed = false) {
+		$this->_compressed = (bool) $compressed;
 		return $this->_content = (string) $string;
 	}
 
@@ -86,8 +96,36 @@ class String {
 			}
 		}
 
-		$this->_content = $return_string;
-		return true;
+		return $this->set($return_string, false);
+	}
+
+	/**
+	 * Create a gzip compressed string
+	 * 
+	 * @param int Level of compression. Can be given as 0 for no compression up to 9 for maximum compression. -1 for default zlib compression level.
+	 * @return bool Returns true if compression went ok
+     */
+	public function gzencode($level = -1) {
+		if ($this->_compressed === true) {
+			return false;
+		}
+		$this->_compressed = true;
+
+		return $this->_content = gzencode($this->_content, $level);
+	}
+
+	/**
+	 * Decodes a gzip compressed string
+	 * 
+	 * @return bool Returns true if decoding went ok
+     */
+	public function gzdecode() {
+		if ($this->_compressed === false) {
+			return false;
+		}
+		$this->_compressed = false;
+		
+		return $this->_content = gzdecode($this->_content);
 	}
 
 	/**
