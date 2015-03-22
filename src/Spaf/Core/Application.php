@@ -47,7 +47,7 @@ class Application extends Dispatcher {
 		$this->setResponse($response);
 	}
 
-	public function run($controller = '\\DreamboxRecorder\\Controller\\NotFound', $action = 'view', $params = array()) {
+	public function run($controller = '\\Spaf\\Controller\\NotFound', $action = 'view', $params = array()) {
 		if ($this->_type === 'php') {
 			// setup for http request
 			$this->_request->setParam('controller', $controller);
